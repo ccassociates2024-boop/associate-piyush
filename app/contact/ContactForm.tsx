@@ -1,177 +1,306 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Clock, MessageCircle, Shield, CheckCircle, Send, ArrowRight, MapPin } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  Clock,
+  MapPin,
+  MessageCircle,
+  Shield,
+  CheckCircle,
+  ArrowRight,
+  Send,
+} from "lucide-react";
 
-export default function ContactForm() {
+const PHONE = "+91 75073 54141";
+const PHONE_RAW = "917507354141";
+const EMAIL = "associate.piyush.nimse@gmail.com";
+const WA_BASE = `https://wa.me/${PHONE_RAW}`;
+const WA_QUICK = `${WA_BASE}?text=${encodeURIComponent(
+  "Hello Associate Piyush, I need tax consultation."
+)}`;
+
+const SERVICES = [
+  "GST Reconciliation",
+  "Income Tax Filing",
+  "TDS Compliance",
+  "Forensic Accounting",
+  "Tax Notice Reply",
+  "Business Advisory",
+  "Other",
+];
+
+const INFO_CARDS = [
+  {
+    icon: Phone,
+    label: "Phone",
+    value: PHONE,
+    sub: "Click to call directly",
+    href: "tel:+917507354141",
+    accent: "bg-primary/10",
+    iconColor: "text-primary",
+  },
+  {
+    icon: MessageCircle,
+    label: "WhatsApp",
+    value: "Chat with us instantly",
+    sub: PHONE,
+    href: WA_QUICK,
+    accent: "bg-green-50",
+    iconColor: "text-green-600",
+    external: true,
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    value: EMAIL,
+    sub: "Response within 24 hours",
+    href: `mailto:${EMAIL}`,
+    accent: "bg-gold/10",
+    iconColor: "text-gold",
+  },
+  {
+    icon: MapPin,
+    label: "Location",
+    value: "Pune, Maharashtra",
+    sub: "Pan India Services",
+    accent: "bg-primary/10",
+    iconColor: "text-primary",
+  },
+  {
+    icon: Clock,
+    label: "Working Hours",
+    value: "Mon–Sat: 10 AM – 7 PM",
+    sub: "Indian Standard Time",
+    accent: "bg-primary/10",
+    iconColor: "text-primary",
+  },
+];
+
+const TRUST = [
+  "Response within 2 hours",
+  "Confidential consultation",
+  "Pan India service",
+  "Since 2020",
+];
+
+export default function ContactSection() {
   const [form, setForm] = useState({
     name: "",
-    email: "",
     phone: "",
     service: "",
     message: "",
   });
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState("");
 
-  const SERVICES = [
-    "GST Reconciliation",
-    "Forensic Accounting",
-    "Income Tax Advisory",
-    "TDS Compliance",
-    "Audit & Assurance",
-    "Business Advisory",
-    "Other / Not Sure",
-  ];
+  const set = (field: string, value: string) =>
+    setForm((prev) => ({ ...prev, [field]: value }));
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) {
-      setError("Please fill in all required fields.");
-      return;
-    }
-    setSubmitting(true);
-    setError("");
-
-    try {
-      const emailjs = await import("@emailjs/browser");
-      await emailjs.send(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
-        {
-          from_name: form.name,
-          from_email: form.email,
-          phone: form.phone,
-          service: form.service || "Not specified",
-          message: form.message,
-          to_name: "Associate Piyush",
-        },
-        "YOUR_PUBLIC_KEY"
-      );
-      setSubmitted(true);
-    } catch (e) {
-      setSubmitted(true);
-    } finally {
-      setSubmitting(false);
-    }
+    const text = [
+      `Name: ${form.name || "—"}`,
+      `Phone: ${form.phone || "—"}`,
+      `Service: ${form.service || "—"}`,
+      `Message: ${form.message || "—"}`,
+    ].join("\n");
+    const url = `${WA_BASE}?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
   };
-
-  const whatsappMessage = encodeURIComponent(
-    `Hello Associate Piyush,\n\nI would like to enquire about your services.\n\nName: ${form.name || "—"}\nService: ${form.service || "—"}`
-  );
 
   return (
     <section className="bg-background py-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Form */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-card shadow-card border border-gray-100 p-6">
-              <h2 className="font-bold text-dark text-xl mb-6">Send a Message</h2>
+        <div className="grid lg:grid-cols-5 gap-8 items-start">
 
-              {submitted ? (
-                <div className="py-10 text-center">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle size={32} className="text-green-500" />
-                  </div>
-                  <h3 className="font-bold text-dark text-xl mb-2">Message Sent!</h3>
-                  <p className="text-muted mb-6">
-                    Thank you, {form.name}. I&apos;ll respond within 24 hours. For urgent matters, WhatsApp is faster.
-                  </p>
-                  <a
-                    href={`https://wa.me/919XXXXXXXXX?text=${whatsappMessage}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-gold gap-2 inline-flex"
-                  >
-                    <MessageCircle size={16} /> Follow Up on WhatsApp
-                  </a>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="label">Full Name <span className="text-red-500">*</span></label>
-                      <input type="text" className="input-field" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Your name" required />
-                    </div>
-                    <div>
-                      <label className="label">Email Address <span className="text-red-500">*</span></label>
-                      <input type="email" className="input-field" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="your@email.com" required />
-                    </div>
-                    <div>
-                      <label className="label">Phone Number</label>
-                      <input type="tel" className="input-field" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} placeholder="+91 9XXXXXXXXX" />
-                    </div>
-                    <div>
-                      <label className="label">Service Required</label>
-                      <select className="input-field" value={form.service} onChange={e => setForm({ ...form, service: e.target.value })}>
-                        <option value="">Select service...</option>
-                        {SERVICES.map(s => <option key={s} value={s}>{s}</option>)}
-                      </select>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="label">Message <span className="text-red-500">*</span></label>
-                    <textarea className="input-field h-32 resize-none" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} placeholder="Briefly describe your requirement. E.g., 'We have 2 years of GST ITC mismatch for our manufacturing firm in Pune...'" required />
-                  </div>
+          {/* ── LEFT: Contact Info Cards ── */}
+          <div className="lg:col-span-2 space-y-3">
+            <h2 className="text-lg font-bold text-dark mb-4">Contact Information</h2>
 
-                  <div className="flex items-start gap-2 p-3 bg-green-50 border border-green-200 rounded-lg text-xs text-green-800">
-                    <Shield size={14} className="mt-0.5 flex-shrink-0 text-green-600" />
-                    <span>All communications are strictly confidential. Information shared is used only for consultation purposes and is never disclosed to third parties.</span>
-                  </div>
-
-                  {error && <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">{error}</div>}
-
-                  <button type="submit" disabled={submitting} className="btn-primary gap-2 w-full justify-center py-3.5">
-                    <Send size={16} />
-                    {submitting ? "Sending..." : "Send Message"}
-                  </button>
-                </form>
-              )}
-            </div>
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-4">
-            {[
-              { icon: MapPin, title: "Location", content: "Pune, Maharashtra\nPan India Services Available", sub: "Virtual consultations available" },
-              { icon: Mail, title: "Email", content: "contact@associatepiyush.in", sub: "Response within 24 hours", href: "mailto:contact@associatepiyush.in" },
-              { icon: Clock, title: "Working Hours", content: "Monday – Saturday\n10:00 AM – 7:00 PM", sub: "IST (Indian Standard Time)" },
-              { icon: CheckCircle, title: "Response Time", content: "Within 24 Hours", sub: "Urgent matters: WhatsApp" },
-            ].map(({ icon: Icon, title, content, sub, href }) => (
-              <div key={title} className="bg-white rounded-card shadow-card border border-gray-100 p-4">
+            {INFO_CARDS.map(({ icon: Icon, label, value, sub, href, accent, iconColor, external }) => {
+              const inner = (
                 <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Icon size={16} className="text-primary" />
+                  <div className={`w-10 h-10 rounded-lg ${accent} flex items-center justify-center flex-shrink-0`}>
+                    <Icon size={18} className={iconColor} />
                   </div>
-                  <div>
-                    <div className="text-xs font-semibold text-muted uppercase tracking-wide mb-1">{title}</div>
-                    {href ? (
-                      <a href={href} className="text-sm font-medium text-dark hover:text-primary whitespace-pre-line">{content}</a>
-                    ) : (
-                      <div className="text-sm font-medium text-dark whitespace-pre-line">{content}</div>
-                    )}
+                  <div className="min-w-0">
+                    <div className="text-[11px] font-semibold text-muted uppercase tracking-wider mb-0.5">
+                      {label}
+                    </div>
+                    <div className="text-sm font-semibold text-dark truncate">{value}</div>
                     <div className="text-xs text-muted mt-0.5">{sub}</div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
 
+              return href ? (
+                <a
+                  key={label}
+                  href={href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
+                  className="block bg-white rounded-card shadow-card border border-gray-100 p-4 hover:border-primary/30 hover:shadow-card-hover transition-all duration-200"
+                >
+                  {inner}
+                </a>
+              ) : (
+                <div
+                  key={label}
+                  className="bg-white rounded-card shadow-card border border-gray-100 p-4"
+                >
+                  {inner}
+                </div>
+              );
+            })}
+
+            {/* WhatsApp quick CTA */}
             <a
-              href="https://wa.me/919XXXXXXXXX?text=Hello%20Associate%20Piyush,%20I%20need%20help%20with%20tax%20compliance."
+              href={WA_QUICK}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg p-4 transition-colors w-full"
+              className="flex items-center justify-between gap-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg px-5 py-4 transition-colors w-full mt-2"
             >
-              <MessageCircle size={20} />
-              <span>Chat on WhatsApp</span>
-              <ArrowRight size={16} />
+              <div className="flex items-center gap-3">
+                <MessageCircle size={22} />
+                <div className="text-left">
+                  <div className="text-sm font-bold">Chat on WhatsApp</div>
+                  <div className="text-green-100 text-xs">+91 75073 54141</div>
+                </div>
+              </div>
+              <ArrowRight size={18} />
             </a>
 
-            <div className="bg-background rounded-lg p-4 text-xs text-muted border border-gray-100">
-              <p className="font-medium text-dark mb-1">Confidentiality Notice</p>
-              <p>All client information is handled with strict confidentiality. Associate Piyush does not share client information with any third party. Consultation discussions are protected under professional ethics.</p>
+            {/* Confidentiality note */}
+            <div className="bg-white border border-gray-100 rounded-card p-4 text-xs text-muted shadow-card">
+              <div className="flex items-center gap-2 mb-1.5">
+                <Shield size={13} className="text-primary flex-shrink-0" />
+                <span className="font-semibold text-dark">Confidentiality Notice</span>
+              </div>
+              All client information is handled with strict confidentiality and is never
+              shared with any third party. Consultation details are protected under
+              professional ethics.
+            </div>
+          </div>
+
+          {/* ── RIGHT: WhatsApp Inquiry Form ── */}
+          <div className="lg:col-span-3">
+            <div className="bg-white rounded-card shadow-card border border-gray-100 p-6 sm:p-8">
+              {/* Header */}
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-11 h-11 rounded-lg bg-green-500 flex items-center justify-center flex-shrink-0">
+                  <MessageCircle size={22} className="text-white" />
+                </div>
+                <div>
+                  <h2 className="font-bold text-dark text-lg leading-tight">
+                    Quick WhatsApp Inquiry
+                  </h2>
+                  <p className="text-muted text-xs mt-0.5">
+                    Fill the form — it opens WhatsApp with your details pre-filled
+                  </p>
+                </div>
+              </div>
+
+              <form onSubmit={handleWhatsApp} className="space-y-4">
+                {/* Name */}
+                <div>
+                  <label className="label">
+                    Your Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="input-field"
+                    placeholder="e.g. Rahul Sharma"
+                    value={form.name}
+                    onChange={(e) => set("name", e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <label className="label">
+                    Your Phone Number <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    className="input-field"
+                    placeholder="+91 9XXXXXXXXX"
+                    value={form.phone}
+                    onChange={(e) => set("phone", e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Service */}
+                <div>
+                  <label className="label">Service Needed</label>
+                  <select
+                    className="input-field"
+                    value={form.service}
+                    onChange={(e) => set("service", e.target.value)}
+                  >
+                    <option value="">Select a service...</option>
+                    {SERVICES.map((s) => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label className="label">Brief Message</label>
+                  <textarea
+                    className="input-field h-28 resize-none"
+                    placeholder="e.g. I need help with GST reconciliation for FY 2023-24. We have ITC mismatch issues."
+                    value={form.message}
+                    onChange={(e) => set("message", e.target.value)}
+                  />
+                </div>
+
+                {/* How it works note */}
+                <div className="flex items-start gap-2 p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <MessageCircle size={14} className="text-green-600 flex-shrink-0 mt-0.5" />
+                  <p className="text-xs text-green-800">
+                    Clicking the button below will open WhatsApp with your details
+                    pre-filled. No data is stored on any server — 100% private.
+                  </p>
+                </div>
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg py-4 text-sm transition-colors"
+                >
+                  <Send size={16} />
+                  Send via WhatsApp →
+                </button>
+              </form>
+
+              {/* Trust badges */}
+              <div className="grid grid-cols-2 gap-2 mt-6 pt-6 border-t border-gray-100">
+                {TRUST.map((t) => (
+                  <div key={t} className="flex items-center gap-2 text-xs text-muted">
+                    <CheckCircle size={13} className="text-green-500 flex-shrink-0" />
+                    <span>{t}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Also reachable via */}
+              <div className="mt-5 pt-5 border-t border-gray-100 flex flex-wrap gap-3">
+                <a
+                  href={`tel:+${PHONE_RAW}`}
+                  className="flex items-center gap-2 text-xs font-medium text-primary hover:underline"
+                >
+                  <Phone size={13} /> {PHONE}
+                </a>
+                <a
+                  href={`mailto:${EMAIL}`}
+                  className="flex items-center gap-2 text-xs font-medium text-primary hover:underline"
+                >
+                  <Mail size={13} /> {EMAIL}
+                </a>
+              </div>
             </div>
           </div>
         </div>

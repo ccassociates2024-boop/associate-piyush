@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   RefreshCw, Search, Calculator, ClipboardCheck, BarChart3, Briefcase,
-  CheckCircle, ArrowRight, Scale, Users, Building2
+  CheckCircle, ArrowRight, Scale, Users, Building2, IndianRupee
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -37,6 +37,7 @@ const services = [
     icon: RefreshCw,
     title: "GST Reconciliation",
     law: "Sec 16(2) CGST Act, 2017 | GSTR-2A/2B Matching",
+    pricing: "Starting from ₹3,500 / month",
     description:
       "GST Input Tax Credit (ITC) reconciliation is critical for every registered business. A mismatch between your purchase register and GSTR-2A/2B can lead to ITC reversal, penalties, and scrutiny notices from the GST department. Our systematic reconciliation process ensures that every rupee of ITC you're entitled to is claimed, and every discrepancy is resolved before the annual return filing.",
     includes: [
@@ -56,6 +57,7 @@ const services = [
     icon: Search,
     title: "Forensic Accounting",
     law: "Companies Act 2013 | PMLA | IPC Provisions",
+    pricing: "Custom quote — based on scope",
     description:
       "Forensic accounting merges accounting expertise with investigative skills to uncover financial irregularities, fraud, and misappropriation. Whether you suspect vendor fraud, employee embezzlement, or need evidence for litigation, our forensic investigation follows a rigorous, court-admissible methodology. We analyze transaction patterns, trace fund flows, and document findings that can withstand legal scrutiny.",
     includes: [
@@ -75,6 +77,7 @@ const services = [
     icon: Calculator,
     title: "Income Tax Advisory",
     law: "Income Tax Act, 1961 | Finance Act 2025 | AY 2025-26",
+    pricing: "ITR filing from ₹1,500 · Advisory from ₹5,000",
     description:
       "Navigating India's complex income tax landscape requires not just compliance but strategic planning. We provide end-to-end income tax services from ITR preparation to representing clients before tax authorities. Our analysis covers old vs new regime comparison, deduction optimization, capital gains planning, and advance tax computation to minimize your tax liability within legal bounds.",
     includes: [
@@ -94,6 +97,7 @@ const services = [
     icon: ClipboardCheck,
     title: "TDS Compliance",
     law: "Sec 192–194N, Income Tax Act | Form 24Q, 26Q, 27Q",
+    pricing: "Starting from ₹2,500 / quarter",
     description:
       "TDS (Tax Deducted at Source) compliance involves timely deduction, deposit, and return filing across multiple sections. Defaults attract interest under Sec 201(1A) and penalties under Sec 271C. Our TDS management service ensures zero defaults — from rate determination to TRACES reconciliation and correction filing.",
     includes: [
@@ -113,6 +117,7 @@ const services = [
     icon: BarChart3,
     title: "Audit & Assurance",
     law: "Companies Act 2013 | SA (Standards on Auditing) | ICAI Guidelines",
+    pricing: "Statutory audit from ₹15,000 · Tax audit from ₹8,000",
     description:
       "Our audit and assurance services go beyond tick-box compliance. We conduct risk-based audits that identify control weaknesses, operational inefficiencies, and compliance gaps. The management letter accompanying every audit provides practical, prioritized recommendations that add real business value beyond the statutory requirement.",
     includes: [
@@ -132,6 +137,7 @@ const services = [
     icon: Briefcase,
     title: "Business Advisory",
     law: "Companies Act 2013 | MSME Act | Startup India Framework",
+    pricing: "Virtual CFO from ₹8,000 / month",
     description:
       "Beyond compliance, we help businesses grow profitably. Our business advisory service combines financial analysis with strategic thinking — identifying where your business is leaking money, how to structure it for tax efficiency, and what financial benchmarks to track for sustainable growth. We work as a virtual CFO for SMEs that need senior financial guidance without the full-time cost.",
     includes: [
@@ -155,6 +161,7 @@ export default function ServicesPage() {
       <section className="bg-primary py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
+            <p className="text-gold text-xs font-semibold uppercase tracking-widest mb-2">What We Offer</p>
             <h1 className="text-4xl font-bold text-white mb-4">Our Services</h1>
             <p className="text-blue-200 text-lg leading-relaxed">
               Comprehensive tax and finance services built for Indian businesses. Each engagement is handled with precision, confidentiality, and deep domain expertise.
@@ -188,20 +195,30 @@ export default function ServicesPage() {
                           <h2 className="text-xl font-bold text-dark">{service.title}</h2>
                         </div>
                       </div>
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/8 rounded-full text-primary text-xs font-medium mb-4">
+
+                      {/* Law badge */}
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/8 rounded-full text-primary text-xs font-medium mb-3">
                         <Scale size={11} />
                         {service.law}
                       </div>
+
+                      {/* Pricing signal */}
+                      <div className="flex items-center gap-1.5 mb-4 text-sm">
+                        <IndianRupee size={13} className="text-gold flex-shrink-0" />
+                        <span className="text-gold font-semibold">{service.pricing}</span>
+                      </div>
+
                       <p className="text-muted text-sm leading-relaxed">{service.description}</p>
-                      <div className="mt-6">
-                        <div className="flex items-start gap-2 text-sm text-muted mb-2">
-                          <Users size={14} className="text-primary mt-0.5 flex-shrink-0" />
-                          <div>
-                            <span className="font-medium text-dark">Who It&apos;s For: </span>
-                            {service.whoFor}
-                          </div>
+
+                      {/* Who it's for */}
+                      <div className="mt-5 flex items-start gap-2 text-sm text-muted">
+                        <Users size={14} className="text-primary mt-0.5 flex-shrink-0" />
+                        <div>
+                          <span className="font-medium text-dark">Who It&apos;s For: </span>
+                          {service.whoFor}
                         </div>
                       </div>
+
                       <Link href="/contact" className="btn-gold gap-2 mt-6 w-full justify-center">
                         {service.cta} <ArrowRight size={15} />
                       </Link>
@@ -209,7 +226,7 @@ export default function ServicesPage() {
 
                     {/* Right: Includes */}
                     <div className="lg:w-2/3 bg-background rounded-lg p-6">
-                      <h3 className="font-semibold text-dark text-sm uppercase tracking-wide mb-4 flex items-center gap-2">
+                      <h3 className="font-semibold text-dark text-xs uppercase tracking-widest mb-4 flex items-center gap-2">
                         <Building2 size={14} className="text-gold" />
                         What&apos;s Included
                       </h3>

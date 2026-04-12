@@ -315,7 +315,7 @@ export default function Dashboard() {
         const parsed = JSON.parse(ev.target?.result as string) as AppData;
         save({ ...DEFAULT_DATA, ...parsed });
         alert("Data imported successfully!");
-      } catch { alert("Invalid file. Please use a CC Associates backup JSON."); }
+      } catch { alert("Invalid file. Please use an Associate Piyush backup JSON."); }
     };
     reader.readAsText(file);
     e.target.value = "";
@@ -393,7 +393,7 @@ export default function Dashboard() {
                 onChange={e => setWelcomeForm(f => ({ ...f, age: e.target.value }))} />
             </div>
             <div className="flex items-center gap-2 text-xs text-green-400 bg-green-900/20 border border-green-800/30 rounded-xl p-3 mb-6">
-              <Shield size={14} /> All data is stored only in your browser. CC Associates cannot see your financial data.
+              <Shield size={14} /> All data is stored only in your browser. Associate Piyush cannot see your financial data.
             </div>
             <Btn variant="primary" className="w-full justify-center" onClick={submitWelcome}>
               Get Started <ArrowRight size={14} />
@@ -409,7 +409,7 @@ export default function Dashboard() {
             <h1 className="text-white font-bold text-lg">
               {data.settings.name ? `${data.settings.name}'s` : "Personal"} Finance Dashboard
             </h1>
-            <p className="text-purple-400 text-xs">CC Associates · 100% Private · Browser Only</p>
+            <p className="text-purple-400 text-xs">Associate Piyush · 100% Private · Browser Only</p>
           </div>
           <div className="flex gap-2">
             <Btn variant="ghost" onClick={exportJSON}><Download size={14} />Export</Btn>
@@ -1128,16 +1128,16 @@ function TaxTab({ data, upd, avgIncome }: { data: AppData; upd: <K extends keyof
         </div>
       </DCard>
 
-      {/* CA CTA */}
+      {/* CTA */}
       <div className="bg-[#1A1630] border border-purple-700/40 rounded-2xl p-5 flex items-center justify-between gap-4">
         <div>
           <div className="text-white font-semibold">Need help optimizing your taxes?</div>
-          <div className="text-purple-400 text-sm">Chat with CA Sourabh Chavan for personalized advice.</div>
+          <div className="text-purple-400 text-sm">Chat with Piyush Nimse for personalized tax advice.</div>
         </div>
-        <a href="https://wa.me/918421465966?text=Hello%20CA%20Sourabh%2C%20I%20need%20tax%20advisory%20help."
+        <a href="https://wa.me/917507354141?text=Hello%20Piyush%2C%20I%20need%20tax%20advisory%20help."
           target="_blank" rel="noopener noreferrer"
           className="flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white rounded-xl px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors">
-          <MessageCircle size={16} />Chat with CA <ArrowRight size={14} />
+          <MessageCircle size={16} />Chat on WhatsApp <ArrowRight size={14} />
         </a>
       </div>
     </div>

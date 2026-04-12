@@ -4,10 +4,10 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: {
     absolute:
-      "Associate Piyush | CA Tax Consultant Pune | GST, Income Tax & TDS Advisory",
+      "CC Associates | Tax Advisory, GST, Audit & Litigation | Pune, India",
   },
   description:
-    "Piyush Nimse — Expert Tax & Finance Consultant in Pune. Specialising in GST Reconciliation, Income Tax Returns, TDS Compliance, Forensic Accounting & Tax Notice Reply. Call +91 75073 54141.",
+    "CC Associates — Expert Tax & Advisory practice in Pune. 950+ income tax cases, GST compliance, TDS, statutory audit, forensic accounting & litigation support. Piyush Nimse & CA Sourabh Chavan. Call +91 75073 54141.",
   keywords: [
     "tax consultant pune",
     "CA pune",
@@ -15,22 +15,24 @@ export const metadata: Metadata = {
     "income tax consultant pune",
     "TDS compliance pune",
     "forensic accounting pune",
+    "CC Associates pune",
     "Piyush Nimse",
-    "Associate Piyush",
+    "Sourabh Chavan CA",
     "GST reconciliation",
     "ITR filing pune",
     "tax notice reply pune",
-    "GSTR filing pune",
+    "statutory audit pune",
+    "litigation support pune",
   ],
   alternates: {
-    canonical: "https://associatepiyush.in",
+    canonical: "https://associate-piyush-bduu.vercel.app",
   },
   openGraph: {
-    title: "Associate Piyush | CA Tax Consultant Pune",
+    title: "CC Associates | Tax Advisory, GST, Audit | Pune",
     description:
-      "Expert GST, Income Tax, TDS & Forensic Accounting services in Pune. Pan India service. First consultation free. Call +91 75073 54141.",
-    url: "https://associatepiyush.in",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Associate Piyush - Tax Consultant Pune" }],
+      "950+ income tax cases. GST, TDS, Audit, Litigation & Business Advisory. CA Sourabh Chavan & Piyush Nimse. Pan India. Call +91 75073 54141.",
+    url: "https://associate-piyush-bduu.vercel.app",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "CC Associates - Tax & Advisory Practice, Pune" }],
   },
 };
 import {
@@ -142,10 +144,10 @@ const testimonials = [
 ];
 
 const stats = [
-  { value: "500+", label: "Cases Handled" },
-  { value: "100%", label: "GST Compliance" },
-  { value: "Pan India", label: "Service Reach" },
-  { value: "Since 2020", label: "Years of Trust" },
+  { value: "950+", label: "Income Tax Cases" },
+  { value: "28+", label: "Audit Clients" },
+  { value: "150+", label: "GST Clients" },
+  { value: "Since 2025", label: "Years of Trust" },
 ];
 
 export default function HomePage() {

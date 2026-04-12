@@ -18,7 +18,7 @@ const PHONE_RAW = "917507354141";
 const EMAIL = "associate.piyush.nimse@gmail.com";
 const WA_BASE = `https://wa.me/${PHONE_RAW}`;
 const WA_QUICK = `${WA_BASE}?text=${encodeURIComponent(
-  "Hi Piyush Nimse,\n\nI need tax consultation. Please get back to me.\n\n— via AssociatePiyush.in"
+  "Hello CC Associates, I need tax and advisory consultation. Please get back to me."
 )}`;
 
 const SERVICES = [
@@ -84,12 +84,13 @@ const TRUST = [
   "Response within 2 hours",
   "Confidential consultation",
   "Pan India service",
-  "Since 2020",
+  "Since 2025",
 ];
 
 export default function ContactSection() {
   const [form, setForm] = useState({
     name: "",
+    email: "",
     phone: "",
     service: "",
     message: "",
@@ -101,13 +102,12 @@ export default function ContactSection() {
   const handleWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
     const text =
-      `*Inquiry — Associate Piyush*\n\n` +
-      `Hi Piyush Nimse,\n\n` +
-      `I'm *${form.name || "—"}* and I need assistance with *${form.service || "Tax Consultation"}*.\n\n` +
-      `📱 My Phone: ${form.phone || "—"}\n` +
-      (form.message ? `📝 Details: ${form.message}\n\n` : "\n") +
-      `Please get back to me at your earliest convenience.\n\n` +
-      `— via AssociatePiyush.in`;
+      `*New Inquiry — CC Associates*\n\n` +
+      `Name: ${form.name || "—"}\n` +
+      `Email: ${form.email || "—"}\n` +
+      `Phone: ${form.phone || "—"}\n` +
+      `Service: ${form.service || "Tax Consultation"}\n\n` +
+      (form.message ? `Message: ${form.message}` : "");
     const url = `${WA_BASE}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
@@ -213,7 +213,7 @@ export default function ContactSection() {
                     Quick WhatsApp Inquiry
                   </h2>
                   <p className="text-muted text-xs mt-0.5">
-                    Sends directly to Piyush Nimse — responds within 2 hours
+                    Sends directly to CC Associates — responds within 2 business days
                   </p>
                 </div>
               </div>
@@ -222,7 +222,7 @@ export default function ContactSection() {
               <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 text-xs text-green-900 font-mono leading-relaxed">
                 <div className="text-[10px] text-green-600 font-semibold uppercase tracking-wide mb-1.5">Message Preview (example)</div>
                 <div className="whitespace-pre-line">{
-                  `*Inquiry — Associate Piyush*\n\nHi Piyush Nimse,\n\nI'm *Sunil Yadav* and I need assistance with *Income Tax Filing*.\n\n📱 My Phone: +91 98765 43210\n📝 Details: I need to file ITR for FY 2025-26.\n\n— via AssociatePiyush.in`
+                  `*New Inquiry — CC Associates*\n\nName: Sunil Yadav\nEmail: sunil@example.com\nPhone: +91 98765 43210\nService: Income Tax Filing\n\nMessage: I need to file ITR for FY 2026-27.`
                 }</div>
               </div>
 
@@ -235,25 +235,37 @@ export default function ContactSection() {
                   <input
                     type="text"
                     className="input-field"
-                    placeholder="e.g. Sunil Yadav"
+                    placeholder="e.g. Piyush Nimse"
                     value={form.name}
                     onChange={(e) => set("name", e.target.value)}
                     required
                   />
                 </div>
 
-                {/* Phone */}
+                {/* Email */}
                 <div>
                   <label className="label">
-                    Your Phone Number <span className="text-red-500">*</span>
+                    Email Address <span className="text-red-500">*</span>
                   </label>
+                  <input
+                    type="email"
+                    className="input-field"
+                    placeholder="e.g. you@example.com"
+                    value={form.email}
+                    onChange={(e) => set("email", e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <label className="label">Phone / WhatsApp</label>
                   <input
                     type="tel"
                     className="input-field"
-                    placeholder="+91 9XXXXXXXXX"
+                    placeholder="+91 XXXXX XXXXX"
                     value={form.phone}
                     onChange={(e) => set("phone", e.target.value)}
-                    required
                   />
                 </div>
 
@@ -289,8 +301,9 @@ export default function ContactSection() {
                   className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg py-4 text-sm transition-colors"
                 >
                   <Send size={16} />
-                  Send to Piyush Nimse via WhatsApp →
+                  Send via WhatsApp →
                 </button>
+                <p className="text-xs text-muted text-center">Confidential. No spam. We respond within 2 business days.</p>
               </form>
 
               {/* Trust badges */}

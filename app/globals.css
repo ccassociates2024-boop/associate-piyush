@@ -5,16 +5,16 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: #1A3A6B;
+  --color-primary: #534AB7;
   --color-gold: #C9A84C;
-  --color-dark: #1A1A2E;
-  --color-muted: #5A6A7A;
-  --color-bg: #F7F9FC;
+  --color-dark: #26215C;
+  --color-muted: #7F77DD;
+  --color-bg: #F5F3FF;
   --color-white: #FFFFFF;
   --font-sans: 'Inter', system-ui, sans-serif;
-  --radius-card: 8px;
-  --shadow-card: 0 1px 3px 0 rgba(0,0,0,0.08), 0 1px 2px -1px rgba(0,0,0,0.06);
-  --shadow-card-hover: 0 4px 12px 0 rgba(0,0,0,0.10), 0 2px 6px -1px rgba(0,0,0,0.08);
+  --radius-card: 12px;
+  --shadow-card: 0 1px 3px 0 rgba(83,74,183,0.08), 0 1px 2px -1px rgba(83,74,183,0.06);
+  --shadow-card-hover: 0 4px 16px 0 rgba(83,74,183,0.14), 0 2px 6px -1px rgba(83,74,183,0.10);
 }
 
 * {
@@ -33,6 +33,11 @@ body {
   background-color: var(--color-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+main {
+  overflow-x: hidden;
 }
 
 @layer components {
@@ -96,7 +101,7 @@ body {
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #1A3A6B;
+  background: #534AB7;
 }
 
 /* Tool disclaimer */

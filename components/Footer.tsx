@@ -31,25 +31,25 @@ const tools = [
 
 export default function Footer() {
   return (
-    <footer className="bg-dark text-white">
+    <footer className="bg-dark-navy text-white">
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-white font-bold text-sm">AP</span>
+              <div className="w-9 h-9 rounded-xl bg-purple-600 flex items-center justify-center">
+                <span className="text-white font-semibold text-sm">CC</span>
               </div>
               <div className="flex flex-col leading-tight">
-                <span className="font-bold text-white text-sm">Associate</span>
-                <span className="font-bold text-blue-300 text-sm -mt-0.5">
-                  Piyush<span className="text-gold ml-0.5">.</span>
+                <span className="font-semibold text-white text-sm">CC Associates</span>
+                <span className="font-medium text-purple-400 text-xs -mt-0.5">
+                  Tax & Advisory<span className="text-gold ml-0.5">.</span>
                 </span>
               </div>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-4">
-              Expert Tax Advisory, GST Reconciliation & Forensic Accounting Services for businesses across India.
+              Expert Tax Advisory, GST, Audit & Business Advisory services for businesses across India. Precision in every number.
             </p>
             <div className="flex flex-col gap-2 text-sm text-gray-400">
               <div className="flex items-center gap-2">
@@ -57,9 +57,15 @@ export default function Footer() {
                 <span>Pune, Maharashtra, India</span>
               </div>
               <div className="flex items-center gap-2">
+                <Phone size={14} className="text-gold flex-shrink-0" />
+                <a href="tel:+917507354141" className="hover:text-white transition-colors">
+                  +91 75073 54141
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
                 <Mail size={14} className="text-gold flex-shrink-0" />
-                <a href="mailto:contact@associatepiyush.in" className="hover:text-white transition-colors">
-                  contact@associatepiyush.in
+                <a href="mailto:associate.piyush.nimse@gmail.com" className="hover:text-white transition-colors break-all">
+                  associate.piyush.nimse@gmail.com
                 </a>
               </div>
             </div>
@@ -124,7 +130,7 @@ export default function Footer() {
       </div>
 
       {/* Privacy badge */}
-      <div className="border-t border-gray-800">
+      <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
             <Shield size={12} className="text-green-400" />
@@ -134,10 +140,10 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-800">
+      <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-gray-500">
-            <p>© 2026 Associate Piyush. All rights reserved. Pune, Maharashtra.</p>
+            <p>© 2025–2026 CC Associates. All rights reserved. Pune, Maharashtra.</p>
             <p className="text-center md:text-right max-w-lg">
               <strong className="text-gray-400">Disclaimer:</strong> Information on this website is for general guidance only and does not constitute legal or financial advice. Results from tools are indicative. Always consult a qualified professional for final decisions.
             </p>

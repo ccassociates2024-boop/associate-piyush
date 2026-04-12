@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Phone, X, MessageCircle } from "lucide-react";
 
 const WA_URL =
-  "https://wa.me/917507354141?text=Hello%20Associate%20Piyush%2C%20I%20need%20tax%20consultation.";
+  "https://wa.me/917507354141?text=Hello%20CC%20Associates%2C%20I%20need%20tax%20and%20advisory%20consultation.";
 const CALL_URL = "tel:+917507354141";
 
 export default function FloatingContact() {
@@ -49,7 +49,7 @@ export default function FloatingContact() {
         {/* Call */}
         <a
           href={CALL_URL}
-          className="flex items-center gap-2.5 bg-[#1A3A6B] hover:bg-[#15305a] text-white text-sm font-semibold px-4 py-2.5 rounded-full shadow-lg transition-colors whitespace-nowrap"
+          className="flex items-center gap-2.5 bg-primary hover:bg-primary-800 text-white text-sm font-semibold px-4 py-2.5 rounded-full shadow-lg transition-colors whitespace-nowrap"
           onClick={() => setOpen(false)}
         >
           <Phone size={14} className="flex-shrink-0" />
@@ -70,10 +70,10 @@ export default function FloatingContact() {
         <button
           onClick={() => setOpen((o) => !o)}
           aria-label={open ? "Close contact options" : "Contact us"}
-          className={`w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1A3A6B] ${
+          className={`w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
             open
               ? "bg-gray-700 rotate-90"
-              : "bg-[#1A3A6B] hover:bg-[#15305a] hover:scale-105"
+              : "bg-primary hover:bg-primary-800 hover:scale-105"
           }`}
         >
           {open ? (

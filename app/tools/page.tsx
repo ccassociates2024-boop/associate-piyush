@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   FileText, Calculator, BarChart3, FileSpreadsheet, Clock, RefreshCw,
-  TrendingUp, Merge, Minimize2, FileOutput, Database, Table, Shield, ArrowRight, Landmark, ScrollText
+  TrendingUp, Merge, Minimize2, FileOutput, Database, Table, Shield, ArrowRight, Landmark, ScrollText, LayoutDashboard
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -34,6 +34,15 @@ export const metadata: Metadata = {
 };
 
 const tools = [
+  {
+    icon: LayoutDashboard,
+    label: "Personal Finance Dashboard",
+    desc: "Track income, expenses, investments, EMIs, tax & goals. Free personal CFO tool built for Indian taxpayers. No login, 100% private.",
+    href: "/tools/dashboard",
+    badge: "New",
+    badgeColor: "bg-purple-100 text-purple-800",
+    category: "Finance",
+  },
   {
     icon: FileText,
     label: "GST Invoice Generator",
@@ -173,7 +182,7 @@ export default function ToolsPage() {
           <div className="max-w-2xl">
             <h1 className="text-4xl font-bold text-white mb-4">Free Tax & Finance Tools</h1>
             <p className="text-blue-200 text-lg leading-relaxed">
-              14 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
+              15 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
             </p>
           </div>
         </div>

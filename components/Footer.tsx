@@ -19,6 +19,7 @@ const quickLinks = [
 ];
 
 const tools = [
+  { label: "Personal Finance Dashboard", href: "/tools/dashboard" },
   { label: "GST Invoice Generator", href: "/tools/gst-invoice" },
   { label: "TDS Calculator", href: "/tools/tds-calculator" },
   { label: "ITR Tax Estimator", href: "/tools/itr-estimator" },
@@ -141,7 +142,7 @@ export default function Footer() {
               ))}
               <li>
                 <Link href="/tools" className="text-gold-400 hover:text-gold-500 text-xs font-medium transition-colors">
-                  View All 14 Tools →
+                  View All 15 Tools →
                 </Link>
               </li>
             </ul>

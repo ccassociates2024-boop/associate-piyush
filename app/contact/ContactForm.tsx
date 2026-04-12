@@ -18,25 +18,27 @@ const PHONE_RAW = "917507354141";
 const EMAIL = "associate.piyush.nimse@gmail.com";
 const WA_BASE = `https://wa.me/${PHONE_RAW}`;
 const WA_QUICK = `${WA_BASE}?text=${encodeURIComponent(
-  "Hello Associate Piyush, I need tax consultation."
+  "Hi Piyush Nimse,\n\nI need tax consultation. Please get back to me.\n\n— via AssociatePiyush.in"
 )}`;
 
 const SERVICES = [
   "GST Reconciliation",
-  "Income Tax Filing",
+  "Income Tax Filing (ITR)",
   "TDS Compliance",
   "Forensic Accounting",
   "Tax Notice Reply",
+  "Audit & Assurance",
   "Business Advisory",
+  "Capital Gains Tax",
   "Other",
 ];
 
 const INFO_CARDS = [
   {
     icon: Phone,
-    label: "Phone",
+    label: "Call Directly",
     value: PHONE,
-    sub: "Click to call directly",
+    sub: "Mon–Sat, 10 AM – 7 PM IST",
     href: "tel:+917507354141",
     accent: "bg-primary/10",
     iconColor: "text-primary",
@@ -44,7 +46,7 @@ const INFO_CARDS = [
   {
     icon: MessageCircle,
     label: "WhatsApp",
-    value: "Chat with us instantly",
+    value: "Chat Instantly",
     sub: PHONE,
     href: WA_QUICK,
     accent: "bg-green-50",
@@ -98,12 +100,14 @@ export default function ContactSection() {
 
   const handleWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
-    const text = [
-      `Name: ${form.name || "—"}`,
-      `Phone: ${form.phone || "—"}`,
-      `Service: ${form.service || "—"}`,
-      `Message: ${form.message || "—"}`,
-    ].join("\n");
+    const text =
+      `*Inquiry — Associate Piyush*\n\n` +
+      `Hi Piyush Nimse,\n\n` +
+      `I'm *${form.name || "—"}* and I need assistance with *${form.service || "Tax Consultation"}*.\n\n` +
+      `📱 My Phone: ${form.phone || "—"}\n` +
+      (form.message ? `📝 Details: ${form.message}\n\n` : "\n") +
+      `Please get back to me at your earliest convenience.\n\n` +
+      `— via AssociatePiyush.in`;
     const url = `${WA_BASE}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
@@ -164,10 +168,24 @@ export default function ContactSection() {
                 <MessageCircle size={22} />
                 <div className="text-left">
                   <div className="text-sm font-bold">Chat on WhatsApp</div>
-                  <div className="text-green-100 text-xs">+91 75073 54141</div>
+                  <div className="text-green-100 text-xs">{PHONE}</div>
                 </div>
               </div>
               <ArrowRight size={18} />
+            </a>
+
+            {/* Email CTA */}
+            <a
+              href={`mailto:${EMAIL}`}
+              className="flex items-center gap-3 bg-white border border-gold/40 hover:border-gold rounded-lg px-5 py-4 transition-colors w-full"
+            >
+              <div className="w-9 h-9 rounded-lg bg-gold/10 flex items-center justify-center flex-shrink-0">
+                <Mail size={18} className="text-gold" />
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-muted uppercase tracking-wide mb-0.5">Email Us</div>
+                <div className="text-sm font-semibold text-dark break-all">{EMAIL}</div>
+              </div>
             </a>
 
             {/* Confidentiality note */}
@@ -186,7 +204,7 @@ export default function ContactSection() {
           <div className="lg:col-span-3">
             <div className="bg-white rounded-card shadow-card border border-gray-100 p-6 sm:p-8">
               {/* Header */}
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-2">
                 <div className="w-11 h-11 rounded-lg bg-green-500 flex items-center justify-center flex-shrink-0">
                   <MessageCircle size={22} className="text-white" />
                 </div>
@@ -195,9 +213,17 @@ export default function ContactSection() {
                     Quick WhatsApp Inquiry
                   </h2>
                   <p className="text-muted text-xs mt-0.5">
-                    Fill the form — it opens WhatsApp with your details pre-filled
+                    Sends directly to Piyush Nimse — responds within 2 hours
                   </p>
                 </div>
+              </div>
+
+              {/* Preview message example */}
+              <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 text-xs text-green-900 font-mono leading-relaxed">
+                <div className="text-[10px] text-green-600 font-semibold uppercase tracking-wide mb-1.5">Message Preview (example)</div>
+                <div className="whitespace-pre-line">{
+                  `*Inquiry — Associate Piyush*\n\nHi Piyush Nimse,\n\nI'm *Rahul Sharma* and I need assistance with *Income Tax Filing*.\n\n📱 My Phone: +91 98765 43210\n📝 Details: I need to file ITR for FY 2025-26.\n\n— via AssociatePiyush.in`
+                }</div>
               </div>
 
               <form onSubmit={handleWhatsApp} className="space-y-4">
@@ -251,19 +277,10 @@ export default function ContactSection() {
                   <label className="label">Brief Message</label>
                   <textarea
                     className="input-field h-28 resize-none"
-                    placeholder="e.g. I need help with GST reconciliation for FY 2023-24. We have ITC mismatch issues."
+                    placeholder="e.g. I need help with GST reconciliation for FY 2024-25. We have ITC mismatch issues."
                     value={form.message}
                     onChange={(e) => set("message", e.target.value)}
                   />
-                </div>
-
-                {/* How it works note */}
-                <div className="flex items-start gap-2 p-3 bg-green-50 border border-green-200 rounded-lg">
-                  <MessageCircle size={14} className="text-green-600 flex-shrink-0 mt-0.5" />
-                  <p className="text-xs text-green-800">
-                    Clicking the button below will open WhatsApp with your details
-                    pre-filled. No data is stored on any server — 100% private.
-                  </p>
                 </div>
 
                 {/* Submit */}
@@ -272,7 +289,7 @@ export default function ContactSection() {
                   className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg py-4 text-sm transition-colors"
                 >
                   <Send size={16} />
-                  Send via WhatsApp →
+                  Send to Piyush Nimse via WhatsApp →
                 </button>
               </form>
 
@@ -287,18 +304,19 @@ export default function ContactSection() {
               </div>
 
               {/* Also reachable via */}
-              <div className="mt-5 pt-5 border-t border-gray-100 flex flex-wrap gap-3">
+              <div className="mt-5 pt-5 border-t border-gray-100 space-y-2">
+                <div className="text-xs text-muted font-semibold uppercase tracking-wide mb-2">Or reach us directly</div>
                 <a
                   href={`tel:+${PHONE_RAW}`}
-                  className="flex items-center gap-2 text-xs font-medium text-primary hover:underline"
+                  className="flex items-center gap-2 text-sm font-medium text-primary hover:underline"
                 >
-                  <Phone size={13} /> {PHONE}
+                  <Phone size={14} /> {PHONE}
                 </a>
                 <a
                   href={`mailto:${EMAIL}`}
-                  className="flex items-center gap-2 text-xs font-medium text-primary hover:underline"
+                  className="flex items-center gap-2 text-sm font-medium text-primary hover:underline break-all"
                 >
-                  <Mail size={13} /> {EMAIL}
+                  <Mail size={14} /> {EMAIL}
                 </a>
               </div>
             </div>

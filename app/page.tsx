@@ -112,22 +112,32 @@ const tools = [
 
 const testimonials = [
   {
-    name: "Rajesh Mehta",
-    role: "Director, Mehta Textiles Pvt. Ltd., Pune",
-    text: "Associate Piyush resolved our 3-year GST ITC mismatch within a week. The reconciliation report was meticulous and helped us claim ₹4.2 lakhs of blocked credit. Highly professional service.",
+    name: "Mukund Kulkarni",
+    role: "Director, Kulkarni Enterprises, Pune",
+    text: "Piyush resolved a 3-year GST ITC mismatch in under a week. The reconciliation report was meticulous — helped us recover ₹4.2 lakhs of blocked credit. Highly recommend.",
     stars: 5,
+    service: "GST Reconciliation",
   },
   {
-    name: "Priya Sharma",
+    name: "Yogesh Zaware",
+    role: "Proprietor, Zaware Agro Traders, Nashik",
+    text: "Switched to the new tax regime on Piyush's advice after a detailed comparison. Saved ₹1.8 lakhs in taxes this year. The free ITR estimator tool gave me confidence even before the consultation.",
+    stars: 5,
+    service: "Income Tax Advisory",
+  },
+  {
+    name: "Nirmala Sawant",
     role: "CFO, TechBridge Solutions, Bangalore",
-    text: "We engaged Associate Piyush for a forensic audit after detecting irregularities in vendor payments. The investigation was thorough, confidential, and the findings report held up in legal proceedings.",
+    text: "We engaged Associate Piyush for a forensic audit after detecting vendor payment irregularities. The investigation was thorough, confidential, and the findings report held up in legal proceedings.",
     stars: 5,
+    service: "Forensic Accounting",
   },
   {
-    name: "Suresh Patil",
-    role: "Proprietor, Patil Agro Exports, Nasik",
-    text: "Switched from old to new tax regime after their detailed comparison. Saved ₹1.8 lakhs in taxes this year. The ITR estimator tool on the website gave me confidence before the consultation.",
+    name: "Pravin Patil",
+    role: "Owner, Patil Construction, Solapur",
+    text: "TDS compliance was always a headache for our business. Piyush set up a proper quarterly system — zero defaults since we engaged him 14 months ago. Excellent and reliable service.",
     stars: 5,
+    service: "TDS Compliance",
   },
 ];
 
@@ -276,8 +286,73 @@ export default function HomePage() {
           </div>
           <div className="text-center mt-8">
             <Link href="/tools" className="btn-outline gap-2">
-              View All 12 Tools <ArrowRight size={16} />
+              View All 15 Tools <ArrowRight size={16} />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Income Tax Highlight */}
+      <section className="bg-white py-16 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/8 rounded-full text-primary text-xs font-semibold mb-4">
+                <Calculator size={12} /> Income Tax Advisory
+              </div>
+              <h2 className="text-3xl font-bold text-dark mb-4 leading-tight">
+                Old Regime vs New Regime —<br />
+                <span className="text-primary">Know Which Saves You More</span>
+              </h2>
+              <p className="text-muted leading-relaxed mb-6">
+                Under Finance Act 2025, the New Regime offers zero tax up to ₹12 lakh income (with 87A rebate). But Old Regime with deductions like 80C, 80D, and HRA can still be better for many. We run a detailed comparison for your exact numbers — no guesswork.
+              </p>
+              <div className="grid sm:grid-cols-2 gap-3 mb-6">
+                {[
+                  "ITR-1 to ITR-6 filing for all taxpayer types",
+                  "Old vs New regime live comparison",
+                  "80C / 80D deduction optimization",
+                  "Capital gains tax (STCG / LTCG) planning",
+                  "Scrutiny & notice (143(1), 148A) handling",
+                  "Appeals before CIT(A) and ITAT",
+                ].map((pt) => (
+                  <div key={pt} className="flex items-start gap-2 text-sm text-muted">
+                    <CheckCircle size={14} className="text-green-500 mt-0.5 flex-shrink-0" />
+                    <span>{pt}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Link href="/services#income-tax" className="btn-primary gap-2">
+                  View Full Details <ArrowRight size={15} />
+                </Link>
+                <Link href="/tools/itr-estimator" className="btn-outline gap-2">
+                  <Calculator size={15} /> Try Free ITR Estimator
+                </Link>
+              </div>
+            </div>
+            <div className="space-y-3">
+              {[
+                { regime: "New Regime (FY 2026-27)", rate: "Zero tax up to ₹12L", note: "Standard deduction ₹75,000. Best for those with fewer deductions.", color: "border-primary", badge: "bg-primary/8 text-primary" },
+                { regime: "Old Regime", rate: "Standard deduction ₹50,000", note: "Add 80C (₹1.5L) + 80D + HRA + NPS — can save more for high deduction earners.", color: "border-gold", badge: "bg-gold/10 text-gold" },
+              ].map(({ regime, rate, note, color, badge }) => (
+                <div key={regime} className={`bg-white rounded-card shadow-card border-l-4 ${color} border border-gray-100 p-5`}>
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="font-semibold text-dark text-sm">{regime}</div>
+                    <span className={`${badge} text-xs font-semibold px-2 py-0.5 rounded-full whitespace-nowrap`}>{rate}</span>
+                  </div>
+                  <p className="text-muted text-xs leading-relaxed">{note}</p>
+                </div>
+              ))}
+              <div className="bg-primary/8 rounded-card border border-primary/20 p-5">
+                <div className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">Our free tool</div>
+                <div className="font-semibold text-dark text-sm mb-1">ITR Tax Estimator — FY 2026-27</div>
+                <p className="text-muted text-xs leading-relaxed mb-3">Enter your income, deductions, and instantly see both regimes compared side by side. No login needed.</p>
+                <Link href="/tools/itr-estimator" className="text-primary text-xs font-semibold hover:underline flex items-center gap-1">
+                  Open Tool <ArrowRight size={12} />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -291,18 +366,26 @@ export default function HomePage() {
               Trusted by businesses across India for precision and reliability.
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {testimonials.map((t) => (
-              <div key={t.name} className="card border-t-2 border-t-gold">
-                <div className="flex mb-3">
-                  {Array.from({ length: t.stars }).map((_, i) => (
-                    <Star key={i} size={14} className="text-gold fill-gold" />
-                  ))}
+              <div key={t.name} className="card border-t-2 border-t-gold flex flex-col">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="flex">
+                    {Array.from({ length: t.stars }).map((_, i) => (
+                      <Star key={i} size={13} className="text-gold fill-gold" />
+                    ))}
+                  </div>
+                  <span className="text-[10px] font-semibold text-primary bg-primary/8 px-2 py-0.5 rounded-full">{t.service}</span>
                 </div>
-                <p className="text-muted text-sm leading-relaxed mb-5 italic">"{t.text}"</p>
-                <div>
-                  <div className="font-semibold text-dark text-sm">{t.name}</div>
-                  <div className="text-muted text-xs mt-0.5">{t.role}</div>
+                <p className="text-muted text-sm leading-relaxed mb-5 italic flex-1">"{t.text}"</p>
+                <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <span className="text-primary font-bold text-xs">{t.name.split(" ").map(n => n[0]).join("")}</span>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-dark text-xs">{t.name}</div>
+                    <div className="text-muted text-[10px] mt-0.5">{t.role}</div>
+                  </div>
                 </div>
               </div>
             ))}

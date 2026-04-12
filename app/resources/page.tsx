@@ -146,7 +146,7 @@ const categoryColors: Record<string, string> = {
 };
 
 const WA_URL =
-  "https://wa.me/917507354141?text=Hello%20CC%20Associates%2C%20I%20have%20a%20tax%20query";
+  "https://wa.me/917507354141?text=Hello%20Associate%20Piyush%2C%20I%20have%20a%20tax%20query";
 
 export default function ResourcesPage() {
   return (
@@ -319,10 +319,10 @@ export default function ResourcesPage() {
           <div className="text-center mb-8">
             <p className="text-gold text-sm font-bold uppercase tracking-wider mb-3">Free Consultation</p>
             <h2 className="text-3xl font-bold text-white mb-4">
-              Have a tax question? Get expert guidance from CC Associates.
+              Have a tax question? Get expert guidance from Associate Piyush.
             </h2>
             <p className="text-blue-200 text-base max-w-xl mx-auto">
-              Piyush Nimse (Tax & Finance) · CA Sourabh Chavan (Audit & Advisory). First consultation is free. Serving clients across India from Pune.
+              First consultation is free. We respond within 2 hours on business days. Serving clients across India from Pune.
             </p>
           </div>
 
@@ -386,7 +386,7 @@ export default function ResourcesPage() {
               <ArrowRight size={18} />
             </a>
             <p className="text-blue-300 text-xs mt-3">
-              associate.piyush.nimse@gmail.com · ccassociates2024@gmail.com · Pune, Maharashtra · Pan India
+              associate.piyush.nimse@gmail.com · Pune, Maharashtra · Pan India Service
             </p>
           </div>
         </div>

@@ -18,7 +18,7 @@ const PHONE_RAW = "917507354141";
 const EMAIL = "associate.piyush.nimse@gmail.com";
 const WA_BASE = `https://wa.me/${PHONE_RAW}`;
 const WA_QUICK = `${WA_BASE}?text=${encodeURIComponent(
-  "Hello CC Associates, I need tax and advisory consultation. Please get back to me."
+  "Hello Associate Piyush, I need tax consultation. Please get back to me."
 )}`;
 
 const SERVICES = [
@@ -102,7 +102,7 @@ export default function ContactSection() {
   const handleWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
     const text =
-      `*New Inquiry — CC Associates*\n\n` +
+      `*New Inquiry — Associate Piyush*\n\n` +
       `Name: ${form.name || "—"}\n` +
       `Email: ${form.email || "—"}\n` +
       `Phone: ${form.phone || "—"}\n` +
@@ -213,7 +213,7 @@ export default function ContactSection() {
                     Quick WhatsApp Inquiry
                   </h2>
                   <p className="text-muted text-xs mt-0.5">
-                    Sends directly to CC Associates — responds within 2 business days
+                    Sends directly to Associate Piyush — responds within 2 business days
                   </p>
                 </div>
               </div>
@@ -222,7 +222,7 @@ export default function ContactSection() {
               <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 text-xs text-green-900 font-mono leading-relaxed">
                 <div className="text-[10px] text-green-600 font-semibold uppercase tracking-wide mb-1.5">Message Preview (example)</div>
                 <div className="whitespace-pre-line">{
-                  `*New Inquiry — CC Associates*\n\nName: Sunil Yadav\nEmail: sunil@example.com\nPhone: +91 98765 43210\nService: Income Tax Filing\n\nMessage: I need to file ITR for FY 2026-27.`
+                  `*New Inquiry — Associate Piyush*\n\nName: Sunil Yadav\nEmail: sunil@example.com\nPhone: +91 98765 43210\nService: Income Tax Filing\n\nMessage: I need to file ITR for FY 2026-27.`
                 }</div>
               </div>
 

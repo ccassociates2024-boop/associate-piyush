@@ -43,12 +43,12 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
-              <span className="text-white font-semibold text-sm tracking-tight">CC</span>
+              <span className="text-white font-semibold text-sm tracking-tight">AP</span>
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="font-semibold text-dark text-sm">CC Associates</span>
-              <span className="font-medium text-muted text-xs -mt-0.5">
-                Tax & Advisory
+              <span className="font-semibold text-dark text-sm">Associate</span>
+              <span className="font-semibold text-primary text-sm -mt-0.5">
+                Piyush
                 <span className="text-gold ml-0.5">.</span>
               </span>
             </div>

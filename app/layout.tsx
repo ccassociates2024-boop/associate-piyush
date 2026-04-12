@@ -13,11 +13,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "CC Associates | Tax Advisory, GST, Audit & Litigation | Pune, India",
-    template: "%s | CC Associates",
+    default: "Associate Piyush | Tax & Finance Consultant, Pune",
+    template: "%s | Associate Piyush",
   },
   description:
-    "Professional tax and advisory by CC Associates — 950+ income tax cases, GST compliance, TDS, statutory audit, litigation & business advisory. Piyush Nimse & CA Sourabh Chavan. Pune. Pan India.",
+    "Expert Tax Advisory, GST Reconciliation & Forensic Accounting Services for businesses across India. Associate Piyush — 950+ income tax cases. Pune. Pan India. Call +91 75073 54141.",
   keywords: [
     "tax consultant pune",
     "GST reconciliation pune",
@@ -26,29 +26,27 @@ export const metadata: Metadata = {
     "TDS compliance",
     "CA consultant pune",
     "tax advisory india",
-    "CC Associates",
+    "Associate Piyush",
     "Piyush Nimse",
-    "Sourabh Chavan CA",
     "GST filing pune",
     "income tax return pune",
     "ITR filing pune",
     "tax notice reply",
     "business advisory pune",
     "statutory audit pune",
-    "litigation support pune",
   ],
-  authors: [{ name: "CC Associates" }],
-  creator: "CC Associates",
-  publisher: "CC Associates",
+  authors: [{ name: "Associate Piyush" }],
+  creator: "Associate Piyush",
+  publisher: "Associate Piyush",
   metadataBase: new URL("https://associate-piyush-bduu.vercel.app"),
   openGraph: {
     type: "website",
     locale: "en_IN",
     url: "https://associate-piyush-bduu.vercel.app",
-    siteName: "CC Associates",
-    title: "CC Associates — Tax & Advisory Practice | Pune",
+    siteName: "Associate Piyush",
+    title: "Associate Piyush | Tax & Finance Consultant, Pune",
     description:
-      "950+ income tax cases. GST, TDS, Audit, Litigation. CA Sourabh Chavan & Piyush Nimse. Since 2025. associate.piyush.nimse@gmail.com",
+      "Expert Tax Advisory, GST Reconciliation & Forensic Accounting. 950+ cases. Since 2025. associate.piyush.nimse@gmail.com",
     images: [
       {
         url: "/og-image.png",
@@ -60,9 +58,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CC Associates | Tax Advisory, GST, Audit | Pune",
+    title: "Associate Piyush | Tax & Finance Consultant, Pune",
     description:
-      "950+ income tax cases. GST, TDS, Audit, Litigation. Since 2025.",
+      "Expert Tax Advisory, GST Reconciliation & Forensic Accounting. 950+ cases. Since 2025.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -81,10 +79,10 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "AccountingService",
-  name: "CC Associates",
-  alternateName: "Associate Piyush",
+  name: "Associate Piyush",
+  alternateName: "Piyush Nimse Tax Consultant",
   description:
-    "Expert Tax Advisory, GST Reconciliation, Statutory Audit & Forensic Accounting Services across India. Based in Pune, Maharashtra. Since 2025.",
+    "Expert Tax Advisory, GST Reconciliation & Forensic Accounting Services across India. Based in Pune, Maharashtra. Since 2025.",
   url: "https://associate-piyush-bduu.vercel.app",
   telephone: "+917507354141",
   email: "associate.piyush.nimse@gmail.com",

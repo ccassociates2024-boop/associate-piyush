@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Phone, X, MessageCircle } from "lucide-react";
 
 const WA_URL =
-  "https://wa.me/917507354141?text=Hello%20CC%20Associates%2C%20I%20need%20tax%20and%20advisory%20consultation.";
+  "https://wa.me/917507354141?text=Hello%20Associate%20Piyush%2C%20I%20need%20tax%20consultation.";
 const CALL_URL = "tel:+917507354141";
 
 export default function FloatingContact() {

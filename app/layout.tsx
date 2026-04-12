@@ -20,13 +20,19 @@ export const metadata: Metadata = {
     "Expert Tax Advisory, GST Reconciliation & Forensic Accounting Services for Businesses Across India. Based in Pune, Maharashtra.",
   keywords: [
     "tax consultant pune",
-    "GST reconciliation",
-    "forensic accounting",
-    "income tax advisory",
+    "GST reconciliation pune",
+    "forensic accounting india",
+    "income tax advisory pune",
     "TDS compliance",
     "CA consultant pune",
     "tax advisory india",
     "Associate Piyush",
+    "Piyush Nimse",
+    "GST filing pune",
+    "income tax return pune",
+    "ITR filing pune",
+    "tax notice reply",
+    "business advisory pune",
   ],
   authors: [{ name: "Associate Piyush" }],
   creator: "Associate Piyush",
@@ -71,17 +77,24 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": "AccountingService",
   name: "Associate Piyush",
+  alternateName: "Piyush Nimse Tax Consultant",
   description:
-    "Expert Tax Advisory, GST Reconciliation & Forensic Accounting Services",
+    "Expert Tax Advisory, GST Reconciliation & Forensic Accounting Services for Businesses Across India. Based in Pune, Maharashtra.",
   url: "https://associatepiyush.in",
-  telephone: "+91-XXXXXXXXXX",
-  email: "contact@associatepiyush.in",
+  telephone: "+917507354141",
+  email: "associate.piyush.nimse@gmail.com",
+  founder: {
+    "@type": "Person",
+    name: "Piyush Nimse",
+    jobTitle: "Tax & Finance Consultant",
+  },
   address: {
     "@type": "PostalAddress",
     addressLocality: "Pune",
     addressRegion: "Maharashtra",
+    postalCode: "411001",
     addressCountry: "IN",
   },
   geo: {
@@ -91,10 +104,20 @@ const jsonLd = {
   },
   openingHours: "Mo-Sa 10:00-19:00",
   priceRange: "$$",
-  serviceArea: {
+  currenciesAccepted: "INR",
+  paymentAccepted: "Bank Transfer, UPI",
+  areaServed: {
     "@type": "Country",
     name: "India",
   },
+  knowsAbout: [
+    "GST Reconciliation",
+    "Forensic Accounting",
+    "Income Tax Advisory",
+    "TDS Compliance",
+    "Tax Notice Reply",
+    "Audit & Assurance",
+  ],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Tax & Finance Services",

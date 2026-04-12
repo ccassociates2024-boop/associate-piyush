@@ -7,7 +7,30 @@ import {
 
 export const metadata: Metadata = {
   title: "Free Tax & Finance Tools",
-  description: "12 free professional-grade tax and finance tools for Indian businesses. GST Invoice Generator, TDS Calculator, ITR Estimator, PDF tools, and more. 100% browser-based.",
+  description:
+    "12 free professional-grade tax and finance tools for Indian businesses — GST Invoice Generator, TDS Calculator, ITR Estimator (FY 2026-27), GSTR-2A Reconciliation, PDF Merge & more. 100% browser-based, no data stored.",
+  keywords: [
+    "free GST invoice generator",
+    "TDS calculator india",
+    "ITR estimator 2026-27",
+    "GSTR-2A reconciliation tool",
+    "advance tax calculator",
+    "GST late fee calculator",
+    "26AS reconciliation",
+    "free tax tools india",
+    "PDF merge online",
+    "word to pdf converter",
+  ],
+  alternates: {
+    canonical: "https://associatepiyush.in/tools",
+  },
+  openGraph: {
+    title: "Free Tax & Finance Tools | Associate Piyush",
+    description:
+      "12 free browser-based tools: GST Invoice, TDS Calculator, ITR Estimator, PDF tools & more. No signup needed.",
+    url: "https://associatepiyush.in/tools",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Free Tax Tools - Associate Piyush" }],
+  },
 };
 
 const tools = [

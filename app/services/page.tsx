@@ -6,8 +6,29 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Services",
-  description: "Comprehensive tax and finance services: GST Reconciliation, Forensic Accounting, Income Tax Advisory, TDS Compliance, Audit & Assurance, Business Advisory.",
+  title: "Tax & Finance Services",
+  description:
+    "Comprehensive tax and finance services in Pune — GST Reconciliation, Forensic Accounting, Income Tax Advisory, TDS Compliance, Audit & Assurance, Business Advisory. Pan India. Call +91 75073 54141.",
+  keywords: [
+    "GST reconciliation pune",
+    "forensic accounting pune",
+    "income tax advisory pune",
+    "TDS compliance pune",
+    "audit assurance pune",
+    "business advisory pune",
+    "tax services pune",
+    "Piyush Nimse services",
+  ],
+  alternates: {
+    canonical: "https://associatepiyush.in/services",
+  },
+  openGraph: {
+    title: "Tax & Finance Services | Associate Piyush",
+    description:
+      "GST Reconciliation, Forensic Accounting, Income Tax, TDS & more. Expert services by Piyush Nimse, Pune.",
+    url: "https://associatepiyush.in/services",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Tax Services - Associate Piyush" }],
+  },
 };
 
 const services = [

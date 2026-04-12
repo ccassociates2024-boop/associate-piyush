@@ -1,4 +1,38 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: {
+    absolute:
+      "Associate Piyush | CA Tax Consultant Pune | GST, Income Tax & TDS Advisory",
+  },
+  description:
+    "Piyush Nimse — Expert Tax & Finance Consultant in Pune. Specialising in GST Reconciliation, Income Tax Returns, TDS Compliance, Forensic Accounting & Tax Notice Reply. Call +91 75073 54141.",
+  keywords: [
+    "tax consultant pune",
+    "CA pune",
+    "GST consultant pune",
+    "income tax consultant pune",
+    "TDS compliance pune",
+    "forensic accounting pune",
+    "Piyush Nimse",
+    "Associate Piyush",
+    "GST reconciliation",
+    "ITR filing pune",
+    "tax notice reply pune",
+    "GSTR filing pune",
+  ],
+  alternates: {
+    canonical: "https://associatepiyush.in",
+  },
+  openGraph: {
+    title: "Associate Piyush | CA Tax Consultant Pune",
+    description:
+      "Expert GST, Income Tax, TDS & Forensic Accounting services in Pune. Pan India service. First consultation free. Call +91 75073 54141.",
+    url: "https://associatepiyush.in",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Associate Piyush - Tax Consultant Pune" }],
+  },
+};
 import {
   FileSpreadsheet,
   Search,

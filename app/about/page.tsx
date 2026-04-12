@@ -3,8 +3,29 @@ import Link from "next/link";
 import { MapPin, GraduationCap, Award, Code2, CheckCircle, ArrowRight, BookOpen, Shield } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "About",
-  description: "About Piyush — Tax & Finance Consultant and Forensic Accounting Specialist based in Pune, Maharashtra.",
+  title: "About Piyush Nimse",
+  description:
+    "Meet Piyush Nimse — Tax & Finance Consultant and Forensic Accounting Specialist in Pune. Expert in GST, Income Tax, TDS, and Forensic Accounting since 2020. Serving clients across India.",
+  keywords: [
+    "Piyush Nimse",
+    "Associate Piyush",
+    "tax consultant pune",
+    "forensic accounting specialist pune",
+    "GST expert pune",
+    "income tax consultant",
+    "CA tax advisor pune",
+    "about Associate Piyush",
+  ],
+  alternates: {
+    canonical: "https://associatepiyush.in/about",
+  },
+  openGraph: {
+    title: "About Piyush Nimse | Tax & Finance Consultant Pune",
+    description:
+      "Piyush Nimse — Forensic Accounting & Tax Consultant in Pune since 2020. GST, Income Tax, TDS, Audit expert. Pan India service.",
+    url: "https://associatepiyush.in/about",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Piyush Nimse - Tax Consultant Pune" }],
+  },
 };
 
 const specializations = [

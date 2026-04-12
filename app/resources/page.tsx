@@ -3,8 +3,29 @@ import Link from "next/link";
 import { Clock, ArrowRight, BookOpen, Tag } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Resources",
-  description: "Free tax and finance guides: GST ITC, TDS Rate Chart, Old vs New Regime, GSTR-9 Filing, Forensic Accounting, Advance Tax.",
+  title: "Free Tax & Finance Guides",
+  description:
+    "Free expert guides on GST ITC eligibility, TDS Rate Chart FY 2026-27, Old vs New Tax Regime comparison, GSTR-9 filing, Forensic Accounting, and Advance Tax — by Associate Piyush, Pune.",
+  keywords: [
+    "GST ITC eligibility guide",
+    "TDS rate chart 2026-27",
+    "old vs new tax regime",
+    "GSTR-9 filing guide",
+    "forensic accounting guide",
+    "advance tax calculation",
+    "free tax guides india",
+    "income tax resources",
+  ],
+  alternates: {
+    canonical: "https://associatepiyush.in/resources",
+  },
+  openGraph: {
+    title: "Free Tax & Finance Guides | Associate Piyush",
+    description:
+      "Expert tax guides: GST ITC, TDS, Old vs New Regime, GSTR-9, Forensic Accounting & more — free resources by Piyush Nimse.",
+    url: "https://associatepiyush.in/resources",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Tax Resources - Associate Piyush" }],
+  },
 };
 
 const articles = [

@@ -222,7 +222,7 @@ export default function ContactSection() {
               <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 text-xs text-green-900 font-mono leading-relaxed">
                 <div className="text-[10px] text-green-600 font-semibold uppercase tracking-wide mb-1.5">Message Preview (example)</div>
                 <div className="whitespace-pre-line">{
-                  `*Inquiry — Associate Piyush*\n\nHi Piyush Nimse,\n\nI'm *Rahul Sharma* and I need assistance with *Income Tax Filing*.\n\n📱 My Phone: +91 98765 43210\n📝 Details: I need to file ITR for FY 2025-26.\n\n— via AssociatePiyush.in`
+                  `*Inquiry — Associate Piyush*\n\nHi Piyush Nimse,\n\nI'm *Sunil Yadav* and I need assistance with *Income Tax Filing*.\n\n📱 My Phone: +91 98765 43210\n📝 Details: I need to file ITR for FY 2025-26.\n\n— via AssociatePiyush.in`
                 }</div>
               </div>
 
@@ -235,7 +235,7 @@ export default function ContactSection() {
                   <input
                     type="text"
                     className="input-field"
-                    placeholder="e.g. Rahul Sharma"
+                    placeholder="e.g. Sunil Yadav"
                     value={form.name}
                     onChange={(e) => set("name", e.target.value)}
                     required

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   FileText, Calculator, BarChart3, FileSpreadsheet, Clock, RefreshCw,
-  TrendingUp, Merge, Minimize2, FileOutput, Database, Table, Shield, ArrowRight
+  TrendingUp, Merge, Minimize2, FileOutput, Database, Table, Shield, ArrowRight, Landmark
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -98,6 +98,15 @@ const tools = [
     category: "Income Tax",
   },
   {
+    icon: Landmark,
+    label: "Capital Gains Tax Calculator",
+    desc: "Calculate STCG & LTCG on equity, mutual funds, and property with indexation for FY 2026-27.",
+    href: "/tools/capital-gains",
+    badge: "New",
+    badgeColor: "bg-green-100 text-green-800",
+    category: "Income Tax",
+  },
+  {
     icon: Merge,
     label: "PDF Merge",
     desc: "Drag, drop, reorder, and merge multiple PDF files into one. No size limit worries.",
@@ -155,7 +164,7 @@ export default function ToolsPage() {
           <div className="max-w-2xl">
             <h1 className="text-4xl font-bold text-white mb-4">Free Tax & Finance Tools</h1>
             <p className="text-blue-200 text-lg leading-relaxed">
-              12 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
+              13 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
             </p>
           </div>
         </div>
@@ -206,6 +215,9 @@ export default function ToolsPage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-xs text-muted">
             <strong className="text-dark">Disclaimer:</strong> All tool results are indicative only. Always consult a qualified tax professional for final decisions. Associate Piyush is not liable for any decisions made based on tool outputs. © 2026 Associate Piyush, Pune.
+          </p>
+          <p className="text-xs text-muted mt-2">
+            Capital Gains tool does not account for Sec 54/54F/54EC reinvestment exemptions, STT paid grandfathering (pre-31 Jan 2018 equity), or partial sale scenarios. Updated for Income-tax Act, 2025.
           </p>
         </div>
       </section>

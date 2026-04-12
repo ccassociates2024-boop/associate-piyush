@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://associatepiyush.in/sitemap.xml
+Sitemap: https://associate-piyush-bduu.vercel.app/sitemap.xml
 
 # Disallow admin or private paths
 Disallow: /api/

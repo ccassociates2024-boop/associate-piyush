@@ -21,7 +21,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -34,37 +34,37 @@ export default function Navbar() {
       className={clsx(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-white shadow-sm border-b border-gray-100"
+          ? "bg-white shadow-sm border-b border-purple-100"
           : "bg-white border-b border-transparent"
       )}
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="max-w-6xl mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-16">
+
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-white font-bold text-sm tracking-tight">AP</span>
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-2xl bg-purple-600 flex items-center justify-center">
+              <span className="text-white font-semibold text-sm tracking-tight">CC</span>
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="font-bold text-dark text-sm">Associate</span>
-              <span className="font-bold text-primary text-sm -mt-0.5">
-                Piyush
-                <span className="text-gold ml-0.5">.</span>
+              <span className="font-semibold text-[#26215C] text-sm">CC Associates</span>
+              <span className="text-[10px] text-[#7F77DD] -mt-0.5 tracking-wide">
+                Tax &amp; Advisory
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-0.5">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={clsx(
-                  "px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150",
+                  "px-3.5 py-2 rounded-lg text-sm font-medium transition-colors duration-150",
                   pathname === link.href || pathname.startsWith(link.href + "/")
-                    ? "text-primary bg-primary/8 font-semibold"
-                    : "text-muted hover:text-dark hover:bg-gray-50"
+                    ? "text-purple-600 bg-purple-50 font-semibold"
+                    : "text-[#7F77DD] hover:text-[#26215C] hover:bg-purple-50"
                 )}
               >
                 {link.label}
@@ -72,17 +72,20 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTA Button + Mobile Menu */}
+          {/* CTA + Mobile toggle */}
           <div className="flex items-center gap-3">
             <Link
               href="/contact"
-              className="hidden md:inline-flex items-center px-4 py-2 bg-gold text-dark font-semibold text-sm rounded-lg hover:bg-gold-500 transition-colors duration-150"
+              className="hidden md:inline-flex items-center px-4 py-2 bg-purple-600 text-white
+                         font-medium text-sm rounded-xl hover:bg-purple-800
+                         transition-all duration-200 shadow-sm"
             >
               Book Consultation
             </Link>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-lg text-muted hover:text-dark hover:bg-gray-50 transition-colors"
+              className="md:hidden p-2 rounded-lg text-[#7F77DD] hover:text-[#26215C]
+                         hover:bg-purple-50 transition-colors"
               aria-label="Toggle menu"
             >
               {isOpen ? <X size={20} /> : <Menu size={20} />}
@@ -92,16 +95,16 @@ export default function Navbar() {
 
         {/* Mobile Drawer */}
         {isOpen && (
-          <div className="md:hidden border-t border-gray-100 py-3 pb-4">
+          <div className="md:hidden border-t border-purple-100 py-3 pb-4">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={clsx(
-                  "block px-4 py-3 text-sm font-medium rounded-lg mx-1 transition-colors",
+                  "block px-4 py-3 text-sm font-medium rounded-xl mx-1 transition-colors",
                   pathname === link.href || pathname.startsWith(link.href + "/")
-                    ? "text-primary bg-primary/8 font-semibold"
-                    : "text-muted hover:text-dark hover:bg-gray-50"
+                    ? "text-purple-600 bg-purple-50 font-semibold"
+                    : "text-[#7F77DD] hover:text-[#26215C] hover:bg-purple-50"
                 )}
               >
                 {link.label}
@@ -110,7 +113,8 @@ export default function Navbar() {
             <div className="px-1 mt-3">
               <Link
                 href="/contact"
-                className="block text-center py-3 bg-gold text-dark font-semibold text-sm rounded-lg hover:bg-gold-500 transition-colors"
+                className="block text-center py-3 bg-purple-600 text-white font-medium
+                           text-sm rounded-xl hover:bg-purple-800 transition-all duration-200"
               >
                 Book Consultation
               </Link>

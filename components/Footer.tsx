@@ -25,6 +25,7 @@ const tools = [
   { label: "Advance Tax Calculator", href: "/tools/advance-tax" },
   { label: "GST Late Fee Calculator", href: "/tools/gst-late-fee" },
   { label: "Capital Gains Calculator", href: "/tools/capital-gains" },
+  { label: "Notice Reply Generator", href: "/tools/notice-reply" },
   { label: "PDF Merge", href: "/tools/pdf-merge" },
 ];
 
@@ -114,7 +115,7 @@ export default function Footer() {
               ))}
               <li>
                 <Link href="/tools" className="text-gold hover:text-gold-300 text-sm font-medium transition-colors">
-                  View All 13 Tools →
+                  View All 14 Tools →
                 </Link>
               </li>
             </ul>

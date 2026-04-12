@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   FileText, Calculator, BarChart3, FileSpreadsheet, Clock, RefreshCw,
-  TrendingUp, Merge, Minimize2, FileOutput, Database, Table, Shield, ArrowRight, Landmark
+  TrendingUp, Merge, Minimize2, FileOutput, Database, Table, Shield, ArrowRight, Landmark, ScrollText
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -98,6 +98,15 @@ const tools = [
     category: "Income Tax",
   },
   {
+    icon: ScrollText,
+    label: "Notice Reply Generator",
+    desc: "Generate professional reply drafts for Sec 143(1), 148A, 139(9), 245, 156 & 131 notices in 60 seconds.",
+    href: "/tools/notice-reply",
+    badge: "New",
+    badgeColor: "bg-green-100 text-green-800",
+    category: "Income Tax",
+  },
+  {
     icon: Landmark,
     label: "Capital Gains Tax Calculator",
     desc: "Calculate STCG & LTCG on equity, mutual funds, and property with indexation for FY 2026-27.",
@@ -164,7 +173,7 @@ export default function ToolsPage() {
           <div className="max-w-2xl">
             <h1 className="text-4xl font-bold text-white mb-4">Free Tax & Finance Tools</h1>
             <p className="text-blue-200 text-lg leading-relaxed">
-              13 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
+              14 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
             </p>
           </div>
         </div>

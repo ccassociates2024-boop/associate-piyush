@@ -104,11 +104,22 @@ export default function BankStatementPage() {
 
       if (file.type === "application/pdf" || file.name.endsWith(".pdf")) {
         setProgress("Extracting text from PDF...");
-        const pdfjs = await import("pdfjs-dist");
-        pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+        // Use pdfjs-dist/webpack.mjs — the correct Next.js/webpack 5 entry point.
+        // It sets GlobalWorkerOptions.workerPort via new Worker(..., {type:'module'})
+        // so webpack bundles the worker as an asset. No manual workerSrc needed.
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const pdfjs = await import("pdfjs-dist/webpack.mjs");
 
         const arrayBuffer = await file.arrayBuffer();
-        const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise;
+        const pdf = await pdfjs.getDocument({
+          data: new Uint8Array(arrayBuffer),
+          isEvalSupported: false,
+          useSystemFonts: true,
+          disableRange: true,
+          disableStream: true,
+          disableAutoFetch: true,
+        }).promise;
 
         let allText = "";
         for (let i = 1; i <= pdf.numPages; i++) {
@@ -146,7 +157,9 @@ export default function BankStatementPage() {
       setTransactions(txns);
       setStep("preview");
     } catch (e: any) {
-      setError("Error processing file: " + (e?.message || "Unknown error"));
+      console.error("Bank statement error:", e);
+      const msg = e?.message || e?.name || (e ? String(e) : "Unknown error");
+      setError("Error processing file: " + msg);
       setStep("upload");
     }
   }, [file]);

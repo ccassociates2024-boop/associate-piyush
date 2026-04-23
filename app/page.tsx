@@ -36,7 +36,6 @@ const tools = [
 
 const stats = [
   { value: "950+",    label: "Income Tax Cases" },
-  { value: "28+",     label: "Audit Clients" },
   { value: "150+",    label: "GST Clients" },
   { value: "15+",     label: "Free Tools" },
 ];

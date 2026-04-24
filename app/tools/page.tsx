@@ -8,7 +8,7 @@ import {
 export const metadata: Metadata = {
   title: "Free Tax & Finance Tools",
   description:
-    "12 free professional-grade tax and finance tools for Indian businesses — GST Invoice Generator, TDS Calculator, ITR Estimator (FY 2026-27), GSTR-2A Reconciliation, PDF Merge & more. 100% browser-based, no data stored.",
+    "14 free professional-grade tax and finance tools for Indian businesses — GST Invoice Generator, TDS Calculator, ITR Estimator (FY 2026-27), GSTR-2A Reconciliation, PDF Merge & more. 100% browser-based, no data stored.",
   keywords: [
     "free GST invoice generator",
     "TDS calculator india",
@@ -154,19 +154,10 @@ const tools = [
   {
     icon: Database,
     label: "Bank Statement to Excel",
-    desc: "Extract transactions from PDF bank statements to structured Excel with debit/credit columns.",
+    desc: "Upload any Indian bank PDF — PNB, SBI, HDFC, ICICI, Axis, Kotak & more. Auto-detects Dr/Cr columns, merges multi-line narrations, classifies transactions.",
     href: "/tools/bank-statement",
     badge: "Advanced",
     badgeColor: "bg-primary/10 text-primary",
-    category: "Finance",
-  },
-  {
-    icon: Landmark,
-    label: "PNB Statement to Excel",
-    desc: "Purpose-built for Punjab National Bank PDFs — Dr/Cr columns, multi-line narrations, running balance verification.",
-    href: "/tools/pnb-statement",
-    badge: "New",
-    badgeColor: "bg-green-100 text-green-800",
     category: "Finance",
   },
   {
@@ -191,7 +182,7 @@ export default function ToolsPage() {
           <div className="max-w-2xl">
             <h1 className="text-4xl font-bold text-white mb-4">Free Tax & Finance Tools</h1>
             <p className="text-blue-200 text-lg leading-relaxed">
-              15 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
+              14 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
             </p>
           </div>
         </div>

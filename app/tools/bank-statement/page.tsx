@@ -134,6 +134,29 @@ function parseAllPages(allPageRows: RawCell[][][]): Transaction[] {
   }
   if (!defs) return [];
 
+  // ── Key layout flags ──────────────────────────────────────────────────────
+  // Whether there's a SEPARATE credit column (PNB style: Dr Amount | Cr Amount)
+  // vs a single amount/debit column where sign distinguishes Dr/Cr (PAN India style)
+  const hasSeparateCreditCol = defs.some(d => d.type === "credit");
+  const dateDef = defs.find(d => d.type === "date");
+
+  // Date in the date COLUMN only (prevents reference numbers triggering false dates)
+  function rowHasDateInCol(row: RawCell[]): boolean {
+    if (!dateDef) return row.some(c => DATE_RE.test(c.text));
+    return row.some(c =>
+      c.x >= dateDef.xLeft && c.x <= dateDef.xRight && DATE_RE.test(c.text)
+    );
+  }
+
+  // Row has a money value in a debit/credit/amount column
+  function rowHasAmountInCol(row: RawCell[]): boolean {
+    const amtTypes: ColType[] = ["debit", "credit", "amount"];
+    return row.some(c => {
+      const def = defs!.find(d => c.x >= d.xLeft && c.x <= d.xRight);
+      return def && amtTypes.includes(def.type) && /^\d[\d,\.]+$/.test(c.text.trim());
+    });
+  }
+
   // Collect data rows after header (skip repeated headers on new pages)
   const dataRows: RawCell[][] = [];
   for (let pi = 0; pi < allPageRows.length; pi++) {
@@ -145,26 +168,53 @@ function parseAllPages(allPageRows: RawCell[][][]): Transaction[] {
     }
   }
 
-  // Merge multi-line rows: new txn starts when a date cell is present
+  // ── Smart row merging ─────────────────────────────────────────────────────
+  // • Has date in date column → new transaction (explicit date)
+  // • Has amount but no date  → new transaction (same date, not reprinted — Indian bank style)
+  //   Inject the last known date so parsing still finds a date
+  // • Has neither             → continuation (extra description lines), merge text only
   const txnRows: RawCell[][] = [];
   let cur: RawCell[] | null = null;
+  let lastDateText = "";
+
   for (const row of dataRows) {
-    const hasDate = row.some(c => DATE_RE.test(c.text));
+    const hasDate = rowHasDateInCol(row);
+    const hasAmt  = rowHasAmountInCol(row);
+
     if (hasDate) {
       if (cur) txnRows.push(cur);
       cur = [...row];
+      // Remember date for same-date rows that don't reprint it
+      const dateCell = row.find(c =>
+        dateDef ? (c.x >= dateDef.xLeft && c.x <= dateDef.xRight && DATE_RE.test(c.text)) : DATE_RE.test(c.text)
+      );
+      if (dateCell) lastDateText = dateCell.text;
+    } else if (hasAmt) {
+      // Separate transaction — bank didn't reprint the date
+      if (cur) txnRows.push(cur);
+      // Inject a synthetic date cell so the parser can extract it
+      const synthetic: RawCell = {
+        text: lastDateText,
+        x: dateDef ? Math.round((dateDef.xLeft + dateDef.xRight) / 2) : 0,
+        y: row[0]?.y ?? 0,
+      };
+      cur = lastDateText ? [synthetic, ...row] : [...row];
     } else if (cur) {
-      cur.push(...row); // merge continuation
+      // Continuation: merge only description-type cells (avoid concatenating stray numbers)
+      const descCells = row.filter(c => {
+        const def = defs!.find(d => c.x >= d.xLeft && c.x <= d.xRight);
+        return !def || def.type === "desc" || def.type === "other";
+      });
+      cur.push(...(descCells.length ? descCells : row));
     }
   }
   if (cur) txnRows.push(cur);
 
-  // Parse each merged row
+  // ── Parse each merged row into a Transaction ──────────────────────────────
   const txns: Transaction[] = [];
   for (const cells of txnRows) {
     const cols = assign(cells, defs);
 
-    // Date
     const dateRaw = cols.get("date") ?? cells.find(c => DATE_RE.test(c.text))?.text ?? "";
     const dm = dateRaw.match(DATE_RE);
     if (!dm) continue;
@@ -173,7 +223,7 @@ function parseAllPages(allPageRows: RawCell[][][]): Transaction[] {
     const cheque  = cols.get("ref")     ?? "";
     const balance = cleanAmt(cols.get("balance") ?? "");
 
-    if ((!desc || desc === "-" || desc === "—") && balance === 0) continue;
+    if ((!desc || desc === "—") && balance === 0) continue;
 
     const amtRaw  = cols.get("amount")   ?? "";
     const drRaw   = cols.get("debit")    ?? "";
@@ -183,13 +233,26 @@ function parseAllPages(allPageRows: RawCell[][][]): Transaction[] {
     let debit = 0, credit = 0;
 
     if (amtRaw && typeRaw) {
+      // Explicit Dr/Cr type indicator (e.g. Axis, Kotak)
       const mag = cleanAmt(amtRaw);
       const t = typeRaw.toLowerCase();
       if (t.startsWith("d") || t.includes("dr")) debit = mag; else credit = mag;
+
     } else if (amtRaw) {
+      // Single signed amount column: negative = debit, positive = credit
       [debit, credit] = parseSigned(amtRaw);
-    } else if (drRaw || crRaw) {
+
+    } else if (hasSeparateCreditCol) {
+      // Two distinct columns — PNB "Dr Amount" / "Cr Amount" style
       debit  = cleanAmt(drRaw);
+      credit = cleanAmt(crRaw);
+
+    } else if (drRaw) {
+      // Only one column detected as "debit" — treat as signed (negative=Dr, positive=Cr)
+      // Handles PAN India and similar banks where a single column holds all amounts
+      [debit, credit] = parseSigned(drRaw);
+
+    } else if (crRaw) {
       credit = cleanAmt(crRaw);
     }
 

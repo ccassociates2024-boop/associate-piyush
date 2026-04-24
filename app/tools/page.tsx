@@ -161,6 +161,15 @@ const tools = [
     category: "Finance",
   },
   {
+    icon: Landmark,
+    label: "PNB Statement to Excel",
+    desc: "Purpose-built for Punjab National Bank PDFs — Dr/Cr columns, multi-line narrations, running balance verification.",
+    href: "/tools/pnb-statement",
+    badge: "New",
+    badgeColor: "bg-green-100 text-green-800",
+    category: "Finance",
+  },
+  {
     icon: Table,
     label: "Tally Ledger to Excel",
     desc: "Convert Tally Prime ledger exports (.xlsx/.xml/.csv) to structured Excel with forensic flags.",

@@ -107,6 +107,10 @@ export default function GSTInvoicePage() {
       doc.text(invoice.placeOfSupply || seller.state || "—", 120, 58);
       doc.text(`Supply Type: ${invoice.supplyType === "intra" ? "Intra-State" : "Inter-State"}`, 120, 64);
 
+      // jsPDF built-in fonts (Helvetica) do not support the ₹ Unicode glyph —
+      // use "Rs." prefix which renders correctly without any custom font embedding.
+      const r = (n: number) => `Rs.${fmt(n)}`;
+
       // Line items
       const tableBody = items.map((item, i) => {
         const { taxable, gstAmt } = calcRow(item);
@@ -114,19 +118,19 @@ export default function GSTInvoicePage() {
         if (invoice.supplyType === "intra") {
           return [
             i + 1, item.description, item.hsnSac, item.qty,
-            `₹${fmt(parseFloat(item.rate) || 0)}`,
-            `₹${fmt(taxable)}`,
-            `${gstPct / 2}%`, `₹${fmt(gstAmt / 2)}`,
-            `${gstPct / 2}%`, `₹${fmt(gstAmt / 2)}`,
-            `₹${fmt(taxable + gstAmt)}`,
+            r(parseFloat(item.rate) || 0),
+            r(taxable),
+            `${gstPct / 2}%`, r(gstAmt / 2),
+            `${gstPct / 2}%`, r(gstAmt / 2),
+            r(taxable + gstAmt),
           ];
         } else {
           return [
             i + 1, item.description, item.hsnSac, item.qty,
-            `₹${fmt(parseFloat(item.rate) || 0)}`,
-            `₹${fmt(taxable)}`,
-            `${gstPct}%`, `₹${fmt(gstAmt)}`,
-            `₹${fmt(taxable + gstAmt)}`,
+            r(parseFloat(item.rate) || 0),
+            r(taxable),
+            `${gstPct}%`, r(gstAmt),
+            r(taxable + gstAmt),
           ];
         }
       });
@@ -151,19 +155,19 @@ export default function GSTInvoicePage() {
       doc.setFontSize(8);
       doc.setFont("helvetica", "normal");
       doc.text("Taxable Amount:", 122, finalY + 5);
-      doc.text(`₹${fmt(totals.taxable)}`, 185, finalY + 5, { align: "right" });
+      doc.text(r(totals.taxable), 185, finalY + 5, { align: "right" });
 
       if (invoice.supplyType === "intra") {
         doc.rect(120, finalY + 7, 75, 7, "F");
         doc.text(`CGST:`, 122, finalY + 12);
-        doc.text(`₹${fmt(totals.gst / 2)}`, 185, finalY + 12, { align: "right" });
+        doc.text(r(totals.gst / 2), 185, finalY + 12, { align: "right" });
         doc.rect(120, finalY + 14, 75, 7, "F");
         doc.text(`SGST:`, 122, finalY + 19);
-        doc.text(`₹${fmt(totals.gst / 2)}`, 185, finalY + 19, { align: "right" });
+        doc.text(r(totals.gst / 2), 185, finalY + 19, { align: "right" });
       } else {
         doc.rect(120, finalY + 7, 75, 7, "F");
         doc.text(`IGST:`, 122, finalY + 12);
-        doc.text(`₹${fmt(totals.gst)}`, 185, finalY + 12, { align: "right" });
+        doc.text(r(totals.gst), 185, finalY + 12, { align: "right" });
       }
 
       const totalY = invoice.supplyType === "intra" ? finalY + 21 : finalY + 14;
@@ -173,7 +177,7 @@ export default function GSTInvoicePage() {
       doc.setFont("helvetica", "bold");
       doc.setFontSize(9);
       doc.text("Grand Total:", 122, totalY + 6);
-      doc.text(`₹${fmt(grandTotal)}`, 185, totalY + 6, { align: "right" });
+      doc.text(r(grandTotal), 185, totalY + 6, { align: "right" });
 
       // Notes
       if (notes) {
@@ -334,7 +338,7 @@ export default function GSTInvoicePage() {
                   <th className="text-left py-2 px-2 text-xs font-semibold text-muted w-10">#</th>
                   <th className="text-left py-2 px-2 text-xs font-semibold text-muted">Description</th>
                   <th className="text-left py-2 px-2 text-xs font-semibold text-muted w-24">HSN/SAC</th>
-                  <th className="text-left py-2 px-2 text-xs font-semibold text-muted w-16">Qty</th>
+                  <th className="text-left py-2 px-2 text-xs font-semibold text-muted w-20">Qty</th>
                   <th className="text-left py-2 px-2 text-xs font-semibold text-muted w-24">Rate (₹)</th>
                   <th className="text-left py-2 px-2 text-xs font-semibold text-muted w-20">GST %</th>
                   <th className="text-right py-2 px-2 text-xs font-semibold text-muted w-24">Taxable</th>
@@ -356,7 +360,7 @@ export default function GSTInvoicePage() {
                         <input type="text" className="input-field text-xs py-1.5" value={item.hsnSac} onChange={e => updateItem(i, "hsnSac", e.target.value)} placeholder="998311" />
                       </td>
                       <td className="py-1 px-2">
-                        <input type="number" className="input-field text-xs py-1.5" value={item.qty} onChange={e => updateItem(i, "qty", e.target.value)} min="0" />
+                        <input type="number" className="input-field text-xs py-1.5 min-w-[64px]" value={item.qty} onChange={e => updateItem(i, "qty", e.target.value)} min="0" step="1" />
                       </td>
                       <td className="py-1 px-2">
                         <input type="number" className="input-field text-xs py-1.5" value={item.rate} onChange={e => updateItem(i, "rate", e.target.value)} placeholder="0.00" min="0" />

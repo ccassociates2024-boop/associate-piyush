@@ -8,7 +8,7 @@ import {
 export const metadata: Metadata = {
   title: "Free Tax & Finance Tools",
   description:
-    "14 free professional-grade tax and finance tools for Indian businesses — GST Invoice Generator, TDS Calculator, ITR Estimator (FY 2026-27), GSTR-2A Reconciliation, PDF Merge & more. 100% browser-based, no data stored.",
+    "15 free professional-grade tax and finance tools for Indian businesses — GST Invoice Generator, TDS Calculator, ITR Estimator (FY 2026-27), GSTR-2A Reconciliation, Multi-Bank PDF to Excel & more. 100% browser-based, no data stored.",
   keywords: [
     "free GST invoice generator",
     "TDS calculator india",
@@ -153,7 +153,16 @@ const tools = [
   },
   {
     icon: Database,
-    label: "Bank Statement to Excel",
+    label: "Multi-Bank PDF → Excel Converter",
+    desc: "Convert HDFC, PNB, Bank of Maharashtra, Kotak & Union Bank PDF statements to Excel. Auto-detects bank format. Outputs: Sr. No., Date, Particulars, Cheque No., Credit, Debit, Balance.",
+    href: "/tools/bank-statement-pro",
+    badge: "New",
+    badgeColor: "bg-green-100 text-green-800",
+    category: "Finance",
+  },
+  {
+    icon: Database,
+    label: "Bank Statement to Excel (Generic)",
     desc: "Upload any Indian bank PDF — PNB, SBI, HDFC, ICICI, Axis, Kotak & more. Auto-detects Dr/Cr columns, merges multi-line narrations, classifies transactions.",
     href: "/tools/bank-statement",
     badge: "Advanced",
@@ -182,7 +191,7 @@ export default function ToolsPage() {
           <div className="max-w-2xl">
             <h1 className="text-4xl font-bold text-white mb-4">Free Tax & Finance Tools</h1>
             <p className="text-blue-200 text-lg leading-relaxed">
-              14 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
+              15 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
             </p>
           </div>
         </div>

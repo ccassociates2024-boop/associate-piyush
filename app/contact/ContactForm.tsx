@@ -84,7 +84,7 @@ const TRUST = [
   "Response within 2 hours",
   "Confidential consultation",
   "Pan India service",
-  "Since 2025",
+  "Est. 2025",
 ];
 
 export default function ContactSection() {

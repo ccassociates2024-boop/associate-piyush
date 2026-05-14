@@ -19,14 +19,15 @@ const quickLinks = [
 ];
 
 const tools = [
-  { label: "GST Invoice Generator", href: "/tools/gst-invoice" },
-  { label: "TDS Calculator",        href: "/tools/tds-calculator" },
-  { label: "ITR Tax Estimator",     href: "/tools/itr-estimator" },
-  { label: "Capital Gains Calc",    href: "/tools/capital-gains" },
-  { label: "Notice Reply Gen",      href: "/tools/notice-reply" },
-  { label: "Bank Statement → Excel",href: "/tools/bank-statement" },
-  { label: "Advance Tax Calc",      href: "/tools/advance-tax" },
-  { label: "PDF Merge",             href: "/tools/pdf-merge" },
+  { label: "GST Invoice Generator",   href: "/tools/gst-invoice" },
+  { label: "TDS Calculator",          href: "/tools/tds-calculator" },
+  { label: "ITR Tax Estimator",       href: "/tools/itr-estimator" },
+  { label: "Capital Gains Calc",      href: "/tools/capital-gains" },
+  { label: "Notice Reply Gen",        href: "/tools/notice-reply" },
+  { label: "Multi-Bank PDF → Excel",  href: "/tools/bank-statement-pro" },
+  { label: "Bank Statement → Excel",  href: "/tools/bank-statement" },
+  { label: "Advance Tax Calc",        href: "/tools/advance-tax" },
+  { label: "PDF Merge",               href: "/tools/pdf-merge" },
 ];
 
 export default function Footer() {
@@ -111,7 +112,7 @@ export default function Footer() {
               ))}
               <li>
                 <Link href="/tools" className="inline-flex items-center gap-1 text-sm font-semibold transition-colors" style={{ color: "#C9A84C" }}>
-                  View All 15 Tools <ArrowRight size={12} />
+                  View All 15+ Tools <ArrowRight size={12} />
                 </Link>
               </li>
             </ul>

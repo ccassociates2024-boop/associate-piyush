@@ -41,10 +41,10 @@ const stats = [
 ];
 
 const testimonials = [
-  { name: "Mukund Kulkarni",  role: "Director, Kulkarni Enterprises, Pune",      service: "GST Reconciliation",  stars: 5, text: "Piyush resolved a 3-year GST ITC mismatch in under a week. Meticulous report — helped us recover ₹4.2 lakhs of blocked credit." },
-  { name: "Yogesh Zaware",    role: "Proprietor, Zaware Agro Traders, Nashik",   service: "Income Tax Advisory", stars: 5, text: "Saved ₹1.8 lakhs after switching to the new tax regime on Piyush's advice. The free ITR estimator gave me confidence even before the consultation." },
-  { name: "Nirmala Sawant",   role: "CFO, TechBridge Solutions, Bangalore",      service: "Forensic Accounting", stars: 5, text: "Engaged for a forensic audit after detecting vendor payment irregularities. Thorough, confidential, and the findings held up in legal proceedings." },
-  { name: "Pravin Patil",     role: "Owner, Patil Construction, Solapur",        service: "TDS Compliance",      stars: 5, text: "Zero TDS defaults in 14 months since we engaged him. Piyush set up a proper quarterly compliance system that just works." },
+  { name: "Vishwajit Surlikar", role: "Owner, Vishwa Shooting Academy, Nigdi, Pune", service: "Income Tax & Financial Consultation", stars: 5, text: "Piyush manages our income tax, insurance, loans, and all financial work for setting up the shooting range. A complete financial support system — highly reliable." },
+  { name: "Yogesh Zaware",      role: "Employee, Mahindra & Mahindra, Chakan",       service: "Income Tax Notice",                 stars: 5, text: "Received an income tax notice and was completely lost. Piyush handled everything professionally and resolved it. Couldn't have done it without him." },
+  { name: "Nirmala Sawant",     role: "Homemaker, Pune",                              service: "TDS Refund on Property",            stars: 5, text: "I had no idea TDS deducted on my property purchase could be reclaimed. Piyush explained the whole process and got the refund processed. Very helpful!" },
+  { name: "Pooja Satish Nimse", role: "Proprietor, Sainath Transport, Pune",          service: "Company Profile & Financial Consultation", stars: 5, text: "Piyush helped create our company profile and guided us on the financial side of running Sainath Transport. Very knowledgeable and always available." },
 ];
 
 export default function HomePage() {

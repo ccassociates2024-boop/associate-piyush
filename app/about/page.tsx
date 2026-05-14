@@ -176,11 +176,10 @@ export default function AboutPage() {
                 <h3 className="font-bold text-dark mb-4 text-sm">Quick Stats</h3>
                 <div className="space-y-3">
                   {[
-                    { label: "GST Cases Handled", value: "150+" },
-                    { label: "Forensic Investigations", value: "25+" },
-                    { label: "ITRs Filed", value: "200+" },
+                    { label: "GST Clients",   value: "150+" },
+                    { label: "ITR Files",     value: "950+" },
                     { label: "States Covered", value: "15+" },
-                    { label: "Free Tools Built", value: "12" },
+                    { label: "Free Tools Built", value: "15+" },
                   ].map(({ label, value }) => (
                     <div key={label} className="flex justify-between items-center text-sm border-b border-gray-50 pb-2">
                       <span className="text-muted">{label}</span>

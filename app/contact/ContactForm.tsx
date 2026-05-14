@@ -81,7 +81,7 @@ const INFO_CARDS = [
 ];
 
 const TRUST = [
-  "Response within 2 hours",
+  "Response within 2–3 working days",
   "Confidential consultation",
   "Pan India service",
   "Est. 2025",
@@ -213,7 +213,7 @@ export default function ContactSection() {
                     Quick WhatsApp Inquiry
                   </h2>
                   <p className="text-muted text-xs mt-0.5">
-                    Sends directly to Associate Piyush — responds within 2 business days
+                    Sends directly to Associate Piyush — responds within 2–3 working days
                   </p>
                 </div>
               </div>
@@ -303,7 +303,7 @@ export default function ContactSection() {
                   <Send size={16} />
                   Send via WhatsApp →
                 </button>
-                <p className="text-xs text-muted text-center">Confidential. No spam. We respond within 2 business days.</p>
+                <p className="text-xs text-muted text-center">Confidential. No spam. We respond within 2–3 working days.</p>
               </form>
 
               {/* Trust badges */}

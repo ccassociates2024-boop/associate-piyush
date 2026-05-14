@@ -182,61 +182,137 @@ function parseHDFC(rows: RawCell[][]): Transaction[] {
 
 // ─── PNB Parser ───────────────────────────────────────────────────────────────
 // Format: Txn No | Txn Date | Description | Branch | Cheque No | Dr Amount | Cr Amount | Balance
-// Dates: DD-MM-YYYY  Amounts: have "Dr." / "Cr." appended on next col
+// Dates: DD-MM-YYYY. PNB often has two-row headers ("Dr." / "Amount" split across rows).
+// Strategy: detect columns from merged header, then fall back to balance-delta inference.
 const PNB_DATE = /^\d{2}-\d{2}-\d{4}$/;
+const PNB_AMT  = /^[\d,]+\.\d{2}$/;
 
 function parsePNB(rows: RawCell[][]): Transaction[] {
   const txns: Transaction[] = [];
 
-  let hdrIdx = rows.findIndex(row =>
-    row.some(c => /txn date/i.test(c.text)) || (
-      row.some(c => /dr.?amount|dr.?amt/i.test(c.text)) &&
-      row.some(c => /cr.?amount|cr.?amt/i.test(c.text))
-    )
-  );
+  // ── Step 1: Find header row(s) ──────────────────────────────────────────────
+  let hdrIdx = -1;
+  for (let i = 0; i < Math.min(rows.length, 40); i++) {
+    const txt = rows[i].map(c => c.text.toLowerCase()).join(" ");
+    if (
+      txt.includes("txn date") || txt.includes("txn no") ||
+      (txt.includes("dr") && txt.includes("cr") && txt.includes("balance")) ||
+      (txt.includes("debit") && txt.includes("credit") && txt.includes("balance"))
+    ) { hdrIdx = i; break; }
+  }
   if (hdrIdx === -1) return txns;
 
-  const hdr = rows[hdrIdx];
-  const dateX   = findHdrX(hdr, ["txn date","date"]);
-  const descX   = findHdrX(hdr, ["description","particulars","narration"]);
-  const branchX = findHdrX(hdr, ["branch"]);
-  const cheqX   = findHdrX(hdr, ["cheque no","chq no","chq"]);
-  const drX     = findHdrX(hdr, ["dr amount","dr amt","withdrawal"]);
-  const crX     = findHdrX(hdr, ["cr amount","cr amt","deposit"]);
-  const balX    = findHdrX(hdr, ["balance"]);
+  // ── Step 2: Merge two-row header if next row has "Amount" sub-labels ────────
+  // PNB puts "Dr." on row 1 and "Amount" on row 2 at the same X position
+  const hdr: RawCell[] = rows[hdrIdx].map(c => ({ ...c })); // clone
+  if (hdrIdx + 1 < rows.length) {
+    const nextRow = rows[hdrIdx + 1];
+    const nextTxt = nextRow.map(c => c.text.toLowerCase()).join(" ");
+    const isSubHeader = nextTxt.includes("amount") && !PNB_DATE.test(nextRow[0]?.text ?? "");
+    if (isSubHeader) {
+      for (const cell of nextRow) {
+        const match = hdr.reduce<RawCell | null>((b, c) =>
+          b === null || Math.abs(c.x - cell.x) < Math.abs(b.x - cell.x) ? c : b, null
+        );
+        if (match && Math.abs(match.x - cell.x) < 60) {
+          match.text = (match.text + " " + cell.text).trim();
+        }
+      }
+    }
+  }
 
+  // ── Step 3: Extract column X positions from merged header ───────────────────
+  const dateX = findHdrX(hdr, ["txn date","date"]);
+  const descX = findHdrX(hdr, ["description","particulars","narration","details"]);
+  const cheqX = findHdrX(hdr, ["cheque","chq"]);
+  let   drX   = findHdrX(hdr, ["dr amount","dr. amount","dr amt","withdrawal","dr"]);
+  let   crX   = findHdrX(hdr, ["cr amount","cr. amount","cr amt","deposit","cr"]);
+  let   balX  = findHdrX(hdr, ["balance"]);
+
+  // ── Step 4: Position-based fallback for Dr/Cr/Balance columns ───────────────
+  // If columns not found from header, look at first few data rows and infer
+  // PNB layout (right → left): Balance | Cr Amount | Dr Amount
+  if (balX < 0 || drX < 0 || crX < 0) {
+    for (let i = hdrIdx + 2; i < Math.min(rows.length, hdrIdx + 15); i++) {
+      const row = rows[i];
+      const dateCell = row.find(c => PNB_DATE.test(c.text));
+      if (!dateCell) continue;
+      const amtCells = row
+        .filter(c => PNB_AMT.test(c.text.replace(/,/g, "")))
+        .sort((a, b) => b.x - a.x); // rightmost first
+      if (amtCells.length >= 2) {
+        if (balX < 0) balX = amtCells[0].x;
+        if (crX  < 0 && amtCells.length >= 2) crX = amtCells[1].x;
+        if (drX  < 0 && amtCells.length >= 3) drX = amtCells[2].x;
+        break;
+      }
+    }
+  }
+
+  // ── Step 5: Parse transaction rows ─────────────────────────────────────────
   let pending: Partial<Transaction> | null = null;
   let pendingRowCount = 0;
+  let prevBalance = 0;
 
-  for (let i = hdrIdx + 1; i < rows.length; i++) {
+  const dataStart = hdrIdx + (
+    hdrIdx + 1 < rows.length &&
+    rows[hdrIdx + 1].map(c => c.text.toLowerCase()).join(" ").includes("amount") &&
+    !PNB_DATE.test(rows[hdrIdx + 1][0]?.text ?? "")
+      ? 2 : 1
+  );
+
+  for (let i = dataStart; i < rows.length; i++) {
     const row = rows[i];
     if (!row.length) continue;
 
     const dateCell = row.find(c => PNB_DATE.test(c.text));
     if (dateCell) {
-      if (pending?.date) txns.push(pending as Transaction);
+      if (pending?.date) { txns.push(pending as Transaction); }
 
-      const dr  = cleanAmt(nearest(row, drX));
-      const cr  = cleanAmt(nearest(row, crX));
-      const bal = cleanAmt(nearest(row, balX));
-      const desc  = nearest(row, descX);
-      const cheque= nearest(row, cheqX);
+      // Get balance first (rightmost known amount column)
+      const bal = balX >= 0 ? cleanAmt(nearest(row, balX)) : 0;
+
+      // Get Dr and Cr amounts
+      let dr = drX >= 0 ? cleanAmt(nearest(row, drX)) : 0;
+      let cr = crX >= 0 ? cleanAmt(nearest(row, crX)) : 0;
+
+      // Fallback: if both dr and cr are 0, infer from balance delta
+      if (dr === 0 && cr === 0 && prevBalance > 0 && bal > 0) {
+        // Find all amount cells excluding the balance
+        const balCell = balX >= 0 ? row.find(c => c.x >= balX - 20 && c.x <= balX + 20) : null;
+        const amtCells = row
+          .filter(c => PNB_AMT.test(c.text.replace(/,/g, "")) && c !== balCell && c !== dateCell)
+          .sort((a, b) => b.x - a.x);
+
+        if (amtCells.length === 1) {
+          const amt = cleanAmt(amtCells[0].text);
+          // Use balance delta: if balance increased → credit, else → debit
+          if (bal > prevBalance) cr = amt; else dr = amt;
+        } else if (amtCells.length >= 2) {
+          // rightmost non-balance = Cr, next = Dr (PNB column order)
+          cr = cleanAmt(amtCells[0].text);
+          dr = cleanAmt(amtCells[1].text);
+        }
+      }
+
+      const desc   = descX >= 0 ? nearest(row, descX) : "";
+      const cheque = cheqX >= 0 ? nearest(row, cheqX) : "";
 
       pending = {
         srNo: txns.length + 1,
         date: normalizeDate(dateCell.text),
         particulars: desc,
-        chequeNo: cheque,
+        chequeNo: cheque === "-" ? "" : cheque,
         credit: cr,
         debit: dr,
         balance: bal,
       };
+      prevBalance = bal;
       pendingRowCount = 0;
-    } else if (pending && pendingRowCount < 3) {
-      // Multi-line description continuation
+    } else if (pending && pendingRowCount < 2) {
       const rowText = row.map(c => c.text).join(" ").trim();
-      const isAmt = /^[\d,]+\.\d{2}$/.test(rowText);
-      const isMeta = /opening|closing|total|page|statement/i.test(rowText);
+      const isAmt   = PNB_AMT.test(rowText.replace(/,/g, ""));
+      const isMeta  = /opening|closing|total|page|statement|balance b\/f/i.test(rowText);
       if (!isAmt && !isMeta && rowText) {
         pending.particulars = ((pending.particulars ?? "") + " " + rowText).trim();
         pendingRowCount++;
@@ -530,20 +606,14 @@ export default function BankStatementPro() {
       }
 
       // Check if scanned (very little text)
-      const isScanned = fullText.replace(/\s/g, "").length < 200;
-      if (isScanned && resolvedBank === "union") {
-        // OCR path — requires tesseract.js
-        setWarning("This appears to be a scanned PDF. OCR is being applied — this may take a minute.");
-        const results = await runOCR(pdf);
-        const ocrRows = results.map(line => {
-          const cells: RawCell[] = line.split(/\s{2,}/).map((t, xi) => ({ text: t.trim(), x: xi * 100, y: 0 }));
-          return cells;
-        });
-        const parsed = parseGeneric(ocrRows);
-        if (!parsed.length) throw new Error("Could not extract transactions from scanned PDF. Please ensure the scan quality is good.");
+      const isScanned = fullText.replace(/\s/g, "").length < 300;
+      if (isScanned) {
+        // OCR path — applies to Union Bank and any other scanned PDF
+        setWarning("Scanned PDF detected. Applying OCR — this may take 1–2 minutes for large files.");
+        const ocrLines = await runOCR(pdf);
+        const parsed = parseOCRLines(ocrLines);
+        if (!parsed.length) throw new Error("OCR ran but could not extract transactions. Please ensure the scan is clear and upright. For best results, use a text-based (non-scanned) bank PDF.");
         setTxns(parsed);
-      } else if (isScanned) {
-        throw new Error("This PDF appears to be scanned/image-based. Select 'Union Bank' for OCR processing, or use a text-based PDF.");
       } else {
         // Text-based PDF
         const parsed = runParser(resolvedBank, allRows);
@@ -569,6 +639,78 @@ export default function BankStatementPro() {
     }
   }, [bank]);
 
+  // ── OCR line parser ──────────────────────────────────────────────────────────
+  // After OCR, each line is a string. We look for lines that contain a date
+  // and amount patterns using regex. Works for most scanned Indian bank statements.
+  function parseOCRLines(lines: string[]): Transaction[] {
+    const txns: Transaction[] = [];
+    // Date patterns: DD/MM/YYYY, DD-MM-YYYY, DD/MM/YY
+    const DATE_P = /\b(\d{2}[\/\-]\d{2}[\/\-]\d{2,4})\b/;
+    // Amount pattern: 1,23,456.78  or  123456.78
+    const AMT_P  = /\b(\d{1,3}(?:,\d{2,3})*\.\d{2})\b/g;
+
+    for (const line of lines) {
+      const trimmed = line.replace(/\s+/g, " ").trim();
+      if (!trimmed) continue;
+
+      const dateMatch = trimmed.match(DATE_P);
+      if (!dateMatch) continue;
+
+      // Extract all amounts from the line
+      const amounts: number[] = [];
+      let m: RegExpExecArray | null;
+      const amtRe = new RegExp(AMT_P.source, "g");
+      while ((m = amtRe.exec(trimmed)) !== null) {
+        const n = parseFloat(m[1].replace(/,/g, ""));
+        if (!isNaN(n)) amounts.push(n);
+      }
+      if (!amounts.length) continue;
+
+      // Convention: rightmost = balance; next = cr or dr; leftmost = dr or cr
+      const bal    = amounts[amounts.length - 1];
+      const prevBal = txns.length > 0 ? txns[txns.length - 1].balance : 0;
+
+      let cr = 0, dr = 0;
+      if (amounts.length >= 3) {
+        // Last=balance, second-last=cr, third-last=dr (common Indian bank layout)
+        cr = amounts[amounts.length - 2];
+        dr = amounts[amounts.length - 3];
+        // Zero out whichever doesn't match balance change
+        if (cr > 0 && dr > 0) {
+          if (prevBal > 0) {
+            if (bal > prevBal) dr = 0; else cr = 0;
+          }
+        }
+      } else if (amounts.length === 2) {
+        const txnAmt = amounts[0];
+        if (prevBal > 0) {
+          if (bal > prevBal) cr = txnAmt; else dr = txnAmt;
+        } else {
+          cr = txnAmt; // assume credit if no previous balance
+        }
+      }
+
+      // Description: remove date + amounts from line → remaining text
+      let desc = trimmed
+        .replace(dateMatch[0], "")
+        .replace(amtRe, "")
+        .replace(/\s{2,}/g, " ")
+        .trim();
+
+      txns.push({
+        srNo: txns.length + 1,
+        date: normalizeDate(dateMatch[1]),
+        particulars: desc || "—",
+        chequeNo: "",
+        credit: cr,
+        debit: dr,
+        balance: bal,
+      });
+    }
+    txns.forEach((t, i) => (t.srNo = i + 1));
+    return txns;
+  }
+
   // OCR via tesseract.js for scanned PDFs
   async function runOCR(pdf: any): Promise<string[]> {
     const { createWorker } = await import("tesseract.js");
@@ -577,14 +719,15 @@ export default function BankStatementPro() {
 
     for (let p = 1; p <= pdf.numPages; p++) {
       const page = await pdf.getPage(p);
-      const viewport = page.getViewport({ scale: 2.0 });
+      const viewport = page.getViewport({ scale: 2.5 }); // higher scale = better OCR
       const canvas = document.createElement("canvas");
       canvas.width  = viewport.width;
       canvas.height = viewport.height;
       const ctx = canvas.getContext("2d")!;
       await page.render({ canvasContext: ctx, viewport }).promise;
       const { data } = await worker.recognize(canvas.toDataURL("image/png"));
-      lines.push(...data.lines.map((l: any) => l.text));
+      // Only keep lines with actual content
+      lines.push(...data.lines.map((l: any) => l.text.trim()).filter(Boolean));
     }
 
     await worker.terminate();

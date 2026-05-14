@@ -322,7 +322,7 @@ export default function ResourcesPage() {
               Have a tax question? Get expert guidance from Associate Piyush.
             </h2>
             <p className="text-blue-200 text-base max-w-xl mx-auto">
-              First consultation is free. We respond within 2 hours on business days. Serving clients across India from Pune.
+              First consultation is free. We respond within 2–3 working days. Serving clients across India from Pune.
             </p>
           </div>
 

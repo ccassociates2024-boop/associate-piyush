@@ -254,7 +254,7 @@ export default function ServicesPage() {
             Not sure which service you need?
           </h2>
           <p className="text-blue-200 mb-6">
-            Get a free 30-minute consultation call. We&apos;ll assess your situation and recommend the right approach.
+            Get a free 10-minute consultation call. We&apos;ll assess your situation and recommend the right approach.
           </p>
           <Link href="/contact" className="btn-gold gap-2">
             Schedule a Free Call <ArrowRight size={16} />

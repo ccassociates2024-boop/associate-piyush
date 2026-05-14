@@ -28,6 +28,7 @@ const tools = [
   { label: "Bank Statement → Excel",  href: "/tools/bank-statement" },
   { label: "Advance Tax Calc",        href: "/tools/advance-tax" },
   { label: "PDF Merge",               href: "/tools/pdf-merge" },
+  { label: "PDF Arranger",            href: "/tools/pdf-arranger" },
 ];
 
 export default function Footer() {

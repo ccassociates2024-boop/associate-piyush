@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   FileText, Calculator, BarChart3, FileSpreadsheet, Clock, RefreshCw,
-  TrendingUp, Merge, Minimize2, FileOutput, Database, Table, Shield, ArrowRight, Landmark, ScrollText, LayoutDashboard
+  TrendingUp, Merge, Minimize2, FileOutput, Database, Table, Shield, ArrowRight, Landmark, ScrollText, LayoutDashboard, LayoutGrid
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -134,6 +134,15 @@ const tools = [
     category: "PDF",
   },
   {
+    icon: LayoutGrid,
+    label: "PDF Arranger",
+    desc: "Upload a PDF and visually rearrange pages. Drag to reorder, rotate 90°/180°/270°, delete pages, then download the rearranged PDF.",
+    href: "/tools/pdf-arranger",
+    badge: "New",
+    badgeColor: "bg-green-100 text-green-800",
+    category: "PDF",
+  },
+  {
     icon: Minimize2,
     label: "PDF Compress",
     desc: "Compress PDF file size with quality control slider. See before/after size comparison.",
@@ -191,7 +200,7 @@ export default function ToolsPage() {
           <div className="max-w-2xl">
             <h1 className="text-4xl font-bold text-white mb-4">Free Tax & Finance Tools</h1>
             <p className="text-blue-200 text-lg leading-relaxed">
-              15 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
+              16 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
             </p>
           </div>
         </div>

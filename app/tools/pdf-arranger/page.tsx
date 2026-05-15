@@ -62,8 +62,10 @@ export default function PDFArrangerPage() {
 
     for (const file of pdfFiles) {
       const buf = await file.arrayBuffer();
+      // Pass a *copy* to pdfjs — pdfjs transfers (detaches) the underlying
+      // ArrayBuffer, which would make the original unusable for pdf-lib export.
       const doc = await pdfjs.getDocument({
-        data: new Uint8Array(buf),
+        data: new Uint8Array(buf.slice(0)),
         isEvalSupported: false,
         useSystemFonts: true,
         disableRange: true,
@@ -71,7 +73,7 @@ export default function PDFArrangerPage() {
         disableAutoFetch: true,
       }).promise;
       pdfjsDocs.push(doc);
-      newBuffers.push(buf);
+      newBuffers.push(buf); // original stays intact for pdf-lib
       total += doc.numPages;
     }
 

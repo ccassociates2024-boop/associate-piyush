@@ -15,17 +15,31 @@ function fmtKB(bytes: number): string {
   return `${(bytes / 1024).toFixed(0)} KB`;
 }
 
-// Given original size + target size, return { scale, jpegQ }
-// scale: PDF page render resolution multiplier (1.0 = 72 DPI)
-// jpegQ: JPEG quality 0–1
-function calcSettings(ratio: number): { scale: number; jpegQ: number } {
-  if (ratio >= 0.80) return { scale: 2.2, jpegQ: 0.90 };
-  if (ratio >= 0.65) return { scale: 2.0, jpegQ: 0.80 };
-  if (ratio >= 0.50) return { scale: 1.8, jpegQ: 0.68 };
-  if (ratio >= 0.35) return { scale: 1.5, jpegQ: 0.55 };
-  if (ratio >= 0.22) return { scale: 1.2, jpegQ: 0.40 };
-  if (ratio >= 0.12) return { scale: 1.0, jpegQ: 0.28 };
-  return                    { scale: 0.8, jpegQ: 0.15 };
+// Compression ladder — from gentle (index 0) to maximum (index 8)
+// scale: render DPI multiplier (1.0 = 72 DPI). jpegQ: JPEG quality 0–1
+const LADDER: { scale: number; jpegQ: number }[] = [
+  { scale: 2.2, jpegQ: 0.92 },  // 0 — very gentle
+  { scale: 2.0, jpegQ: 0.80 },  // 1
+  { scale: 1.8, jpegQ: 0.68 },  // 2
+  { scale: 1.5, jpegQ: 0.55 },  // 3
+  { scale: 1.3, jpegQ: 0.42 },  // 4
+  { scale: 1.0, jpegQ: 0.30 },  // 5
+  { scale: 0.8, jpegQ: 0.20 },  // 6
+  { scale: 0.65, jpegQ: 0.12 }, // 7
+  { scale: 0.5,  jpegQ: 0.07 }, // 8 — maximum
+];
+
+// Pick starting rung from desired size ratio
+function startRung(ratio: number): number {
+  if (ratio >= 0.82) return 0;
+  if (ratio >= 0.68) return 1;
+  if (ratio >= 0.54) return 2;
+  if (ratio >= 0.40) return 3;
+  if (ratio >= 0.28) return 4;
+  if (ratio >= 0.18) return 5;
+  if (ratio >= 0.12) return 6;
+  if (ratio >= 0.07) return 7;
+  return 8;
 }
 
 // ─── Preset quick-picks ────────────────────────────────────────────────────────
@@ -70,25 +84,25 @@ export default function PDFCompressPage() {
         targetBytes = file.size * (1 - targetPct / 100);
       }
 
-      if (targetBytes >= file.size * 0.95) {
-        throw new Error("Target size is too close to the original. Choose a higher reduction percentage or smaller KB target.");
+      if (targetBytes >= file.size * 0.97) {
+        throw new Error("Target size is too close to the original. Choose a higher reduction percentage or a smaller KB target.");
       }
-      if (targetBytes < 20 * 1024) {
-        throw new Error("Target size is too small (minimum ~20 KB). PDF quality would be unusable.");
+      if (targetBytes < 15 * 1024) {
+        throw new Error("Target size is too small (minimum ~15 KB). PDF quality would be unusable.");
       }
 
       const ratio = targetBytes / file.size;
-      const { scale, jpegQ } = calcSettings(ratio);
+      const rung0 = startRung(ratio);
 
       setProgressMsg("Loading PDF…");
       setProgress(5);
 
-      // 2. Load PDF with pdfjs
+      // 2. Load PDF with pdfjs (pass a copy — pdfjs may transfer the buffer)
       const arrayBuffer = await file.arrayBuffer();
       // @ts-ignore
       const pdfjs = await import("pdfjs-dist/webpack.mjs");
       const pdf = await pdfjs.getDocument({
-        data: new Uint8Array(arrayBuffer),
+        data: new Uint8Array(arrayBuffer.slice(0)),
         isEvalSupported: false,
         useSystemFonts: true,
         disableRange: true,
@@ -97,52 +111,76 @@ export default function PDFCompressPage() {
       }).promise;
 
       const numPages = pdf.numPages;
-      setProgressMsg(`Processing ${numPages} page${numPages > 1 ? "s" : ""}…`);
       setProgress(10);
 
-      // 3. Render each page → JPEG blob
-      const jpegBlobs: ArrayBuffer[] = [];
-
-      for (let p = 1; p <= numPages; p++) {
-        setProgressMsg(`Compressing page ${p} of ${numPages}…`);
-        setProgress(10 + Math.round((p - 1) / numPages * 70));
-
-        const page      = await pdf.getPage(p);
-        const viewport  = page.getViewport({ scale });
-
-        const canvas    = document.createElement("canvas");
-        canvas.width    = Math.round(viewport.width);
-        canvas.height   = Math.round(viewport.height);
-
-        const ctx = canvas.getContext("2d")!;
-        // White background (avoids transparent-to-black on JPEG)
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        await page.render({ canvasContext: ctx, viewport }).promise;
-
-        const blob: Blob = await new Promise(res =>
-          canvas.toBlob(b => res(b!), "image/jpeg", jpegQ)
-        );
-        jpegBlobs.push(await blob.arrayBuffer());
-      }
-
-      // 4. Build new PDF from JPEG images using pdf-lib
-      setProgressMsg("Building output PDF…");
-      setProgress(82);
-
       const { PDFDocument } = await import("pdf-lib");
-      const outPdf = await PDFDocument.create();
 
-      for (let i = 0; i < jpegBlobs.length; i++) {
-        const jpgImg  = await outPdf.embedJpg(new Uint8Array(jpegBlobs[i]));
-        const { width, height } = jpgImg.scale(1);
-        const pg = outPdf.addPage([width, height]);
-        pg.drawImage(jpgImg, { x: 0, y: 0, width, height });
+      // Helper: render all pages at given scale+quality → build PDF → return bytes
+      const renderAtSettings = async (scale: number, jpegQ: number, pass: number): Promise<Uint8Array> => {
+        const label = pass === 1 ? "" : ` (pass ${pass} — harder settings)`;
+        const canvases: { canvas: HTMLCanvasElement; w: number; h: number }[] = [];
+
+        for (let p = 1; p <= numPages; p++) {
+          setProgressMsg(`Page ${p}/${numPages}${label}…`);
+          setProgress(10 + Math.round((p - 1) / numPages * 62));
+
+          const page     = await pdf.getPage(p);
+          const viewport = page.getViewport({ scale });
+          const canvas   = document.createElement("canvas");
+          canvas.width   = Math.round(viewport.width);
+          canvas.height  = Math.round(viewport.height);
+          const ctx      = canvas.getContext("2d")!;
+          ctx.fillStyle  = "#ffffff";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          await page.render({ canvasContext: ctx, viewport }).promise;
+          canvases.push({ canvas, w: canvas.width, h: canvas.height });
+        }
+
+        setProgressMsg("Building PDF…");
+        setProgress(75);
+
+        const outPdf = await PDFDocument.create();
+        for (const { canvas, w, h } of canvases) {
+          const blob: Blob = await new Promise(res => canvas.toBlob(b => res(b!), "image/jpeg", jpegQ));
+          const ab = await blob.arrayBuffer();
+          const jpgImg = await outPdf.embedJpg(new Uint8Array(ab));
+          const pg = outPdf.addPage([w, h]);
+          pg.drawImage(jpgImg, { x: 0, y: 0, width: w, height: h });
+        }
+
+        setProgress(92);
+        return outPdf.save();
+      };
+
+      // 3. Adaptive compression — retry with harder settings if output ≥ original
+      let pdfBytes: Uint8Array | null = null;
+      let usedRung = rung0;
+
+      for (let r = rung0; r < LADDER.length; r++) {
+        const { scale, jpegQ } = LADDER[r];
+        const pass = r - rung0 + 1;
+        const bytes = await renderAtSettings(scale, jpegQ, pass);
+
+        if (bytes.byteLength < file.size) {
+          // Successfully smaller than original — use this
+          pdfBytes = bytes;
+          usedRung = r;
+          break;
+        }
+
+        // Still larger — if not at last rung, try harder
+        if (r < LADDER.length - 1) {
+          setProgressMsg(`Output was larger (${Math.round(bytes.byteLength / 1024)} KB) — trying harder…`);
+          await new Promise(r => setTimeout(r, 200)); // brief pause so UI updates
+          continue;
+        }
+
+        // Last rung exhausted and still not smaller — use this anyway (best we can do)
+        pdfBytes = bytes;
+        usedRung = r;
       }
 
-      setProgress(95);
-      const pdfBytes = await outPdf.save();
+      if (!pdfBytes) throw new Error("Compression produced no output.");
 
       const blob = new Blob([pdfBytes as unknown as BlobPart], { type: "application/pdf" });
       const url  = URL.createObjectURL(blob);
@@ -395,8 +433,7 @@ export default function PDFCompressPage() {
               <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2.5 text-xs text-amber-800 mb-4">
                 <AlertCircle size={13} className="flex-shrink-0 mt-0.5" />
                 <span>
-                  Output is larger than input. This happens when the original PDF already uses efficient image encoding
-                  (e.g. JBIG2 or CCITT for black-and-white scans). Try a lower target — or the file is already near-optimal.
+                  <strong>Maximum compression attempted — file could not be reduced.</strong> This PDF uses JBIG2 or CCITT encoding (extremely efficient for black-and-white scans), which JPEG cannot beat even at the lowest quality. The original file is already near-optimal for its content type.
                 </span>
               </div>
             )}

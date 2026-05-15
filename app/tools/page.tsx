@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   FileText, Calculator, BarChart3, FileSpreadsheet, Clock, RefreshCw,
-  TrendingUp, Merge, Minimize2, FileOutput, Database, Table, Shield, ArrowRight, Landmark, ScrollText, LayoutDashboard, LayoutGrid
+  TrendingUp, Merge, Minimize2, FileOutput, Database, Table, Shield, ArrowRight, Landmark, ScrollText, LayoutDashboard, LayoutGrid, Wand2
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -41,6 +41,15 @@ const tools = [
     href: "/tools/dashboard",
     badge: "New",
     badgeColor: "bg-purple-100 text-purple-800",
+    category: "Finance",
+  },
+  {
+    icon: Wand2,
+    label: "Smart PDF → Excel",
+    desc: "Universal PDF table extractor. Upload any bank statement, ledger, or tabular PDF — auto-detects tables, removes repeated headers, outputs 2-sheet Excel: raw extraction + standardised Date/Particulars/Debit/Credit/Balance.",
+    href: "/tools/pdf-to-excel",
+    badge: "New",
+    badgeColor: "bg-green-100 text-green-800",
     category: "Finance",
   },
   {
@@ -200,7 +209,7 @@ export default function ToolsPage() {
           <div className="max-w-2xl">
             <h1 className="text-4xl font-bold text-white mb-4">Free Tax & Finance Tools</h1>
             <p className="text-blue-200 text-lg leading-relaxed">
-              16 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
+              17 professional-grade tools built specifically for Indian tax compliance and finance workflows. Free forever.
             </p>
           </div>
         </div>

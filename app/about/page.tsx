@@ -17,24 +17,26 @@ export const metadata: Metadata = {
     "about Associate Piyush",
   ],
   alternates: {
-    canonical: "https://associatepiyush.in/about",
+    canonical: "https://associatepiyush.co.in/about",
   },
   openGraph: {
     title: "About Piyush Nimse | Tax & Finance Consultant Pune",
     description:
       "Piyush Nimse — Forensic Accounting & Tax Consultant in Pune since 2020. GST, Income Tax, TDS, Audit expert. Pan India service.",
-    url: "https://associatepiyush.in/about",
+    url: "https://associatepiyush.co.in/about",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Piyush Nimse - Tax Consultant Pune" }],
   },
 };
 
 const specializations = [
   "GST Compliance & Reconciliation (GSTR-1, 3B, 9, 9C)",
+  "GST Refund for SEZ Suppliers & Exporters (Zero-Rated Supply)",
   "Forensic Accounting & Financial Fraud Detection",
   "Income Tax Advisory (ITR, Appeals, Scrutiny Handling)",
   "TDS Compliance (Sec 192–194N, Return Filing, 26AS Recon)",
   "Statutory & Internal Audit under Companies Act 2013",
   "Financial Statement Analysis & Ratio Analysis",
+  "Long Term Capital Gain (LTCG) on Sale of Property",
   "Tax Regime Optimization (Old vs New Regime)",
   "Business Structuring & Cost Optimization",
   "Advance Tax & Minimum Alternate Tax (MAT) Planning",

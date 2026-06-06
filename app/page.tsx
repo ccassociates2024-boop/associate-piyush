@@ -169,43 +169,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── ABOUT STRIP ──────────────────────────────────────────────────── */}
-      <section style={{ background: "var(--ap-surface)", borderTop: "1px solid var(--ap-border)", borderBottom: "1px solid var(--ap-border)" }}
-               className="py-12">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div data-reveal className="grid sm:grid-cols-2 gap-8 items-center">
-            {/* Left — brief bio */}
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest mb-2"
-                 style={{ color: "var(--ap-gold)" }}>About</p>
-              <h2 className="text-xl sm:text-2xl font-bold mb-3" style={{ color: "var(--ap-text)" }}>
-                Piyush Nimse — Tax &amp; Finance Consultant
-              </h2>
-              <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--ap-text-muted)" }}>
-                Based in Pune, Piyush works with individuals, SMEs, and professionals across India on income tax returns, GST compliance, TDS, and tax notice resolution. With 950+ ITRs filed and 150+ GST clients served, his approach is practical, accurate, and client-focused.
-              </p>
-              <Link href="/about" className="btn-outline gap-1.5 text-sm">
-                Learn More <ChevronRight size={13} />
-              </Link>
-            </div>
-            {/* Right — credential highlights */}
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { icon: "⚖️", title: "950+ Income Tax Returns Filed", desc: "Individuals, businesses & NRIs across India" },
-                { icon: "🏢", title: "150+ GST Clients",  desc: "Reconciliation, registration, and returns" },
-                { icon: "📋", title: "Notice Resolution", desc: "Sec 143(1), 148A, 245 and more handled" },
-              ].map((c) => (
-                <div key={c.title} className="ap-card p-4">
-                  <div className="text-xl mb-2">{c.icon}</div>
-                  <div className="font-semibold text-sm mb-1" style={{ color: "var(--ap-text)" }}>{c.title}</div>
-                  <div className="text-xs leading-snug" style={{ color: "var(--ap-text-muted)" }}>{c.desc}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── FREE TOOLS ───────────────────────────────────────────────────── */}
       <section style={{ background: "var(--ap-surface-2)" }} className="py-20 border-b ap-divider">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">

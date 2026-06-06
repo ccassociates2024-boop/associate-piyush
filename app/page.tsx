@@ -3,8 +3,8 @@ import Link from "next/link";
 import {
   FileSpreadsheet, Search, Calculator, ClipboardCheck, BarChart3, Briefcase,
   ArrowRight, CheckCircle, Shield, MapPin, FileText, RefreshCw, Clock,
-  TrendingUp, Merge, FileOutput, Database, ChevronRight, Phone, Mail,
-  Lightbulb, MessageCircle,
+  TrendingUp, Merge, Home, Database, ChevronRight, Phone, Mail,
+  Lightbulb,
 } from "lucide-react";
 import Team from "@/components/Team";
 
@@ -15,15 +15,15 @@ export const metadata: Metadata = {
 };
 
 const services = [
-  { icon: RefreshCw,       title: "GST",                         desc: "End-to-end GST compliance (GSTR-1, 3B, 9), ITC claim management, and refund for SEZ suppliers & exporters.", href: "/services#gst"                    },
-  { icon: Search,          title: "Forensic Accounting",     desc: "Financial fraud detection, transaction trail analysis, and investigative accounting for legal proceedings.",    href: "/services#forensic"               },
-  { icon: Calculator,      title: "Income Tax Advisory",     desc: "ITR filing, tax planning, scrutiny handling, and regime optimisation for individuals and businesses.",          href: "/services#income-tax"              },
-  { icon: ClipboardCheck,  title: "TDS Compliance",          desc: "Section 192–194N TDS computation, return filing, 26AS reconciliation, and default rectification.",            href: "/services#tds"                    },
-  { icon: BarChart3,       title: "Audit & Assurance",       desc: "Statutory, internal, and compliance audits with actionable findings and management letter.",                   href: "/services#audit"                  },
-  { icon: Briefcase,       title: "Business Advisory",       desc: "Business structuring, cost optimisation, financial planning, and growth strategy for SMEs.",                   href: "/services#business"               },
-  { icon: TrendingUp,      title: "Virtual CFO Service",     desc: "Senior financial leadership for your business — MIS, budgeting, cash flow, compliance calendar, and investor readiness.", href: "/services#virtual-cfo"   },
-  { icon: FileSpreadsheet, title: "Outsourced Accounting",   desc: "Full-cycle bookkeeping, bank reconciliation, GST-ready books, payroll, and monthly financial statements.",    href: "/services#outsourced-accounting"  },
-  { icon: Lightbulb,       title: "Financial Consultation",  desc: "Personalised financial guidance — tax-efficient planning, debt management, profitability analysis, and custom financial roadmaps.", href: "/services#financial-consultation" },
+  { icon: Calculator,      title: "Income Tax Advisory",    desc: "ITR filing, tax planning, regime optimisation, LTCG on property, scrutiny & notice handling for individuals and businesses.",   href: "/services#income-tax"             },
+  { icon: RefreshCw,       title: "GST",                    desc: "End-to-end GST compliance (GSTR-1, 3B, 9), ITC claim management, and refund for SEZ suppliers & exporters.",                   href: "/services#gst"                    },
+  { icon: ClipboardCheck,  title: "TDS Compliance",         desc: "Section 192–194T TDS computation, return filing, 26AS reconciliation, and default rectification.",                             href: "/services#tds"                    },
+  { icon: BarChart3,       title: "Audit & Assurance",      desc: "CA-certified statutory, tax, and internal audits with actionable findings and management letter.",                              href: "/services#audit"                  },
+  { icon: TrendingUp,      title: "Virtual CFO Service",    desc: "Senior financial leadership for your business — MIS, budgeting, cash flow, compliance calendar, and investor readiness.",      href: "/services#virtual-cfo"            },
+  { icon: Briefcase,       title: "Business Advisory",      desc: "Business structuring, cost optimisation, financial planning, and growth strategy for SMEs and startups.",                       href: "/services#business"               },
+  { icon: Lightbulb,       title: "Financial Consultation", desc: "Personalised financial guidance — tax-efficient planning, debt management, profitability analysis, and custom roadmaps.",       href: "/services#financial-consultation" },
+  { icon: FileSpreadsheet, title: "Outsourced Accounting",  desc: "Full-cycle bookkeeping, bank reconciliation, GST-ready books, payroll, and monthly financial statements.",                     href: "/services#outsourced-accounting"  },
+  { icon: Search,          title: "Forensic Accounting",    desc: "Financial fraud detection, transaction trail analysis, and investigative accounting for legal proceedings.",                    href: "/services#forensic"               },
 ];
 
 const tools = [
@@ -36,13 +36,13 @@ const tools = [
   { icon: TrendingUp,      label: "Advance Tax Calc",       href: "/tools/advance-tax",    badge: ""        },
   { icon: Database,        label: "Bank Statement → Excel", href: "/tools/bank-statement", badge: ""        },
   { icon: Merge,           label: "PDF Merge",              href: "/tools/pdf-merge",      badge: ""        },
-  { icon: FileOutput,      label: "Word to PDF",            href: "/tools/word-to-pdf",    badge: ""        },
+  { icon: Home,            label: "LTCG Property Calc",     href: "/tools/ltcg-property",  badge: "New"     },
 ];
 
 const stats = [
   { value: "950",  suffix: "+", label: "Income Tax Returns Filed" },
-  { value: "150",  suffix: "+", label: "GST Clients Served"     },
-  { value: "15",   suffix: "+", label: "Free Tools Built"       },
+  { value: "150",  suffix: "+", label: "GST Clients Served"       },
+  { value: "7",    suffix: "+", label: "Years Combined Practice"  },
 ];
 
 export default function HomePage() {
@@ -66,14 +66,14 @@ export default function HomePage() {
           <h1 data-reveal data-delay="100"
               className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-5 text-balance"
               style={{ color: "var(--ap-text)" }}>
-            Expert Tax &amp; Finance<br />
-            Advisory for <span className="text-gold-gradient">Indian Businesses</span>
+            Tax &amp; Finance Advisory<br />
+            for <span className="text-gold-gradient">Individuals, SMEs &amp; Startups</span>
           </h1>
 
           <p data-reveal data-delay="200"
              className="text-base sm:text-lg leading-relaxed mb-10 max-w-2xl"
              style={{ color: "var(--ap-text-muted)" }}>
-            Piyush Nimse helps individuals, SMEs, and professionals with GST reconciliation, income tax returns, TDS compliance, and forensic accounting — across India.
+            Piyush Nimse &amp; CA Sourabh Chavan — your complete tax and finance team. GST compliance, income tax returns, audits, TDS, Virtual CFO, and financial advisory. Serving clients across India from Pune.
           </p>
 
           {/* CTAs */}
@@ -92,9 +92,9 @@ export default function HomePage() {
                style={{ borderTop: "1px solid var(--ap-border)" }}>
             {[
               { icon: CheckCircle, text: "100% Confidential" },
-              { icon: CheckCircle, text: "Pan India Services" },
               { icon: CheckCircle, text: "First Consultation Free" },
-              { icon: CheckCircle, text: "Quick Turnaround" },
+              { icon: CheckCircle, text: "Response within 2–3 Working Days" },
+              { icon: CheckCircle, text: "CA-Certified Practice" },
             ].map(({ icon: Icon, text }) => (
               <div key={text} className="flex items-center gap-1.5 text-sm" style={{ color: "var(--ap-text-muted)" }}>
                 <Icon size={14} style={{ color: "var(--ap-green)" }} />
@@ -134,7 +134,7 @@ export default function HomePage() {
             <p className="text-xs font-semibold uppercase tracking-widest mb-2"
                style={{ color: "var(--ap-gold)" }}>Services</p>
             <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--ap-text)" }}>
-              What We Help With
+              Our Services
             </h2>
           </div>
 
@@ -220,73 +220,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── TAX REGIME HIGHLIGHT ─────────────────────────────────────────── */}
-      <section style={{ background: "var(--ap-surface)" }} className="py-20 border-b ap-divider">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-
-            <div data-reveal>
-              <p className="text-xs font-semibold uppercase tracking-widest mb-2"
-                 style={{ color: "var(--ap-gold)" }}>Income Tax Advisory</p>
-              <h2 className="text-2xl sm:text-3xl font-bold leading-snug mb-4"
-                  style={{ color: "var(--ap-text)" }}>
-                Old vs New Regime —<br />Which Saves More for You?
-              </h2>
-              <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--ap-text-muted)" }}>
-                Under Finance Act 2025, the New Regime offers zero tax up to ₹12 lakh. But the Old Regime with 80C, 80D, and HRA can still win for high-deduction earners. We run the numbers for your exact situation.
-              </p>
-              <ul className="space-y-2.5 mb-8">
-                {["ITR-1 to ITR-6 filing", "Old vs New regime comparison", "80C / 80D optimisation", "LTCG on property sale — Sec 54/54F relief", "Capital gains tax planning", "Scrutiny & notice handling", "Appeals before CIT(A) / ITAT"].map((pt) => (
-                  <li key={pt} className="flex items-center gap-2 text-sm" style={{ color: "var(--ap-text-muted)" }}>
-                    <CheckCircle size={13} style={{ color: "var(--ap-green)", flexShrink: 0 }} />
-                    {pt}
-                  </li>
-                ))}
-              </ul>
-              <div className="flex flex-wrap gap-3">
-                <Link href="/services#income-tax" className="btn-primary gap-1.5 text-sm">
-                  View Service <ArrowRight size={14} />
-                </Link>
-                <Link href="/tools/itr-estimator" className="btn-outline gap-1.5 text-sm">
-                  <Calculator size={13} /> Free ITR Estimator
-                </Link>
-              </div>
-            </div>
-
-            <div data-reveal data-delay="200" className="space-y-3">
-              {[
-                { label: "New Regime (FY 2026-27)", rate: "Zero tax up to ₹12L", note: "Standard deduction ₹75,000. Ideal for salaried with fewer deductions." },
-                { label: "Old Regime",              rate: "₹50,000 std. deduction", note: "Add 80C (₹1.5L) + 80D + HRA + NPS — better for high-deduction earners." },
-              ].map(({ label, rate, note }) => (
-                <div key={label} className="ap-card p-5">
-                  <div className="flex items-start justify-between gap-3 mb-2">
-                    <div className="font-semibold text-sm" style={{ color: "var(--ap-text)" }}>{label}</div>
-                    <span className="text-xs font-semibold px-2 py-0.5 rounded whitespace-nowrap"
-                          style={{ background: "var(--ap-gold-bg)", color: "var(--ap-gold)" }}>
-                      {rate}
-                    </span>
-                  </div>
-                  <p className="text-xs leading-relaxed" style={{ color: "var(--ap-text-muted)" }}>{note}</p>
-                </div>
-              ))}
-              <div className="ap-card p-5" style={{ borderLeft: "3px solid var(--ap-gold)" }}>
-                <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "var(--ap-gold)" }}>
-                  Try it free
-                </p>
-                <p className="font-semibold text-sm mb-1" style={{ color: "var(--ap-text)" }}>
-                  Income Tax Estimator — FY 2026-27
-                </p>
-                <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--ap-text-muted)" }}>
-                  Enter your income &amp; deductions — see both regimes compared side by side, instantly.
-                </p>
-                <Link href="/tools/itr-estimator" className="inline-flex items-center gap-1 text-xs font-semibold"
-                      style={{ color: "var(--ap-gold)" }}>
-                  Open Tool <ArrowRight size={11} />
-                </Link>
-              </div>
-            </div>
-
-          </div>
+      {/* ── TAX REGIME PROMO STRIP ────────────────────────────────────────── */}
+      <section className="py-5 border-b ap-divider" style={{ background: "var(--ap-gold-bg)" }}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-sm font-medium text-center sm:text-left" style={{ color: "var(--ap-text)" }}>
+            🧮 <strong>Not sure which tax regime saves you more?</strong> — Old Regime with 80C/HRA vs New Regime zero-tax up to ₹12L.
+          </p>
+          <Link href="/tools/itr-estimator"
+                className="btn-gold shrink-0 gap-1.5 text-sm whitespace-nowrap">
+            Free ITR Estimator <ArrowRight size={14} />
+          </Link>
         </div>
       </section>
 
@@ -304,17 +247,6 @@ export default function HomePage() {
             </p>
           </div>
           <Team />
-          <div data-reveal className="mt-8">
-            <a
-              href="https://wa.me/918421465966?text=Hello%20C.A.%20Sourabh%2C%20I%20need%20consultation."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-lg transition-all"
-              style={{ background: "rgba(22,163,74,0.10)", color: "#16A34A", border: "1px solid rgba(22,163,74,0.20)" }}
-            >
-              <MessageCircle size={14} /> WhatsApp C.A. Sourabh — +91 84214 65966
-            </a>
-          </div>
         </div>
       </section>
 
@@ -327,10 +259,10 @@ export default function HomePage() {
               First Consultation Free
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Have a tax matter to resolve?
+              Stop overpaying taxes.<br className="hidden sm:block" /> Let&apos;s fix that.
             </h2>
             <p className="text-base mb-10" style={{ color: "rgba(255,255,255,0.55)" }}>
-              Reach out today — confidential, no obligation, and quick to respond.
+              Whether it&apos;s a notice, GST refund, LTCG on property, or just filing your ITR — we respond within 2–3 working days and your first consultation is free.
             </p>
             <div className="flex flex-wrap justify-center gap-3 mb-10">
               <Link href="/contact" className="btn-gold gap-2 px-7 py-3 text-sm">

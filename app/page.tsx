@@ -78,13 +78,9 @@ export default function HomePage() {
 
           {/* CTAs */}
           <div data-reveal data-delay="300" className="flex flex-wrap gap-3 mb-12">
-            <a
-              href="https://wa.me/917507354141?text=Hello%20Piyush%2C%20I%20would%20like%20to%20book%20a%20free%20consultation%20call.%20Please%20let%20me%20know%20your%20available%20slots."
-              target="_blank" rel="noopener noreferrer"
-              className="btn-gold gap-2 px-6 py-3 text-sm"
-            >
-              <MessageCircle size={15} /> Book a Free Call
-            </a>
+            <Link href="/contact" className="btn-gold gap-2 px-6 py-3 text-sm">
+              Book a Free Consultation <ArrowRight size={15} />
+            </Link>
             <Link href="/tools" className="btn-outline gap-2 px-6 py-3 text-sm">
               <Shield size={14} /> Explore Free Tools
             </Link>

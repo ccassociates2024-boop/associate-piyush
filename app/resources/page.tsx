@@ -18,13 +18,13 @@ export const metadata: Metadata = {
     "income tax resources",
   ],
   alternates: {
-    canonical: "https://associatepiyush.in/resources",
+    canonical: "https://associatepiyush.co.in/resources",
   },
   openGraph: {
     title: "Free Tax & Finance Guides | Associate Piyush",
     description:
       "Expert tax guides: GST ITC, TDS, Old vs New Regime, GSTR-9, Forensic Accounting & more — free resources by Piyush Nimse.",
-    url: "https://associatepiyush.in/resources",
+    url: "https://associatepiyush.co.in/resources",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Tax Resources - Associate Piyush" }],
   },
 };
@@ -83,6 +83,24 @@ const taxUpdates = [
 // ── Articles ─────────────────────────────────────────────────────────────────
 const articles = [
   {
+    slug: "ltcg-flat-sale-section-54",
+    title: "LTCG on Flat Sale & Section 54 Exemption — Complete Guide",
+    category: "Income Tax",
+    readTime: "10 min read",
+    date: "June 7, 2026",
+    excerpt:
+      "Long Term Capital Gain on property sale: 12.5% vs 20% with CII indexation, Section 54 conditions, CGAS deposits, Section 54EC bonds — everything you need before selling your flat.",
+  },
+  {
+    slug: "gst-refund-exporters-lut-igst",
+    title: "GST Refund for Exporters: LUT vs IGST Method",
+    category: "GST",
+    readTime: "12 min read",
+    date: "June 7, 2026",
+    excerpt:
+      "Export under LUT (no IGST) or with IGST payment and claim refund? Complete guide for Indian exporters and SEZ suppliers — ITC refund calculation, Rule 89/96A, and best method comparison.",
+  },
+  {
     slug: "gst-itc-eligibility",
     title: "Complete Guide to GST ITC Eligibility under Section 16",
     category: "GST",
@@ -93,12 +111,12 @@ const articles = [
   },
   {
     slug: "tds-rate-chart",
-    title: "TDS Rate Chart FY 2025-26: Section-wise Reference",
+    title: "TDS Rate Chart FY 2026-27: Section-wise Reference",
     category: "TDS",
     readTime: "6 min read",
     date: "April 3, 2026",
     excerpt:
-      "Complete TDS rate chart for FY 2025-26 covering all sections from 192 to 194N with threshold limits, applicable forms, and due date reminders.",
+      "Complete TDS rate chart for FY 2026-27 covering all sections from 192 to 194T — including new Section 194T (partner payments), 194R (perquisites), and 194S (crypto/VDA).",
   },
   {
     slug: "old-vs-new-regime",
@@ -107,7 +125,7 @@ const articles = [
     readTime: "7 min read",
     date: "April 1, 2026",
     excerpt:
-      "A detailed analysis of old vs new tax regime for FY 2025-26 with break-even salary analysis, optimal deduction scenarios, and a decision framework.",
+      "A detailed analysis of old vs new tax regime for FY 2026-27 with break-even salary analysis, optimal deduction scenarios, and a decision framework.",
   },
   {
     slug: "gstr9-filing-guide",
@@ -143,6 +161,7 @@ const categoryColors: Record<string, string> = {
   TDS: "bg-purple-100 text-purple-800",
   "Income Tax": "bg-green-100 text-green-800",
   Forensic: "bg-orange-100 text-orange-800",
+  Finance: "bg-amber-100 text-amber-800",
 };
 
 const WA_URL =

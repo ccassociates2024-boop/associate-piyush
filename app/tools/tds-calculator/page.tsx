@@ -15,18 +15,21 @@ interface TDSSection {
 }
 
 const TDS_SECTIONS: TDSSection[] = [
-  { section: "192", nature: "Salary", rateIndividual: 0, rateCompany: 0, threshold: 250000, form: "24Q", notes: "Rate based on tax slab; as per Form 12BA" },
-  { section: "194", nature: "Dividend", rateIndividual: 10, rateCompany: 10, threshold: 5000, form: "26Q", notes: "" },
-  { section: "194A", nature: "Interest (Bank/Others)", rateIndividual: 10, rateCompany: 10, threshold: 40000, form: "26Q", notes: "Threshold ₹50,000 for senior citizens" },
-  { section: "194B", nature: "Lottery Winnings", rateIndividual: 30, rateCompany: 30, threshold: 10000, form: "26Q", notes: "No surcharge threshold for individuals" },
-  { section: "194C", nature: "Contractor/Subcontractor", rateIndividual: 1, rateCompany: 2, threshold: 30000, form: "26Q", notes: "Aggregate ₹1,00,000 in FY" },
-  { section: "194D", nature: "Insurance Commission", rateIndividual: 5, rateCompany: 10, threshold: 15000, form: "26Q", notes: "" },
-  { section: "194H", nature: "Commission/Brokerage", rateIndividual: 5, rateCompany: 5, threshold: 15000, form: "26Q", notes: "" },
-  { section: "194I", nature: "Rent (Land & Building)", rateIndividual: 10, rateCompany: 10, threshold: 240000, form: "26Q", notes: "Plant & Machinery: 2%" },
-  { section: "194IA", nature: "Purchase of Immovable Property", rateIndividual: 1, rateCompany: 1, threshold: 5000000, form: "26QB", notes: "Threshold ₹50,00,000" },
-  { section: "194J", nature: "Professional/Technical Fees", rateIndividual: 10, rateCompany: 10, threshold: 30000, form: "26Q", notes: "Royalty/Director fees: 10%; Technical: 2%" },
-  { section: "194N", nature: "Cash Withdrawal (Bank)", rateIndividual: 2, rateCompany: 2, threshold: 2000000, form: "26Q", notes: "Higher rate if ITR not filed: 5% above ₹20L" },
-  { section: "194Q", nature: "Purchase of Goods", rateIndividual: 0.1, rateCompany: 0.1, threshold: 5000000, form: "26Q", notes: "Buyer TDS; aggregate purchase > ₹50L in FY" },
+  { section: "192",   nature: "Salary",                              rateIndividual: 0,    rateCompany: 0,    threshold: 250000,  form: "24Q",  notes: "Rate based on applicable tax slab; employer to consider all exemptions & deductions per Form 12BA / 12BB" },
+  { section: "194",   nature: "Dividend",                            rateIndividual: 10,   rateCompany: 10,   threshold: 5000,    form: "26Q",  notes: "Threshold ₹5,000 per FY per assessee" },
+  { section: "194A",  nature: "Interest (Bank / Others)",            rateIndividual: 10,   rateCompany: 10,   threshold: 40000,   form: "26Q",  notes: "Threshold ₹40,000 for banks; ₹50,000 for senior citizens; ₹5,000 for others" },
+  { section: "194B",  nature: "Lottery / Game Show Winnings",        rateIndividual: 30,   rateCompany: 30,   threshold: 10000,   form: "26Q",  notes: "TDS on each prize separately; no basic exemption benefit" },
+  { section: "194C",  nature: "Contractor / Subcontractor",          rateIndividual: 1,    rateCompany: 2,    threshold: 30000,   form: "26Q",  notes: "Single payment threshold ₹30,000 OR aggregate ₹1,00,000 in FY" },
+  { section: "194D",  nature: "Insurance Commission",                rateIndividual: 5,    rateCompany: 10,   threshold: 15000,   form: "26Q",  notes: "" },
+  { section: "194H",  nature: "Commission / Brokerage",              rateIndividual: 5,    rateCompany: 5,    threshold: 15000,   form: "26Q",  notes: "Includes commission on sale of lottery tickets" },
+  { section: "194I",  nature: "Rent (Land & Building)",              rateIndividual: 10,   rateCompany: 10,   threshold: 240000,  form: "26Q",  notes: "Threshold ₹2,40,000/year. Plant & Machinery rent: 2%" },
+  { section: "194IA", nature: "Purchase of Immovable Property",      rateIndividual: 1,    rateCompany: 1,    threshold: 5000000, form: "26QB", notes: "Threshold ₹50,00,000 per property. Buyer deducts; pays via Form 26QB" },
+  { section: "194J",  nature: "Professional / Technical Fees",       rateIndividual: 10,   rateCompany: 10,   threshold: 30000,   form: "26Q",  notes: "Technical services (non-professional): 2%. Director fees: 10%. Royalty: 10%" },
+  { section: "194N",  nature: "Cash Withdrawal (Bank)",              rateIndividual: 2,    rateCompany: 2,    threshold: 2000000, form: "26Q",  notes: "For non-ITR filers: 2% from ₹20L–₹1 Cr and 5% above ₹1 Cr. Normal filers: 2% above ₹1 Cr only" },
+  { section: "194Q",  nature: "Purchase of Goods",                   rateIndividual: 0.1,  rateCompany: 0.1,  threshold: 5000000, form: "26Q",  notes: "Applies to buyer whose turnover > ₹10 Cr. Aggregate purchase from same seller > ₹50L in FY" },
+  { section: "194R",  nature: "Benefit / Perquisite (Business)",     rateIndividual: 10,   rateCompany: 10,   threshold: 20000,   form: "26Q",  notes: "TDS on benefits given to dealers/agents/distributors. Threshold ₹20,000 per FY per recipient. Effective 1 July 2022" },
+  { section: "194S",  nature: "Virtual Digital Assets (Crypto/NFT)", rateIndividual: 1,    rateCompany: 1,    threshold: 10000,   form: "26QE", notes: "TDS on transfer of VDA (crypto, NFT). Threshold ₹10,000 for others; ₹50,000 for specified persons (family/employer). Pay via Form 26QE" },
+  { section: "194T",  nature: "Payment to Partners (Firm / LLP)",    rateIndividual: 10,   rateCompany: 10,   threshold: 20000,   form: "26Q",  notes: "NEW from 1 Apr 2025. Firm/LLP must deduct TDS on salary, bonus, commission, interest paid to partners. Threshold ₹20,000 per partner per FY" },
 ];
 
 const PAYEE_TYPES = [
@@ -34,14 +37,14 @@ const PAYEE_TYPES = [
   { value: "company", label: "Company / LLP / Firm" },
 ];
 
-const FY_OPTIONS = ["2025-26", "2024-25", "2023-24"];
+const FY_OPTIONS = ["2026-27", "2025-26", "2024-25", "2023-24"];
 
 export default function TDSCalculatorPage() {
   const [sectionKey, setSectionKey] = useState("194J");
   const [payeeType, setPayeeType] = useState("individual");
   const [amount, setAmount] = useState("");
   const [panAvailable, setPanAvailable] = useState("yes");
-  const [fy, setFY] = useState("2025-26");
+  const [fy, setFY] = useState("2026-27");
 
   const selected = useMemo(() =>
     TDS_SECTIONS.find(s => s.section === sectionKey) || TDS_SECTIONS[0],

@@ -6,15 +6,17 @@ import ServicesAccordion from "./ServicesAccordion";
 export const metadata: Metadata = {
   title: "Tax & Finance Services",
   description:
-    "Comprehensive tax and finance services in Pune — GST, Income Tax, TDS Compliance, Audit & Assurance, Virtual CFO, Outsourced Accounting & Financial Consultation. Pan India. Call +91 75073 54141.",
+    "Comprehensive tax and finance services — GST compliance & ITC refund, Income Tax Advisory, TDS, Audit, Virtual CFO, Outsourced Accounting & Financial Consultation. Based in Pune, serving clients Pan India. Call +91 75073 54141.",
   keywords: [
     "GST compliance pune",
-    "income tax advisory pune",
+    "GST refund exporters india",
+    "income tax advisory india",
+    "virtual CFO india",
+    "outsourced accounting india",
     "TDS compliance pune",
     "audit assurance pune",
-    "virtual CFO pune",
-    "outsourced accounting pune",
     "financial consultation pune",
+    "LTCG property tax advisor",
     "Piyush Nimse services",
   ],
   alternates: { canonical: "https://associatepiyush.co.in/services" },

@@ -9,8 +9,8 @@ import {
 import Team from "@/components/Team";
 
 export const metadata: Metadata = {
-  title: { absolute: "Associate Piyush | Tax & Finance Consultant, Pune" },
-  description: "Piyush Nimse — Expert Tax & Finance Consultant in Pune. 950+ income tax cases. GST Reconciliation, Income Tax Returns, TDS Compliance, Forensic Accounting & Tax Notice Reply. Call +91 75073 54141.",
+  title: { absolute: "Associate Piyush | Tax & Finance Consultant — Pune & Pan India" },
+  description: "Piyush Nimse & CA Sourabh Chavan — Expert Tax & Finance Consultants. 950+ ITR filed. GST compliance & ITC refunds, Income Tax, TDS, Virtual CFO, Outsourced Accounting, Forensic Accounting. Serving clients Pan India from Pune. Call +91 75073 54141.",
   alternates: { canonical: "https://associatepiyush.co.in" },
 };
 
@@ -78,9 +78,13 @@ export default function HomePage() {
 
           {/* CTAs */}
           <div data-reveal data-delay="300" className="flex flex-wrap gap-3 mb-12">
-            <Link href="/contact" className="btn-gold gap-2 px-6 py-3 text-sm">
-              Book a Free Consultation <ArrowRight size={15} />
-            </Link>
+            <a
+              href="https://wa.me/917507354141?text=Hello%20Piyush%2C%20I%20would%20like%20to%20book%20a%20free%20consultation%20call.%20Please%20let%20me%20know%20your%20available%20slots."
+              target="_blank" rel="noopener noreferrer"
+              className="btn-gold gap-2 px-6 py-3 text-sm"
+            >
+              <MessageCircle size={15} /> Book a Free Call
+            </a>
             <Link href="/tools" className="btn-outline gap-2 px-6 py-3 text-sm">
               <Shield size={14} /> Explore Free Tools
             </Link>

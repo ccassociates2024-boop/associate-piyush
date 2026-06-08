@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Clock, ArrowRight, BookOpen, Tag, Bell, Phone, Mail, MessageCircle, Calendar } from "lucide-react";
+import { Clock, ArrowRight, BookOpen, Tag, Bell, Phone, Mail, MessageCircle } from "lucide-react";
 import ComplianceCalendar from "./ComplianceCalendar";
 
 export const metadata: Metadata = {
@@ -251,29 +251,7 @@ export default function ResourcesPage() {
       {/* ── Section 2: Compliance Calendar ── */}
       <section className="bg-white py-14 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-              <Calendar size={18} className="text-gold" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-dark">Compliance Calendar — April 2026</h2>
-              <p className="text-muted text-sm mt-0.5">
-                <span className="inline-flex items-center gap-1 text-amber-700 font-medium">
-                  <span className="w-2 h-2 rounded-full bg-amber-400 inline-block" /> Amber = Overdue
-                </span>
-                &nbsp;&nbsp;
-                <span className="inline-flex items-center gap-1 text-green-700 font-medium">
-                  <span className="w-2 h-2 rounded-full bg-green-400 inline-block" /> Green = Upcoming
-                </span>
-              </p>
-            </div>
-          </div>
-
           <ComplianceCalendar />
-
-          <p className="text-[11px] text-muted mt-3">
-            * Due dates are as per Income-tax Act, 2025 and GST Act. Confirm with your CA for your specific category. Dates falling on public holidays may shift.
-          </p>
         </div>
       </section>
 

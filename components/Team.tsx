@@ -54,7 +54,7 @@ export default function Team() {
             A Complete Tax + CA Partnership
           </p>
           <p className="text-xs text-purple-700 leading-relaxed">
-            Together, Piyush Satish and Sourabh cover the full spectrum — from day-to-day tax filing and GST
+            Together, Piyush and Sourabh cover the full spectrum — from day-to-day tax filing and GST
             compliance to CA-certified audits, financial litigation, and strategic advisory.
             One point of contact. Complete coverage.
           </p>

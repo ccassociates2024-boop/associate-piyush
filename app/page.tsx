@@ -233,20 +233,58 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── PARTNERS ─────────────────────────────────────────────────────── */}
+      {/* ── HOW WE WORK ──────────────────────────────────────────────────── */}
       <section style={{ background: "var(--ap-surface)" }} className="py-20 border-b ap-divider">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div data-reveal className="mb-10">
+
+          {/* Section header */}
+          <div data-reveal className="mb-12">
             <p className="text-xs font-semibold uppercase tracking-widest mb-2"
-               style={{ color: "var(--ap-gold)" }}>Our Team</p>
+               style={{ color: "var(--ap-gold)" }}>How We Work</p>
             <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--ap-text)" }}>
-              The People Behind the Work
+              Simple Steps. Expert Results.
             </h2>
             <p className="text-sm mt-2 max-w-lg" style={{ color: "var(--ap-text-muted)" }}>
-              Every engagement is handled personally — precise, confidential, and results-driven.
+              From your first message to final filing — a clear, confidential process every time.
+            </p>
+          </div>
+
+          {/* 4-step process */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
+            {[
+              { step: "01", title: "Reach Out",       body: "WhatsApp, email, or the contact form — whichever is easiest. We reply within 2–3 working days." },
+              { step: "02", title: "Share Your Case", body: "Send your documents or describe your situation. Everything is handled with complete confidentiality." },
+              { step: "03", title: "Expert Review",   body: "CA-reviewed analysis specific to your numbers — tax-saving options, risks, and the best path forward." },
+              { step: "04", title: "Execute & File",  body: "Accurate, on-time filing. We keep you in the loop at every step until the job is fully done." },
+            ].map(({ step, title, body }) => (
+              <div key={step} data-reveal className="ap-card p-6 relative overflow-hidden">
+                <span className="absolute top-3 right-4 text-4xl font-black select-none"
+                      style={{ color: "var(--ap-gold-bg)", lineHeight: 1 }}>
+                  {step}
+                </span>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-4 text-sm font-bold"
+                     style={{ background: "var(--ap-gold-bg)", color: "var(--ap-gold)" }}>
+                  {step}
+                </div>
+                <h3 className="font-semibold text-sm mb-2" style={{ color: "var(--ap-text)" }}>{title}</h3>
+                <p className="text-xs leading-relaxed" style={{ color: "var(--ap-text-muted)" }}>{body}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Team divider */}
+          <div data-reveal className="mb-10">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2"
+               style={{ color: "var(--ap-gold)" }}>Meet the Experts</p>
+            <h3 className="text-xl sm:text-2xl font-bold" style={{ color: "var(--ap-text)" }}>
+              Handled by Qualified Professionals
+            </h3>
+            <p className="text-sm mt-2 max-w-lg" style={{ color: "var(--ap-text-muted)" }}>
+              Every case is personally reviewed and managed — not outsourced, not automated.
             </p>
           </div>
           <Team />
+
         </div>
       </section>
 

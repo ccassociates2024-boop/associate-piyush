@@ -10,20 +10,6 @@ const combinedExpertise = [
 
 const partners = [
   {
-    initials: "PN",
-    name: "Piyush Satish Nimse",
-    role: "Tax & Finance",
-    qualification: "Tax & Finance Consultant",
-    description:
-      "Specialises in Income Tax advisory, GST reconciliation, TDS compliance, forensic accounting, LTCG on property, and handling tax notices & assessments.",
-    phone: "+91 75073 54141",
-    phoneRaw: "917507354141",
-    email: "associate.piyush.nimse@gmail.com",
-    expertise: ["Income Tax", "GST", "TDS", "Forensic Accounting", "Tax Notices", "LTCG"],
-    accentBg: "#7C3AED",
-    highlight: "950+ Income Tax Returns · 150+ GST Clients",
-  },
-  {
     initials: "SBC",
     name: "C.A. Sourabh Bhimrao Chavan",
     role: "Audit, Advisory & Litigation",
@@ -36,6 +22,20 @@ const partners = [
     expertise: ["CA Firm", "Audit", "Income Tax", "GST", "Financial Litigation", "Financial Consultant"],
     accentBg: "#D97706",
     highlight: "7+ Years CA Practice · 100+ Audit Clients",
+  },
+  {
+    initials: "PN",
+    name: "Piyush Satish Nimse",
+    role: "Tax & Finance",
+    qualification: "Tax & Finance Consultant",
+    description:
+      "Specialises in Income Tax advisory, GST reconciliation, TDS compliance, forensic accounting, LTCG on property, and handling tax notices & assessments.",
+    phone: "+91 75073 54141",
+    phoneRaw: "917507354141",
+    email: "associate.piyush.nimse@gmail.com",
+    expertise: ["Income Tax", "GST", "TDS", "Forensic Accounting", "Tax Notices", "LTCG"],
+    accentBg: "#7C3AED",
+    highlight: "950+ Income Tax Returns · 150+ GST Clients",
   },
 ];
 

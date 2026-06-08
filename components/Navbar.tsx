@@ -10,7 +10,6 @@ const NAV_LINKS = [
   { label: "Services",  href: "/services" },
   { label: "Tools",     href: "/tools" },
   { label: "Resources", href: "/resources" },
-  { label: "About",     href: "/about" },
   { label: "Contact",   href: "/contact" },
 ];
 
@@ -18,7 +17,6 @@ const SPOTLIGHT_ITEMS = [
   { type: "page", icon: "🏠", label: "Home",        desc: "Main page",                  href: "/" },
   { type: "page", icon: "⚖️", label: "Services",    desc: "Tax & finance services",     href: "/services" },
   { type: "page", icon: "🛠", label: "Free Tools",   desc: "15 browser-based tools",     href: "/tools" },
-  { type: "page", icon: "👤", label: "About",        desc: "About Piyush Nimse",         href: "/about" },
   { type: "page", icon: "📬", label: "Contact",      desc: "Book a consultation",        href: "/contact" },
   { type: "page", icon: "📚", label: "Resources",    desc: "Tax guides & articles",      href: "/resources" },
   { type: "tool", icon: "🧾", label: "GST Invoice Generator", desc: "Generate GST invoices",    href: "/tools/gst-invoice" },

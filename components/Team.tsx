@@ -10,7 +10,7 @@ const combinedExpertise = [
 
 const partners = [
   {
-    initials: "SBC",
+    initials: "SC",
     name: "C.A. Sourabh Bhimrao Chavan",
     role: "Audit, Advisory & Litigation",
     qualification: "Chartered Accountant (ACA)",

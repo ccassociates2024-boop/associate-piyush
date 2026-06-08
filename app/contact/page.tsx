@@ -40,7 +40,7 @@ export default function ContactPage() {
             </h1>
             <p className="text-blue-200 text-lg leading-relaxed">
               Reach out via WhatsApp, call, or email. First consultation is free.
-              Response within 2 hours on business days.
+              Response within 2–3 working days.
             </p>
           </div>
         </div>

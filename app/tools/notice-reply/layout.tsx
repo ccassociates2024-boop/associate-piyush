@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     "section 245 refund adjustment reply",
     "income tax demand notice reply",
   ],
-  alternates: { canonical: "https://associatepiyush.in/tools/notice-reply" },
+  alternates: { canonical: "https://associatepiyush.co.in/tools/notice-reply" },
   openGraph: {
     title: "Income Tax Notice Reply Generator | Associate Piyush",
     description:
       "Generate professional IT notice replies for Sec 143(1), 148A, 139(9), 245, 156, 131. Free draft in 60 seconds.",
-    url: "https://associatepiyush.in/tools/notice-reply",
+    url: "https://associatepiyush.co.in/tools/notice-reply",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
 };

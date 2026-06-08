@@ -279,9 +279,12 @@ export default function BankStatementPage() {
     if (!file) return;
     setStep("processing"); setError(""); setProgress("Loading PDF…");
     try {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const pdfjs = await import("pdfjs-dist/webpack.mjs");
+      const pdfjs = await import("pdfjs-dist" as any) as any;
+      // Set worker source explicitly — required for pdfjs-dist v4.x in Next.js
+      if (!pdfjs.GlobalWorkerOptions.workerSrc) {
+        pdfjs.GlobalWorkerOptions.workerSrc =
+          `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+      }
       const buf   = await file.arrayBuffer();
       const pdf   = await pdfjs.getDocument({ data: new Uint8Array(buf), isEvalSupported:false, useSystemFonts:true, disableRange:true, disableStream:true, disableAutoFetch:true }).promise;
 
@@ -338,47 +341,149 @@ export default function BankStatementPage() {
   };
 
   const downloadExcel = useCallback(async () => {
-    const XLSX = await import("xlsx");
-    const hdrs = ["Date","Description","Cheque/Ref No","Debit (₹)","Credit (₹)","Balance (₹)","Category","Ledger"];
-    const rows = transactions.map(t => [t.date,t.description,t.cheque,t.debit||"",t.credit||"",t.balance||"",t.category,t.ledger]);
+    const EXM = await import("exceljs" as any) as any;
+    const EX  = EXM.default ?? EXM;
+    const wb  = new EX.Workbook();
+    wb.creator = "Associate Piyush";
 
-    const ws = XLSX.utils.aoa_to_sheet([hdrs, ...rows]);
+    // ── Category colour map ────────────────────────────────────────────────
+    const CAT_ARGB: Record<string,string> = {
+      Tax:"FFFFF3CD", Salary:"FFD4EDDA", Purchase:"FFF8D7DA", Income:"FFD1ECF1",
+      Rent:"FFE2D9F3", Utilities:"FFFDEBD0", Loan:"FFFCE4EC", Insurance:"FFE8F4FD",
+      Cash:"FFF5F5F5", Travel:"FFE8F8E8", Investment:"FFEAF4FB", Refund:"FFFFFFE7",
+    };
+    const sf = (argb: string) => ({ type: "pattern" as const, pattern: "solid" as const, fgColor: { argb } });
 
-    // Navy header
-    const range = XLSX.utils.decode_range(ws["!ref"]||"A1");
-    for (let c = range.s.c; c <= range.e.c; c++) {
-      const addr = XLSX.utils.encode_cell({ r:0, c });
-      if (ws[addr]) ws[addr].s = { fill:{fgColor:{rgb:"1E3A5F"}}, font:{color:{rgb:"FFFFFF"},bold:true} };
-    }
+    // ── Sheet 1: Transactions ─────────────────────────────────────────────
+    const ws = wb.addWorksheet("Transactions");
+    ws.columns = [
+      { width: 13 }, { width: 50 }, { width: 17 },
+      { width: 14 }, { width: 14 }, { width: 14 }, { width: 16 }, { width: 24 },
+    ];
+    ws.views = [{ state: "frozen", ySplit: 1 }];
 
-    const CAT_CLR: Record<string,string> = { Tax:"FFF3CD", Salary:"D4EDDA", Purchase:"F8D7DA", Income:"D1ECF1", Rent:"E2D9F3", Utilities:"FDEBD0", Loan:"FCE4EC", Insurance:"E8F4FD", Cash:"F5F5F5", Travel:"E8F8E8", Investment:"EAF4FB", Refund:"FFFDE7" };
-    for (let r = 1; r <= rows.length; r++) {
-      const cat = rows[r-1][6] as string;
-      const bg  = CAT_CLR[cat] || (r%2===0?"EBF3FB":"FFFFFF");
-      for (let c = range.s.c; c <= range.e.c; c++) {
-        const a = XLSX.utils.encode_cell({r,c});
-        if (!ws[a]) ws[a] = {t:"z"};
-        ws[a].s = { fill:{fgColor:{rgb:bg}} };
+    // Title banner
+    const titleRow = ws.addRow(["BANK STATEMENT — TRANSACTION REGISTER"]);
+    titleRow.height = 28;
+    ws.mergeCells("A1:H1");
+    titleRow.getCell(1).fill = sf("FF1E3A5F");
+    titleRow.getCell(1).font = { name: "Calibri", size: 13, bold: true, color: { argb: "FFFFFFFF" } };
+    titleRow.getCell(1).alignment = { horizontal: "center", vertical: "middle" };
+
+    // Header row
+    const headers = ["Date","Description","Cheque / Ref No","Debit (₹)","Credit (₹)","Balance (₹)","Category","Ledger"];
+    const hdrRow  = ws.addRow(headers);
+    hdrRow.height = 22;
+    headers.forEach((_, i) => {
+      const cell = hdrRow.getCell(i + 1);
+      cell.fill      = sf("FF2C5F8A");
+      cell.font      = { name: "Calibri", size: 10, bold: true, color: { argb: "FFFFFFFF" } };
+      cell.alignment = { horizontal: i >= 3 && i <= 5 ? "right" : "center", vertical: "middle" };
+    });
+
+    // Data rows
+    const AMT = "#,##0.00";
+    transactions.forEach((t, i) => {
+      const row = ws.addRow([t.date, t.description, t.cheque,
+        t.debit || "", t.credit || "", t.balance || "", t.category, t.ledger]);
+      row.height = 17;
+      const bg = CAT_ARGB[t.category] || (i % 2 === 0 ? "FFE8F0FE" : "FFFFFFFF");
+      row.eachCell((cell: any, cn: number) => {
+        cell.fill = sf(bg);
+        cell.font = { name: "Calibri", size: 10, color: { argb: "FF1E293B" } };
+        if (cn === 4) { // Debit — red
+          cell.font = { name: "Calibri", size: 10, bold: !!t.debit, color: { argb: t.debit ? "FFC0392B" : "FF9CA3AF" } };
+          cell.alignment = { horizontal: "right" };
+          if (t.debit) cell.numFmt = AMT;
+        } else if (cn === 5) { // Credit — green
+          cell.font = { name: "Calibri", size: 10, bold: !!t.credit, color: { argb: t.credit ? "FF1B7B3F" : "FF9CA3AF" } };
+          cell.alignment = { horizontal: "right" };
+          if (t.credit) cell.numFmt = AMT;
+        } else if (cn === 6) { // Balance
+          cell.alignment = { horizontal: "right" };
+          if (t.balance) cell.numFmt = AMT;
+        } else if (cn === 1) {
+          cell.alignment = { horizontal: "center" };
+        }
+      });
+    });
+
+    // Totals row
+    const totD = transactions.reduce((s, t) => s + (t.debit  || 0), 0);
+    const totC = transactions.reduce((s, t) => s + (t.credit || 0), 0);
+    const totRow = ws.addRow(["TOTAL", "", "", totD, totC, transactions[transactions.length - 1]?.balance || "", "", ""]);
+    totRow.height = 20;
+    totRow.eachCell((cell: any, cn: number) => {
+      cell.fill = sf("FF1E3A5F");
+      cell.font = { name: "Calibri", size: 10, bold: true, color: { argb: "FFFFFFFF" } };
+      if ([4, 5, 6].includes(cn)) {
+        cell.alignment = { horizontal: "right" };
+        cell.numFmt = AMT;
       }
-    }
+    });
 
-    ws["!cols"] = [{wch:13},{wch:50},{wch:16},{wch:14},{wch:14},{wch:14},{wch:16},{wch:24}];
+    // ── Sheet 2: Summary ──────────────────────────────────────────────────
+    const ws2 = wb.addWorksheet("Summary");
+    ws2.columns = [{ width: 28 }, { width: 20 }];
 
-    const total = (k: "debit"|"credit") => transactions.reduce((s,t)=>s+(t[k]||0),0);
-    const ws2   = XLSX.utils.aoa_to_sheet([
-      ["Summary",""],["",""],
-      ["Total Transactions", transactions.length],
-      ["Total Debits (₹)",   total("debit")],
-      ["Total Credits (₹)",  total("credit")],
-      ["Net Cash Flow (₹)",  total("credit")-total("debit")],
-      ["Closing Balance (₹)",transactions[transactions.length-1]?.balance||""],
-    ]);
-    ws2["!cols"] = [{wch:25},{wch:20}];
+    const s2Title = ws2.addRow(["TRANSACTION SUMMARY"]);
+    s2Title.height = 28; ws2.mergeCells("A1:B1");
+    s2Title.getCell(1).fill = sf("FF1E3A5F");
+    s2Title.getCell(1).font = { name: "Calibri", size: 13, bold: true, color: { argb: "FFFFFFFF" } };
+    s2Title.getCell(1).alignment = { horizontal: "center", vertical: "middle" };
 
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws,  "Transactions");
-    XLSX.utils.book_append_sheet(wb, ws2, "Summary");
-    XLSX.writeFile(wb, `bank_statement_${(file?.name||"export").replace(".pdf","")}.xlsx`);
+    const s2Rows: [string, any][] = [
+      ["Total Transactions",  transactions.length],
+      ["Total Debits (₹)",    totD],
+      ["Total Credits (₹)",   totC],
+      ["Net Cash Flow (₹)",   totC - totD],
+      ["Closing Balance (₹)", transactions[transactions.length - 1]?.balance || 0],
+    ];
+    s2Rows.forEach(([label, val], i) => {
+      const row = ws2.addRow([label, val]);
+      row.height = 20;
+      const isAmt = i >= 1;
+      row.getCell(1).fill = sf(i % 2 === 0 ? "FFE8F0FE" : "FFFFFFFF");
+      row.getCell(1).font = { name: "Calibri", size: 11, bold: true, color: { argb: "FF1E3A5F" } };
+      row.getCell(2).fill = sf(i % 2 === 0 ? "FFE8F0FE" : "FFFFFFFF");
+      row.getCell(2).font = { name: "Calibri", size: 11,
+        bold: true, color: { argb: i === 3 ? (totC >= totD ? "FF1B7B3F" : "FFC0392B") : "FF1E3A5F" } };
+      row.getCell(2).alignment = { horizontal: "right" };
+      if (isAmt) row.getCell(2).numFmt = AMT;
+    });
+
+    // ── Category breakdown ────────────────────────────────────────────────
+    ws2.addRow([]);
+    const bkHdr = ws2.addRow(["Category", "Total Amount (₹)"]);
+    bkHdr.height = 20;
+    bkHdr.eachCell((cell: any) => {
+      cell.fill = sf("FF2C5F8A");
+      cell.font = { name: "Calibri", size: 10, bold: true, color: { argb: "FFFFFFFF" } };
+      cell.alignment = { horizontal: "center" };
+    });
+    const catTotals: Record<string, number> = {};
+    transactions.forEach(t => { catTotals[t.category] = (catTotals[t.category] || 0) + (t.debit || t.credit || 0); });
+    Object.entries(catTotals).sort((a, b) => b[1] - a[1]).forEach(([cat, amt], i) => {
+      const row = ws2.addRow([cat, amt]);
+      row.height = 18;
+      const bg = CAT_ARGB[cat] || (i % 2 === 0 ? "FFE8F0FE" : "FFFFFFFF");
+      row.getCell(1).fill = sf(bg);
+      row.getCell(1).font = { name: "Calibri", size: 10 };
+      row.getCell(2).fill = sf(bg);
+      row.getCell(2).font = { name: "Calibri", size: 10 };
+      row.getCell(2).alignment = { horizontal: "right" };
+      row.getCell(2).numFmt = AMT;
+    });
+
+    // ── Download ──────────────────────────────────────────────────────────
+    const buf  = await wb.xlsx.writeBuffer();
+    const blob = new Blob([buf], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement("a");
+    a.href     = url;
+    a.download = `bank_statement_${(file?.name || "export").replace(".pdf", "")}.xlsx`;
+    a.click();
+    URL.revokeObjectURL(url);
   }, [transactions, file]);
 
   const fmt = (n: number) => n ? new Intl.NumberFormat("en-IN",{minimumFractionDigits:2}).format(n) : "";

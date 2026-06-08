@@ -12,11 +12,11 @@ export const metadata: Metadata = {
     "GSTR-2A vs purchase register",
     "free GST reconciliation tool",
   ],
-  alternates: { canonical: "https://associatepiyush.in/tools/gstr2a-recon" },
+  alternates: { canonical: "https://associatepiyush.co.in/tools/gstr2a-recon" },
   openGraph: {
     title: "Free GSTR-2A Reconciliation Tool | Associate Piyush",
     description: "Match your purchase register with GSTR-2A instantly. Find ITC mismatches. No data stored.",
-    url: "https://associatepiyush.in/tools/gstr2a-recon",
+    url: "https://associatepiyush.co.in/tools/gstr2a-recon",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
 };

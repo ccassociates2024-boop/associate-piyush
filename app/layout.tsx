@@ -14,10 +14,10 @@ export const metadata: Metadata = {
   keywords: ["tax consultant pune","GST reconciliation pune","forensic accounting india","income tax advisory pune","TDS compliance","CA consultant pune","Associate Piyush","Piyush Nimse"],
   authors: [{ name: "Associate Piyush" }],
   creator: "Associate Piyush",
-  metadataBase: new URL("https://associate-piyush-bduu.vercel.app"),
+  metadataBase: new URL("https://associatepiyush.co.in"),
   openGraph: {
     type: "website", locale: "en_IN",
-    url: "https://associate-piyush-bduu.vercel.app",
+    url: "https://associatepiyush.co.in",
     siteName: "Associate Piyush",
     title: "Associate Piyush | Tax & Finance Consultant, Pune",
     description: "Expert Tax Advisory, GST Reconciliation & Forensic Accounting. 950+ cases. Since 2025.",
@@ -32,7 +32,7 @@ const jsonLd = {
   "@type": "AccountingService",
   name: "Associate Piyush",
   description: "Expert Tax Advisory, GST Reconciliation & Forensic Accounting Services across India.",
-  url: "https://associate-piyush-bduu.vercel.app",
+  url: "https://associatepiyush.co.in",
   telephone: "+917507354141",
   email: "associate.piyush.nimse@gmail.com",
   foundingDate: "2025",
@@ -48,8 +48,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script dangerouslySetInnerHTML={{ __html: `
 (function(){
   try {
-    var t = localStorage.getItem('ap-theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var t = localStorage.getItem('ap-theme') || 'light';
     document.documentElement.classList.toggle('dark', t === 'dark');
   } catch(e){}
 })();
@@ -57,6 +56,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body className="font-sans antialiased">
+        <div id="ap-progress-bar" aria-hidden="true" />
         <Navbar />
         <ThemeProvider>
           <main className="min-h-screen">{children}</main>

@@ -98,6 +98,25 @@ function fmtDate(d: string) {
 function monthKey(d: string) { return d.slice(0, 7); }
 function uid() { return Math.random().toString(36).slice(2, 10); }
 function todayISO() { return new Date().toISOString().slice(0, 10); }
+function parseXLSXDate(val: any): string {
+  if (!val) return todayISO();
+  // Already ISO string YYYY-MM-DD
+  if (typeof val === "string" && /^\d{4}-\d{2}-\d{2}/.test(val)) return val.slice(0, 10);
+  // Excel serial number → JS date
+  if (typeof val === "number") {
+    const date = XLSX.SSF.parse_date_code(val);
+    if (date) return `${date.y}-${String(date.m).padStart(2,"0")}-${String(date.d).padStart(2,"0")}`;
+  }
+  // DD/MM/YYYY or DD-MM-YYYY (common Indian format)
+  if (typeof val === "string") {
+    const dm = val.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+    if (dm) return `${dm[3]}-${dm[2].padStart(2,"0")}-${dm[1].padStart(2,"0")}`;
+  }
+  // Fallback: try native Date parse
+  const d = new Date(val);
+  if (!isNaN(d.getTime())) return d.toISOString().slice(0, 10);
+  return todayISO();
+}
 function monthLabel(iso: string) {
   const [y, m] = iso.split("-");
   const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -409,89 +428,448 @@ export default function Dashboard() {
     setShowWelcome(false);
   }
 
-  // ── Excel Export ───────────────────────────────────────────────────────────
+  // ── Excel Export (Professional Styled + Dropdown Validation) ──────────────
 
-  function exportExcel(templateOnly: boolean) {
-    const wb = XLSX.utils.book_new();
+  async function exportExcel(templateOnly: boolean) {
+    // ExcelJS — handles colours, merged cells AND real data-validation dropdowns natively
+    const EXM = await import("exceljs" as any) as any;
+    const EX  = EXM.default ?? EXM;
+    const wb  = new EX.Workbook();
+    wb.creator  = "Associate Piyush";
+    wb.created  = new Date();
 
-    // Instructions
-    const instrWs = XLSX.utils.aoa_to_sheet([
-      ["Associate Piyush — Personal Finance Dashboard"],
-      [""],
-      ["HOW TO USE THIS FILE:"],
-      ["1. Fill in each sheet with your financial data"],
-      ["2. Do NOT change column headers or sheet names"],
-      ["3. Dates must be in YYYY-MM-DD format (e.g. 2025-04-01)"],
-      ["4. Amounts in rupees — numbers only, no commas or ₹ symbol"],
-      ["5. Save the file and import it back into the dashboard"],
-      [""],
-      ["SHEETS IN THIS FILE:"],
-      ["Settings    — Name, age, bank balance, property value, monthly budgets"],
-      ["Income      — Income entries: date, source, amount, tax category"],
-      ["Expenses    — Expenses: date, category, amount, payment mode"],
-      ["Investments — Portfolio: type, fund name, invested, current value"],
-      ["Loans_EMI   — Loan details for EMI tracking"],
-      ["Goals       — Financial goals with target amount and deadline"],
-    ]);
-    XLSX.utils.book_append_sheet(wb, instrWs, "Instructions");
+    // ── Shared colour palette (ARGB: Alpha + RGB) ────────────────────────────
+    const PH = "FF534AB7"; // Purple header
+    const GH = "FFB8973A"; // Gold accent
+    const NV = "FF1A1630"; // Dark navy (cover)
+    const LP = "FFEDE9FF"; // Light purple alt row
+    const WH = "FFFFFFFF"; // White
+    const DK = "FF1E1B4B"; // Dark text
+    const MT = "FF7A7AAA"; // Muted text
+    const EG = "FFF9FAFB"; // Example row bg
+    const EGT= "FF9CA3AF"; // Example row text
 
-    // Settings
-    const s = templateOnly ? DEFAULT_DATA.settings : data.settings;
-    const budgets = s.monthlyBudgets || {};
-    const settingsWs = XLSX.utils.aoa_to_sheet([
-      ["Field", "Value", "Notes"],
-      ["Name", s.name || "", "Your full name"],
-      ["Age", s.age || "", "Your current age in years"],
-      ["Bank Balance (₹)", s.bankBalance || 0, "Total across savings + current accounts"],
-      ["Property Value (₹)", s.propertyValue || 0, "Market value of owned property"],
-      ["Budget — Housing (₹)", budgets["Housing"] || 0, "Monthly budget for rent / home loan"],
-      ["Budget — Food & Dining (₹)", budgets["Food & Dining"] || 0, "Monthly food budget"],
-      ["Budget — Transport (₹)", budgets["Transport"] || 0, "Fuel, cab, vehicle"],
-      ["Budget — Utilities (₹)", budgets["Utilities"] || 0, "Electricity, water, gas, internet"],
-      ["Budget — Healthcare (₹)", budgets["Healthcare"] || 0, "Medical, pharmacy"],
-      ["Budget — Education (₹)", budgets["Education"] || 0, "Tuition, courses, books"],
-      ["Budget — Entertainment (₹)", budgets["Entertainment"] || 0, "Movies, subscriptions, outings"],
-      ["Budget — Clothing (₹)", budgets["Clothing"] || 0, "Clothes, shoes, accessories"],
-      ["Budget — Insurance (₹)", budgets["Insurance"] || 0, "Life, health, vehicle insurance"],
-      ["Budget — Tax Payments (₹)", budgets["Tax Payments"] || 0, "Advance tax, GST, etc."],
-      ["Budget — Professional Fees (₹)", budgets["Professional Fees"] || 0, "CA, legal, consultants"],
-      ["Budget — Other (₹)", budgets["Other"] || 0, "Miscellaneous"],
-    ]);
-    XLSX.utils.book_append_sheet(wb, settingsWs, "Settings");
+    const sf  = (argb: string) => ({ type: "pattern" as const, pattern: "solid" as const, fgColor: { argb } });
+    const fnt = (argb: string, sz = 11, bold = false, italic = false) =>
+      ({ name: "Calibri", size: sz, bold, italic, color: { argb } });
+    const aln = (h: "left"|"center"|"right", v: "top"|"middle"|"bottom" = "middle", wrap = false) =>
+      ({ horizontal: h, vertical: v, wrapText: wrap });
 
-    // Income
-    const incRows: any[][] = [["Date (YYYY-MM-DD)", "Source", "Amount (₹)", "Description", "Tax Category"]];
-    if (!templateOnly) data.income.forEach(e => incRows.push([e.date, e.source, e.amount, e.description, e.taxCategory]));
-    else incRows.push(["2025-04-01", "Salary", 85000, "April salary", "Taxable"], ["2025-04-10", "Freelance", 15000, "Project payment", "Taxable"]);
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(incRows), "Income");
+    // Apply style to a single ExcelJS cell
+    const stc = (cell: any, fillA: string, fontA: string, h: "left"|"center"|"right",
+                 bold = false, sz = 11, italic = false, numFmt?: string) => {
+      cell.fill      = sf(fillA);
+      cell.font      = fnt(fontA, sz, bold, italic);
+      cell.alignment = aln(h);
+      if (numFmt) cell.numFmt = numFmt;
+    };
 
-    // Expenses
-    const expRows: any[][] = [["Date (YYYY-MM-DD)", "Category", "Amount (₹)", "Description", "Payment Mode", "Tax Deductible (Yes/No)"]];
-    if (!templateOnly) data.expenses.forEach(e => expRows.push([e.date, e.category, e.amount, e.description, e.paymentMode, e.taxDeductible ? "Yes" : "No"]));
-    else expRows.push(["2025-04-02", "Food & Dining", 4500, "Grocery", "UPI", "No"], ["2025-04-05", "Housing", 15000, "Rent", "Bank Transfer", "No"]);
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(expRows), "Expenses");
+    // Style every cell in a row
+    const str = (ws: any, rowNum: number, ncols: number,
+                 fillA: string, fontA: string, h: "left"|"center"|"right",
+                 bold = false, sz = 11, amtCols: number[] = []) => {
+      const row = ws.getRow(rowNum);
+      for (let c = 1; c <= ncols; c++) {
+        const cell = row.getCell(c);
+        stc(cell, fillA, fontA, amtCols.includes(c) ? "right" : h, bold, sz);
+        if (amtCols.includes(c)) cell.numFmt = "#,##0.00";
+      }
+    };
 
-    // Investments
-    const invRows: any[][] = [["Type", "Name / Fund", "Invested (₹)", "Current Value (₹)", "Start Date (YYYY-MM-DD)", "Maturity Date (YYYY-MM-DD)", "Linked Goal"]];
-    if (!templateOnly) data.investments.forEach(i => invRows.push([i.type, i.name, i.invested, i.currentValue, i.date, i.maturityDate, i.linkedGoal]));
-    else invRows.push(["Mutual Fund", "HDFC Top 100", 50000, 62000, "2023-06-01", "", "Retirement"], ["Fixed Deposit", "SBI FD", 100000, 108000, "2024-01-01", "2026-01-01", ""]);
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(invRows), "Investments");
+    // Add a real dropdown validation to a range
+    const dv = (ws: any, range: string, options: string[]) => {
+      ws.dataValidations.add(range, {
+        type: "list",
+        allowBlank: true,
+        formulae: [`"${options.join(",")}"`],
+        showDropDown: false,
+        showErrorMessage: true,
+        errorStyle: "error",
+        error: "Please choose from the dropdown list",
+        errorTitle: "Invalid Entry",
+      });
+    };
 
-    // Loans
-    const loanRows: any[][] = [["Type", "Lender", "Principal (₹)", "Rate (%)", "Tenure (Months)", "Start Date (YYYY-MM-DD)", "EMI (₹, leave 0 for auto)"]];
-    if (!templateOnly) data.loans.forEach(l => loanRows.push([l.type, l.lender, l.principal, l.rate, l.tenure, l.startDate, l.emi]));
-    else loanRows.push(["Home", "HDFC Bank", 3500000, 8.5, 240, "2022-04-01", 0], ["Car", "Axis Bank", 600000, 9.5, 60, "2023-09-01", 0]);
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(loanRows), "Loans_EMI");
+    const today    = new Date().toISOString().slice(0, 10);
+    const s        = templateOnly ? DEFAULT_DATA.settings : data.settings;
+    const budgets  = s.monthlyBudgets || {};
+    const income   = templateOnly ? [] : data.income;
+    const expenses = templateOnly ? [] : data.expenses;
+    const invests  = templateOnly ? [] : data.investments;
+    const loans    = templateOnly ? [] : data.loans;
+    const goals    = templateOnly ? [] : data.goals;
+    const AMT      = "#,##0.00";
 
-    // Goals
-    const goalRows: any[][] = [["Goal Name", "Target Amount (₹)", "Current Savings (₹)", "Target Date (YYYY-MM-DD)", "Monthly Contribution (₹)", "Icon (emoji)"]];
-    if (!templateOnly) data.goals.forEach(g => goalRows.push([g.name, g.target, g.current, g.targetDate, g.monthly, g.icon]));
-    else goalRows.push(["Emergency Fund", 300000, 120000, "2025-12-31", 15000, "🆘"], ["Home Down Payment", 1500000, 350000, "2027-06-01", 25000, "🏠"]);
-    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(goalRows), "Goals");
+    // ════════════════════════════════════════════════════════════════════════
+    // SHEET 1 — Instructions Cover
+    // ════════════════════════════════════════════════════════════════════════
+    {
+      const ws = wb.addWorksheet("Instructions");
+      ws.columns = [{ width: 5 }, { width: 58 }, { width: 46 }, { width: 10 }];
 
-    XLSX.writeFile(wb, templateOnly
-      ? "AP-Finance-Dashboard-Template.xlsx"
-      : `AP-Finance-Backup-${new Date().toISOString().slice(0, 10)}.xlsx`);
+      const addRow = (vals: any[], fillA: string, fontA: string,
+                      h: "left"|"center"|"right", bold = false, sz = 11) => {
+        const row = ws.addRow(vals);
+        row.height = 18;
+        for (let c = 1; c <= 4; c++) stc(row.getCell(c), fillA, fontA, h, bold, sz);
+        return row;
+      };
+
+      // Title row — merged, tall
+      const r1 = ws.addRow(["PERSONAL FINANCE DASHBOARD"]);
+      r1.height = 40;
+      ws.mergeCells("A1:D1");
+      stc(r1.getCell(1), NV, WH, "center", true, 18);
+
+      // Subtitle
+      const r2 = ws.addRow(["Associate Piyush  ·  100% Private  ·  No Server Upload"]);
+      r2.height = 22;
+      ws.mergeCells("A2:D2");
+      stc(r2.getCell(1), NV, "FF8B83C8", "center", false, 10);
+
+      ws.addRow([""]);
+
+      const secRows = [
+        ["📋  HOW TO USE THIS FILE"],
+        ["1.", "Fill in each sheet tab with your actual financial data"],
+        ["2.", "Do NOT rename column headers or the sheet names"],
+        ["3.", "Dates must be in YYYY-MM-DD format   e.g.  2025-04-01"],
+        ["4.", "Amounts are in Rupees (₹) — enter numbers only, no commas or ₹ symbol"],
+        ["5.", "Cells with ▾ in the header have a dropdown — click cell then click arrow"],
+        ["6.", "Save the file and click Import in the dashboard to load your data"],
+        [""],
+        ["📁  SHEETS IN THIS FILE"],
+        ["Settings",    "→", "Name, age, bank balance, property value & monthly budgets"],
+        ["Income",      "→", "Income entries with source & tax category dropdowns"],
+        ["Expenses",    "→", "Expenses with category, payment mode & deductibility dropdowns"],
+        ["Investments", "→", "Portfolio with investment type dropdown"],
+        ["Loans_EMI",   "→", "Loan details for EMI and outstanding balance tracking"],
+        ["Goals",       "→", "Financial goals with target amount and deadline"],
+        [""],
+        ["⚠️  NOTES"],
+        ["", "Grey rows in template mode are examples — overwrite with your data"],
+        ["", "Cells with dropdown ▾ show a list — click the cell then click the arrow"],
+        ["", `Generated by: AssociatePiyush.in  ·  ${today}`],
+      ];
+
+      const secHeadRows = new Set([4, 12, 20]); // 1-indexed relative to sheet
+      secRows.forEach((vals, i) => {
+        const rowNum = i + 4; // rows 1-3 already added
+        const row = ws.addRow(vals);
+        row.height = 18;
+        const isHead = secHeadRows.has(rowNum);
+        for (let c = 1; c <= 4; c++)
+          stc(row.getCell(c), isHead ? GH : (rowNum % 2 === 0 ? LP : WH),
+              isHead ? WH : DK, "left", isHead, 10);
+      });
+    }
+
+    // ════════════════════════════════════════════════════════════════════════
+    // SHEET 2 — Settings
+    // ════════════════════════════════════════════════════════════════════════
+    {
+      const ws = wb.addWorksheet("Settings");
+      ws.columns = [{ width: 36 }, { width: 22 }, { width: 40 }];
+      ws.views   = [{ state: "frozen", ySplit: 2 }];
+
+      // Title
+      const tr = ws.addRow(["PERSONAL SETTINGS & MONTHLY BUDGETS"]);
+      tr.height = 32; ws.mergeCells("A1:C1");
+      stc(tr.getCell(1), NV, WH, "center", true, 13);
+
+      // Header
+      const hr = ws.addRow(["Field", "Your Value", "Notes"]);
+      hr.height = 22;
+      [1,2,3].forEach(c => stc(hr.getCell(c), PH, WH, "center", true, 10));
+
+      const dataRows: any[][] = [
+        ["Full Name",          s.name || "",        "Your name"],
+        ["Age",                s.age  || "",        "Current age in years"],
+        ["Bank Balance (₹)",   s.bankBalance || 0,  "Total savings + current account"],
+        ["Property Value (₹)", s.propertyValue || 0,"Market value of owned property"],
+      ];
+      dataRows.forEach((vals, i) => {
+        const row = ws.addRow(vals);
+        row.height = 18;
+        const bg = i % 2 === 0 ? LP : WH;
+        stc(row.getCell(1), bg, DK, "left",  true,  10);
+        stc(row.getCell(2), bg, DK, (i >= 2 ? "right" : "left"), false, 10);
+        if (i >= 2) row.getCell(2).numFmt = AMT;
+        stc(row.getCell(3), WH, MT, "left",  false, 9, true);
+      });
+
+      // Section heading
+      const sg = ws.addRow(["MONTHLY BUDGETS — enter your spending limit per category"]);
+      sg.height = 20; ws.mergeCells(`A${sg.number}:C${sg.number}`);
+      stc(sg.getCell(1), GH, WH, "left", true, 10);
+
+      EXPENSE_CATEGORIES.forEach((cat, i) => {
+        const row = ws.addRow([`Budget — ${cat} (₹)`, budgets[cat] || 0, `Monthly limit for ${cat.toLowerCase()}`]);
+        row.height = 18;
+        const bg = i % 2 === 0 ? LP : WH;
+        stc(row.getCell(1), bg, DK, "left",  true,  10);
+        stc(row.getCell(2), bg, DK, "right", false, 10);
+        row.getCell(2).numFmt = AMT;
+        stc(row.getCell(3), WH, MT, "left",  false, 9, true);
+      });
+    }
+
+    // ════════════════════════════════════════════════════════════════════════
+    // SHEET 3 — Income
+    // ════════════════════════════════════════════════════════════════════════
+    {
+      const NC = 5;
+      const ws = wb.addWorksheet("Income");
+      ws.columns = [{ width: 18 }, { width: 16 }, { width: 16 }, { width: 38 }, { width: 16 }];
+      ws.views   = [{ state: "frozen", ySplit: 2 }];
+      ws.autoFilter = { from: { row: 2, column: 1 }, to: { row: 2, column: NC } };
+
+      // Title
+      const tr = ws.addRow(["INCOME TRACKER"]);
+      tr.height = 32; ws.mergeCells(`A1:E1`);
+      stc(tr.getCell(1), NV, WH, "center", true, 13);
+
+      // Header
+      const hr = ws.addRow(["Date (YYYY-MM-DD)", "Source ▾", "Amount (₹)", "Description", "Tax Category ▾"]);
+      hr.height = 22;
+      [1,2,3,4,5].forEach(c => stc(hr.getCell(c), PH, WH, "center", true, 10));
+
+      const SRCS  = INCOME_SOURCES;
+      const TAXCS = ["Taxable", "Exempt", "Capital Gain"];
+      const samples = templateOnly ? [
+        ["2025-04-01", "Salary",    85000, "April salary",        "Taxable"],
+        ["2025-04-10", "Freelance", 15000, "Project payment",     "Taxable"],
+        ["2025-05-01", "Salary",    85000, "May salary",          "Taxable"],
+        ["2025-05-15", "Rental",    12000, "House rental income", "Taxable"],
+      ] : income.map(e => [e.date, e.source, e.amount, e.description, e.taxCategory]);
+
+      samples.forEach((vals, i) => {
+        const row = ws.addRow(vals);
+        row.height = 18;
+        const bg = templateOnly ? EG : (i % 2 === 0 ? LP : WH);
+        const fg = templateOnly ? EGT : DK;
+        stc(row.getCell(1), bg, fg, "center", false, 10);
+        stc(row.getCell(2), bg, fg, "left",   false, 10);
+        stc(row.getCell(3), bg, fg, "right",  false, 10); row.getCell(3).numFmt = AMT;
+        stc(row.getCell(4), bg, fg, "left",   false, 10);
+        stc(row.getCell(5), bg, fg, "center", false, 10);
+      });
+
+      if (!templateOnly && income.length > 0) {
+        const tot = income.reduce((s, e) => s + e.amount, 0);
+        const row = ws.addRow(["TOTAL", "", tot, "", ""]);
+        row.height = 20;
+        [1,2,4,5].forEach(c => stc(row.getCell(c), GH, WH, "left", true, 10));
+        stc(row.getCell(3), GH, WH, "right", true, 10); row.getCell(3).numFmt = AMT;
+      }
+
+      dv(ws, `B3:B1048576`, SRCS);
+      dv(ws, `E3:E1048576`, TAXCS);
+    }
+
+    // ════════════════════════════════════════════════════════════════════════
+    // SHEET 4 — Expenses
+    // ════════════════════════════════════════════════════════════════════════
+    {
+      const NC = 6;
+      const ws = wb.addWorksheet("Expenses");
+      ws.columns = [{ width: 18 }, { width: 18 }, { width: 14 }, { width: 38 }, { width: 16 }, { width: 16 }];
+      ws.views   = [{ state: "frozen", ySplit: 2 }];
+      ws.autoFilter = { from: { row: 2, column: 1 }, to: { row: 2, column: NC } };
+
+      const tr = ws.addRow(["EXPENSE TRACKER"]);
+      tr.height = 32; ws.mergeCells("A1:F1");
+      stc(tr.getCell(1), NV, WH, "center", true, 13);
+
+      const hr = ws.addRow(["Date (YYYY-MM-DD)", "Category ▾", "Amount (₹)", "Description", "Payment Mode ▾", "Tax Deductible ▾"]);
+      hr.height = 22;
+      [1,2,3,4,5,6].forEach(c => stc(hr.getCell(c), PH, WH, "center", true, 10));
+
+      const PMODES = ["UPI", "Cash", "Credit Card", "Debit Card", "Bank Transfer", "Cheque"];
+      const samples = templateOnly ? [
+        ["2025-04-02", "Food & Dining", 4500,  "Grocery shopping",  "UPI",           "No"],
+        ["2025-04-05", "Housing",       15000, "Monthly rent",      "Bank Transfer", "No"],
+        ["2025-04-10", "Transport",     2200,  "Petrol",            "UPI",           "No"],
+        ["2025-04-15", "Healthcare",    800,   "Pharmacy",          "Cash",          "No"],
+        ["2025-04-20", "Entertainment", 1200,  "OTT subscriptions", "Credit Card",   "No"],
+      ] : expenses.map(e => [e.date, e.category, e.amount, e.description, e.paymentMode, e.taxDeductible ? "Yes" : "No"]);
+
+      samples.forEach((vals, i) => {
+        const row = ws.addRow(vals);
+        row.height = 18;
+        const bg = templateOnly ? EG : (i % 2 === 0 ? LP : WH);
+        const fg = templateOnly ? EGT : DK;
+        stc(row.getCell(1), bg, fg, "center", false, 10);
+        stc(row.getCell(2), bg, fg, "left",   false, 10);
+        stc(row.getCell(3), bg, fg, "right",  false, 10); row.getCell(3).numFmt = AMT;
+        stc(row.getCell(4), bg, fg, "left",   false, 10);
+        stc(row.getCell(5), bg, fg, "center", false, 10);
+        stc(row.getCell(6), bg, fg, "center", false, 10);
+      });
+
+      if (!templateOnly && expenses.length > 0) {
+        const tot = expenses.reduce((s, e) => s + e.amount, 0);
+        const row = ws.addRow(["TOTAL", "", tot, "", "", ""]);
+        row.height = 20;
+        [1,2,4,5,6].forEach(c => stc(row.getCell(c), GH, WH, "left", true, 10));
+        stc(row.getCell(3), GH, WH, "right", true, 10); row.getCell(3).numFmt = AMT;
+      }
+
+      dv(ws, "B3:B1048576", EXPENSE_CATEGORIES);
+      dv(ws, "E3:E1048576", PMODES);
+      dv(ws, "F3:F1048576", ["Yes", "No"]);
+    }
+
+    // ════════════════════════════════════════════════════════════════════════
+    // SHEET 5 — Investments
+    // ════════════════════════════════════════════════════════════════════════
+    {
+      const NC = 7;
+      const ws = wb.addWorksheet("Investments");
+      ws.columns = [{ width: 16 }, { width: 30 }, { width: 16 }, { width: 18 }, { width: 14 }, { width: 14 }, { width: 20 }];
+      ws.views   = [{ state: "frozen", ySplit: 2 }];
+      ws.autoFilter = { from: { row: 2, column: 1 }, to: { row: 2, column: NC } };
+
+      const tr = ws.addRow(["INVESTMENT PORTFOLIO"]);
+      tr.height = 32; ws.mergeCells("A1:G1");
+      stc(tr.getCell(1), NV, WH, "center", true, 13);
+
+      const hr = ws.addRow(["Type ▾", "Name / Fund Description", "Invested (₹)", "Current Value (₹)", "Start Date", "Maturity Date", "Linked Goal"]);
+      hr.height = 22;
+      [1,2,3,4,5,6,7].forEach(c => stc(hr.getCell(c), PH, WH, "center", true, 10));
+
+      const samples = templateOnly ? [
+        ["Mutual Fund",   "HDFC Top 100 Direct",  50000,  62000,  "2023-06-01", "",           "Retirement"],
+        ["Fixed Deposit", "SBI FD 7.5% p.a.",    100000, 108000, "2024-01-01", "2026-01-01", ""],
+        ["PPF",           "PPF Account",          150000, 168000, "2020-04-01", "2035-04-01", "Retirement"],
+        ["Stocks",        "Infosys, TCS, HDFC",   80000,  96000,  "2022-01-01", "",           ""],
+      ] : invests.map(iv => [iv.type, iv.name, iv.invested, iv.currentValue, iv.date, iv.maturityDate, iv.linkedGoal]);
+
+      samples.forEach((vals, i) => {
+        const row = ws.addRow(vals);
+        row.height = 18;
+        const bg = templateOnly ? EG : (i % 2 === 0 ? LP : WH);
+        const fg = templateOnly ? EGT : DK;
+        stc(row.getCell(1), bg, fg, "left",   false, 10);
+        stc(row.getCell(2), bg, fg, "left",   false, 10);
+        stc(row.getCell(3), bg, fg, "right",  false, 10); row.getCell(3).numFmt = AMT;
+        stc(row.getCell(4), bg, fg, "right",  false, 10); row.getCell(4).numFmt = AMT;
+        stc(row.getCell(5), bg, fg, "center", false, 10);
+        stc(row.getCell(6), bg, fg, "center", false, 10);
+        stc(row.getCell(7), bg, fg, "left",   false, 10);
+      });
+
+      if (!templateOnly && invests.length > 0) {
+        const totI = invests.reduce((s, iv) => s + iv.invested, 0);
+        const totC = invests.reduce((s, iv) => s + iv.currentValue, 0);
+        const row  = ws.addRow(["TOTAL", "", totI, totC, "", "", ""]);
+        row.height = 20;
+        [1,2,5,6,7].forEach(c => stc(row.getCell(c), GH, WH, "left", true, 10));
+        stc(row.getCell(3), GH, WH, "right", true, 10); row.getCell(3).numFmt = AMT;
+        stc(row.getCell(4), GH, WH, "right", true, 10); row.getCell(4).numFmt = AMT;
+      }
+
+      dv(ws, "A3:A1048576", INVESTMENT_TYPES);
+    }
+
+    // ════════════════════════════════════════════════════════════════════════
+    // SHEET 6 — Loans & EMI
+    // ════════════════════════════════════════════════════════════════════════
+    {
+      const ws = wb.addWorksheet("Loans_EMI");
+      ws.columns = [{ width: 14 }, { width: 22 }, { width: 16 }, { width: 14 }, { width: 18 }, { width: 14 }, { width: 26 }];
+      ws.views   = [{ state: "frozen", ySplit: 2 }];
+
+      const tr = ws.addRow(["LOANS & EMI TRACKER"]);
+      tr.height = 32; ws.mergeCells("A1:G1");
+      stc(tr.getCell(1), NV, WH, "center", true, 13);
+
+      const hr = ws.addRow(["Type ▾", "Lender / Bank", "Principal (₹)", "Rate (% p.a.)", "Tenure (Months)", "Start Date", "EMI (₹ · 0=auto)"]);
+      hr.height = 22;
+      [1,2,3,4,5,6,7].forEach(c => stc(hr.getCell(c), PH, WH, "center", true, 10));
+
+      const samples = templateOnly ? [
+        ["Home",     "HDFC Bank",  3500000, 8.5, 240, "2022-04-01", 0],
+        ["Car",      "Axis Bank",   600000, 9.5,  60, "2023-09-01", 0],
+        ["Personal", "ICICI Bank",  200000,12.0,  36, "2024-06-01", 0],
+      ] : loans.map(l => [l.type, l.lender, l.principal, l.rate, l.tenure, l.startDate, l.emi]);
+
+      samples.forEach((vals, i) => {
+        const row = ws.addRow(vals);
+        row.height = 18;
+        const bg = templateOnly ? EG : (i % 2 === 0 ? LP : WH);
+        const fg = templateOnly ? EGT : DK;
+        stc(row.getCell(1), bg, fg, "left",   false, 10);
+        stc(row.getCell(2), bg, fg, "left",   false, 10);
+        stc(row.getCell(3), bg, fg, "right",  false, 10); row.getCell(3).numFmt = AMT;
+        stc(row.getCell(4), bg, fg, "right",  false, 10); row.getCell(4).numFmt = "0.00";
+        stc(row.getCell(5), bg, fg, "center", false, 10);
+        stc(row.getCell(6), bg, fg, "center", false, 10);
+        stc(row.getCell(7), bg, fg, "right",  false, 10); row.getCell(7).numFmt = AMT;
+      });
+
+      dv(ws, "A3:A1048576", LOAN_TYPES);
+    }
+
+    // ════════════════════════════════════════════════════════════════════════
+    // SHEET 7 — Goals
+    // ════════════════════════════════════════════════════════════════════════
+    {
+      const NC = 6;
+      const ws = wb.addWorksheet("Goals");
+      ws.columns = [{ width: 28 }, { width: 18 }, { width: 20 }, { width: 14 }, { width: 18 }, { width: 8 }];
+      ws.views   = [{ state: "frozen", ySplit: 2 }];
+
+      const tr = ws.addRow(["FINANCIAL GOALS"]);
+      tr.height = 32; ws.mergeCells("A1:F1");
+      stc(tr.getCell(1), NV, WH, "center", true, 13);
+
+      const hr = ws.addRow(["Goal Name", "Target Amount (₹)", "Current Savings (₹)", "Target Date", "Monthly SIP (₹)", "Icon"]);
+      hr.height = 22;
+      [1,2,3,4,5,6].forEach(c => stc(hr.getCell(c), PH, WH, "center", true, 10));
+
+      const samples = templateOnly ? [
+        ["Emergency Fund",    300000,  120000, "2025-12-31", 15000, "🆘"],
+        ["Home Down Payment", 1500000, 350000, "2027-06-01", 25000, "🏠"],
+        ["Child Education",   2000000,      0, "2035-04-01",  8000, "🎓"],
+        ["Retirement Corpus", 5000000, 800000, "2045-04-01", 20000, "🏦"],
+      ] : goals.map(g => [g.name, g.target, g.current, g.targetDate, g.monthly, g.icon]);
+
+      samples.forEach((vals, i) => {
+        const row = ws.addRow(vals);
+        row.height = 18;
+        const bg = templateOnly ? EG : (i % 2 === 0 ? LP : WH);
+        const fg = templateOnly ? EGT : DK;
+        stc(row.getCell(1), bg, fg, "left",   false, 10);
+        stc(row.getCell(2), bg, fg, "right",  false, 10); row.getCell(2).numFmt = AMT;
+        stc(row.getCell(3), bg, fg, "right",  false, 10); row.getCell(3).numFmt = AMT;
+        stc(row.getCell(4), bg, fg, "center", false, 10);
+        stc(row.getCell(5), bg, fg, "right",  false, 10); row.getCell(5).numFmt = AMT;
+        stc(row.getCell(6), bg, fg, "center", false, 10);
+      });
+
+      if (!templateOnly && goals.length > 0) {
+        const totT = goals.reduce((s, g) => s + g.target,  0);
+        const totC = goals.reduce((s, g) => s + g.current, 0);
+        const row  = ws.addRow(["TOTAL", totT, totC, "", "", ""]);
+        row.height = 20;
+        [1,4,5,6].forEach(c => stc(row.getCell(c), GH, WH, "left",  true, 10));
+        stc(row.getCell(2), GH, WH, "right", true, 10); row.getCell(2).numFmt = AMT;
+        stc(row.getCell(3), GH, WH, "right", true, 10); row.getCell(3).numFmt = AMT;
+      }
+
+      dv(ws, "F3:F1048576", GOAL_ICONS);
+    }
+
+    // ── Download ─────────────────────────────────────────────────────────────
+    const buf  = await wb.xlsx.writeBuffer();
+    const blob = new Blob([buf], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement("a");
+    a.href     = url;
+    a.download = templateOnly ? "AP-Finance-Template.xlsx" : `AP-Finance-Backup-${today}.xlsx`;
+    a.click();
+    URL.revokeObjectURL(url);
   }
 
   // ── Excel Import ───────────────────────────────────────────────────────────
@@ -536,7 +914,7 @@ export default function Dashboard() {
         if (incWs) {
           const rows = (XLSX.utils.sheet_to_json<any[]>(incWs, { header: 1 }) as any[][]).slice(1);
           newData.income = rows.filter(r => r[0] && r[2]).map(r => ({
-            id: uid(), date: String(r[0]), source: String(r[1] || "Other"),
+            id: uid(), date: parseXLSXDate(r[0]), source: String(r[1] || "Other"),
             amount: parseFloat(String(r[2]).replace(/,/g, "")) || 0,
             description: String(r[3] || ""), taxCategory: String(r[4] || "Taxable"),
           }));
@@ -547,7 +925,7 @@ export default function Dashboard() {
         if (expWs) {
           const rows = (XLSX.utils.sheet_to_json<any[]>(expWs, { header: 1 }) as any[][]).slice(1);
           newData.expenses = rows.filter(r => r[0] && r[2]).map(r => ({
-            id: uid(), date: String(r[0]), category: String(r[1] || "Other"),
+            id: uid(), date: parseXLSXDate(r[0]), category: String(r[1] || "Other"),
             amount: parseFloat(String(r[2]).replace(/,/g, "")) || 0,
             description: String(r[3] || ""), paymentMode: String(r[4] || "UPI"),
             taxDeductible: String(r[5]).toLowerCase() === "yes",
@@ -562,7 +940,7 @@ export default function Dashboard() {
             id: uid(), type: String(r[0] || "Other"), name: String(r[1] || ""),
             invested: parseFloat(String(r[2]).replace(/,/g, "")) || 0,
             currentValue: parseFloat(String(r[3]).replace(/,/g, "")) || 0,
-            date: String(r[4] || ""), maturityDate: String(r[5] || ""), linkedGoal: String(r[6] || ""),
+            date: parseXLSXDate(r[4] || ""), maturityDate: parseXLSXDate(r[5] || ""), linkedGoal: String(r[6] || ""),
           }));
         }
 
@@ -575,7 +953,7 @@ export default function Dashboard() {
             principal: parseFloat(String(r[2]).replace(/,/g, "")) || 0,
             rate: parseFloat(String(r[3])) || 0,
             tenure: parseInt(String(r[4])) || 12,
-            startDate: String(r[5] || todayISO()),
+            startDate: parseXLSXDate(r[5] || todayISO()),
             emi: parseFloat(String(r[6]).replace(/,/g, "")) || 0,
           }));
         }
@@ -1709,7 +2087,7 @@ function GoalsTab({ data, upd }: { data: AppData; upd: <K extends keyof AppData>
 
 // ── REPORTS ───────────────────────────────────────────────────────────────
 
-function ReportsTab({ data, exportExcel }: { data: AppData; exportExcel: (templateOnly: boolean) => void }) {
+function ReportsTab({ data, exportExcel }: { data: AppData; exportExcel: (templateOnly: boolean) => void | Promise<void> }) {
   const months = Array.from({ length: 12 }, (_, i) => {
     const d = new Date(); d.setMonth(d.getMonth() - 11 + i);
     return d.toISOString().slice(0, 7);

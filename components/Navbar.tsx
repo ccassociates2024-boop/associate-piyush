@@ -23,7 +23,7 @@ const SPOTLIGHT_ITEMS = [
   { type: "page", icon: "📚", label: "Resources",    desc: "Tax guides & articles",      href: "/resources" },
   { type: "tool", icon: "🧾", label: "GST Invoice Generator", desc: "Generate GST invoices",    href: "/tools/gst-invoice" },
   { type: "tool", icon: "🔢", label: "TDS Calculator",         desc: "Section-wise TDS rates",  href: "/tools/tds-calculator" },
-  { type: "tool", icon: "📊", label: "ITR Tax Estimator",      desc: "Old vs New regime",        href: "/tools/itr-estimator" },
+  { type: "tool", icon: "📊", label: "Income Tax Estimator",      desc: "Old vs New regime",        href: "/tools/itr-estimator" },
   { type: "tool", icon: "🏦", label: "Bank Statement → Excel", desc: "PDF extraction tool",     href: "/tools/bank-statement" },
   { type: "tool", icon: "💰", label: "Capital Gains Calc",     desc: "STCG / LTCG calculator",  href: "/tools/capital-gains" },
   { type: "tool", icon: "📝", label: "Notice Reply Generator", desc: "143(1), 148A & more",     href: "/tools/notice-reply" },
@@ -106,13 +106,13 @@ export default function Navbar() {
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-                   style={{ background: "linear-gradient(135deg, #0A1628 0%, #152268 100%)", boxShadow: "0 2px 8px rgba(10,22,40,0.3)" }}>
-                <span className="text-white font-bold text-sm tracking-tight">AP</span>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:shadow-[0_0_16px_rgba(201,168,76,0.35)]"
+                   style={{ background: "linear-gradient(135deg, #0A1628 0%, #1F3088 60%, #2A40A0 100%)", boxShadow: "0 2px 8px rgba(10,22,40,0.35), inset 0 1px 0 rgba(255,255,255,0.08)", border: "1px solid rgba(201,168,76,0.20)" }}>
+                <span className="text-white font-black text-sm tracking-tight">AP</span>
               </div>
               <div className="flex flex-col leading-none">
-                <span className="font-semibold text-sm" style={{ color: "var(--ap-text)" }}>Associate</span>
-                <span className="font-bold text-sm -mt-0.5" style={{ color: "var(--ap-text)" }}>
+                <span className="font-medium text-xs tracking-wide" style={{ color: "var(--ap-text-muted)" }}>Associate</span>
+                <span className="font-black text-sm -mt-0.5 tracking-tight" style={{ color: "var(--ap-text)" }}>
                   Piyush<span style={{ color: "#C9A84C" }}>.</span>
                 </span>
               </div>

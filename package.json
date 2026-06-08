@@ -13,8 +13,10 @@
     "autoprefixer": "^10.4.27",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "exceljs": "^4.4.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
+    "jszip": "^3.10.1",
     "lucide-react": "^0.400.0",
     "mammoth": "^1.7.1",
     "next": "^14.2.29",
@@ -25,6 +27,7 @@
     "recharts": "^3.8.1",
     "tesseract.js": "^5.0.5",
     "xlsx": "^0.18.5",
+    "xlsx-js-style": "^1.2.0",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {

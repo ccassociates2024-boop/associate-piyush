@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import {
   Building2, Upload, Download, AlertCircle, CheckCircle,
-  Loader2, ArrowLeft, Shield, RefreshCw, Eye, EyeOff, ChevronDown
+  Loader2, ArrowLeft, Shield, RefreshCw, Eye, EyeOff, ChevronDown, Tag
 } from "lucide-react";
 import Link from "next/link";
 import * as XLSX from "xlsx";
@@ -20,9 +20,46 @@ interface Transaction {
   credit: number;
   debit: number;
   balance: number;
+  category: string;
+  ledger: string;
 }
 
 interface RawCell { text: string; x: number; y: number; }
+
+// ─── Transaction Classification ───────────────────────────────────────────────
+const CLASSIFY_RULES: { kw: string[]; cat: string; led: string }[] = [
+  { kw: ["gst","igst","cgst","sgst","tds","income tax","advance tax"],          cat: "Tax",        led: "GST / Tax Ledger" },
+  { kw: ["salary","payroll","wages","stipend","remuneration"],                   cat: "Salary",     led: "Salary Ledger" },
+  { kw: ["amazon","flipkart","myntra","swiggy","zomato","purchase","shop","mart"], cat: "Purchase", led: "Purchase Ledger" },
+  { kw: ["rent","lease","property"],                                              cat: "Rent",       led: "Rent Ledger" },
+  { kw: ["loan","emi","equated","repayment","mortgage"],                          cat: "Loan",       led: "Loan Ledger" },
+  { kw: ["insurance","lic","premium","policy"],                                   cat: "Insurance",  led: "Insurance Ledger" },
+  { kw: ["electricity","water","gas","utility","bill","bescom","msedcl","mahadiscom","tata power"], cat: "Utilities", led: "Utilities Ledger" },
+  { kw: ["neft","imps","rtgs","upi","received","receipt","income","dividend","interest"], cat: "Income", led: "Sales / Income Ledger" },
+  { kw: ["cash","atm","withdrawal"],                                              cat: "Cash",       led: "Cash Ledger" },
+  { kw: ["refund","reversal","cashback"],                                         cat: "Refund",     led: "Creditors Ledger" },
+  { kw: ["mutual fund","mf","sip","equity","share","stock","investment"],         cat: "Investment", led: "Investment Ledger" },
+  { kw: ["travel","hotel","flight","irctc","makemytrip","oyo"],                   cat: "Travel",     led: "Travel Expense Ledger" },
+];
+function classify(desc: string): { category: string; ledger: string } {
+  const low = desc.toLowerCase();
+  for (const r of CLASSIFY_RULES) if (r.kw.some(k => low.includes(k))) return { category: r.cat, ledger: r.led };
+  return { category: "Uncategorized", ledger: "Suspense Ledger" };
+}
+const BADGE: Record<string, string> = {
+  Tax: "bg-yellow-100 text-yellow-800", Salary: "bg-green-100 text-green-800",
+  Purchase: "bg-red-100 text-red-800", Income: "bg-cyan-100 text-cyan-800",
+  Rent: "bg-purple-100 text-purple-800", Utilities: "bg-orange-100 text-orange-800",
+  Loan: "bg-pink-100 text-pink-800", Insurance: "bg-blue-100 text-blue-800",
+  Cash: "bg-gray-100 text-gray-700", Travel: "bg-emerald-100 text-emerald-800",
+  Investment: "bg-sky-100 text-sky-800", Refund: "bg-lime-100 text-lime-800",
+  Uncategorized: "bg-gray-100 text-gray-400",
+};
+const CAT_CLR: Record<string, string> = {
+  Tax:"FFF3CD", Salary:"D4EDDA", Purchase:"F8D7DA", Income:"D1ECF1",
+  Rent:"E2D9F3", Utilities:"FDEBD0", Loan:"FCE4EC", Insurance:"E8F4FD",
+  Cash:"F5F5F5", Travel:"E8F8E8", Investment:"EAF4FB", Refund:"FFFDE7",
+};
 
 // ─── Bank definitions ─────────────────────────────────────────────────────────
 const BANKS: { id: BankId; label: string; color: string; keywords: string[] }[] = [
@@ -513,7 +550,7 @@ function runParser(bank: BankId, rows: RawCell[][]): Transaction[] {
 
 // ─── Excel Export ─────────────────────────────────────────────────────────────
 function exportExcel(txns: Transaction[], bankLabel: string, fileName: string) {
-  const header = ["Sr. No.", "Date", "Particulars", "Cheque Number", "Credit / Deposit (₹)", "Debit / Withdrawal (₹)", "Balance (₹)"];
+  const header = ["Sr. No.", "Date", "Particulars", "Cheque Number", "Credit / Deposit (₹)", "Debit / Withdrawal (₹)", "Balance (₹)", "Category", "Ledger"];
   const data = txns.map(t => [
     t.srNo,
     t.date,
@@ -522,15 +559,52 @@ function exportExcel(txns: Transaction[], bankLabel: string, fileName: string) {
     t.credit  > 0 ? t.credit  : "",
     t.debit   > 0 ? t.debit   : "",
     t.balance > 0 ? t.balance : "",
+    t.category || "Uncategorized",
+    t.ledger   || "Suspense Ledger",
   ]);
 
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet([header, ...data]);
   ws["!cols"] = [
     { wch: 8 }, { wch: 14 }, { wch: 50 }, { wch: 18 },
-    { wch: 20 }, { wch: 22 }, { wch: 18 },
+    { wch: 20 }, { wch: 22 }, { wch: 18 }, { wch: 16 }, { wch: 24 },
   ];
+
+  // Color rows by category
+  const range = XLSX.utils.decode_range(ws["!ref"] || "A1");
+  for (let r = 1; r <= data.length; r++) {
+    const cat = data[r - 1][7] as string;
+    const bg  = CAT_CLR[cat] || (r % 2 === 0 ? "EBF3FB" : "FFFFFF");
+    for (let c = range.s.c; c <= range.e.c; c++) {
+      const addr = XLSX.utils.encode_cell({ r, c });
+      if (!ws[addr]) ws[addr] = { t: "z" };
+      ws[addr].s = { fill: { fgColor: { rgb: bg } } };
+    }
+  }
+
+  // Summary sheet
+  const totalCredit = txns.reduce((s, t) => s + (t.credit || 0), 0);
+  const totalDebit  = txns.reduce((s, t) => s + (t.debit  || 0), 0);
+  const ws2 = XLSX.utils.aoa_to_sheet([
+    ["Summary", ""],
+    ["", ""],
+    ["Total Transactions", txns.length],
+    ["Total Credits (₹)",  totalCredit],
+    ["Total Debits (₹)",   totalDebit],
+    ["Net Cash Flow (₹)",  totalCredit - totalDebit],
+    ["", ""],
+    ["Category Breakdown", ""],
+    ...Object.entries(
+      txns.reduce<Record<string, number>>((acc, t) => {
+        acc[t.category] = (acc[t.category] || 0) + 1;
+        return acc;
+      }, {})
+    ).map(([cat, count]) => [cat, count]),
+  ]);
+  ws2["!cols"] = [{ wch: 25 }, { wch: 20 }];
+
   XLSX.utils.book_append_sheet(wb, ws, "Bank Statement");
+  XLSX.utils.book_append_sheet(wb, ws2, "Summary");
   XLSX.writeFile(wb, fileName);
 }
 
@@ -606,6 +680,10 @@ export default function BankStatementPro() {
       }
 
       // Check if scanned (very little text)
+      // Helper: add category + ledger to any parsed result
+      const withClassification = (rows: Transaction[]) =>
+        rows.map(t => ({ ...t, ...classify(t.particulars) }));
+
       const isScanned = fullText.replace(/\s/g, "").length < 300;
       if (isScanned) {
         // OCR path — applies to Union Bank and any other scanned PDF
@@ -613,7 +691,7 @@ export default function BankStatementPro() {
         const ocrLines = await runOCR(pdf);
         const parsed = parseOCRLines(ocrLines);
         if (!parsed.length) throw new Error("OCR ran but could not extract transactions. Please ensure the scan is clear and upright. For best results, use a text-based (non-scanned) bank PDF.");
-        setTxns(parsed);
+        setTxns(withClassification(parsed));
       } else {
         // Text-based PDF
         const parsed = runParser(resolvedBank, allRows);
@@ -622,9 +700,9 @@ export default function BankStatementPro() {
           const fallback = parseGeneric(allRows);
           if (!fallback.length) throw new Error(`No transactions found. The PDF format may differ from expected ${bankLabel(resolvedBank)} layout. Try selecting the correct bank manually.`);
           setWarning(`Specific ${bankLabel(resolvedBank)} parser found 0 rows — used generic parser instead.`);
-          setTxns(fallback);
+          setTxns(withClassification(fallback));
         } else {
-          setTxns(parsed);
+          setTxns(withClassification(parsed));
         }
       }
 
@@ -754,7 +832,7 @@ export default function BankStatementPro() {
 
   // ── Upload screen ──────────────────────────────────────────────────────────
   if (step === "upload") return (
-    <div className="min-h-screen bg-background py-10">
+    <div className="min-h-screen bg-background pt-20 pb-10">
       <div className="max-w-3xl mx-auto px-4">
 
         {/* Back */}
@@ -848,7 +926,7 @@ export default function BankStatementPro() {
 
   // ── Processing screen ──────────────────────────────────────────────────────
   if (step === "processing") return (
-    <div className="min-h-screen bg-background flex items-center justify-center">
+    <div className="min-h-screen bg-background flex items-center justify-center pt-[60px]">
       <div className="text-center max-w-sm mx-auto px-4">
         <Loader2 size={40} className="animate-spin text-primary mx-auto mb-4" />
         <h2 className="font-bold text-dark text-lg mb-2">Processing PDF…</h2>
@@ -871,12 +949,15 @@ export default function BankStatementPro() {
   const activeBank   = detectedBank ?? (bank === "auto" ? "hdfc" : bank);
 
   return (
-    <div className="min-h-screen bg-background py-8">
+    <div className="min-h-screen bg-background pt-20 pb-8">
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Top bar */}
-        <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
-          <button onClick={reset} className="inline-flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors">
+        <div className="flex items-center justify-between gap-3 mb-6 flex-wrap">
+          <button
+            onClick={reset}
+            className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-dark hover:border-primary hover:text-primary transition-all shadow-sm"
+          >
             <ArrowLeft size={15} /> New File
           </button>
           <div className="flex items-center gap-3 flex-wrap">
@@ -915,13 +996,22 @@ export default function BankStatementPro() {
           ))}
         </div>
 
+        {/* Category legend */}
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {Array.from(new Set(txns.map(t => t.category))).map(cat => (
+            <span key={cat} className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-medium ${BADGE[cat] || "bg-gray-100 text-gray-400"}`}>
+              <Tag size={9} />{cat}
+            </span>
+          ))}
+        </div>
+
         {/* Table */}
         <div className="bg-white rounded-card shadow-card border border-gray-100 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-100">
-                  {["Sr.", "Date", "Particulars", "Cheque No.", "Credit (₹)", "Debit (₹)", "Balance (₹)"].map(h => (
+                  {["Sr.", "Date", "Particulars", "Cheque No.", "Credit (₹)", "Debit (₹)", "Balance (₹)", "Category", "Ledger"].map(h => (
                     <th key={h} className="px-3 py-3 text-left text-xs font-semibold text-muted uppercase tracking-wider whitespace-nowrap">
                       {h}
                     </th>
@@ -944,6 +1034,12 @@ export default function BankStatementPro() {
                       {t.debit > 0 ? fmt(t.debit) : ""}
                     </td>
                     <td className="px-3 py-2.5 text-xs text-dark text-right">{t.balance > 0 ? fmt(t.balance) : ""}</td>
+                    <td className="px-3 py-2.5 text-xs">
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${BADGE[t.category] || "bg-gray-100 text-gray-400"}`}>
+                        <Tag size={9} />{t.category || "Uncategorized"}
+                      </span>
+                    </td>
+                    <td className="px-3 py-2.5 text-xs text-muted whitespace-nowrap">{t.ledger || "Suspense Ledger"}</td>
                   </tr>
                 ))}
               </tbody>
@@ -971,8 +1067,11 @@ export default function BankStatementPro() {
           >
             <Download size={16} /> Download Excel (.xlsx)
           </button>
-          <button onClick={reset} className="flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors px-4 py-3">
-            <RefreshCw size={14} /> Process another file
+          <button
+            onClick={reset}
+            className="flex items-center gap-2 text-sm font-semibold px-5 py-3 rounded-lg border border-gray-300 bg-white text-dark hover:border-primary hover:text-primary transition-all shadow-sm"
+          >
+            <RefreshCw size={14} /> Process Another File
           </button>
         </div>
 

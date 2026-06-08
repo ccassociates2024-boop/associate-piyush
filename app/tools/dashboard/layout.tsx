@@ -16,13 +16,13 @@ export const metadata: Metadata = {
     "financial health score",
   ],
   alternates: {
-    canonical: "https://associate-piyush-bduu.vercel.app/tools/dashboard",
+    canonical: "https://associatepiyush.co.in/tools/dashboard",
   },
   openGraph: {
     title: "Personal Finance Dashboard | CC Associates — Free, No Login",
     description:
       "Track income, expenses, investments, tax liability & goals. Built for Indian taxpayers. 100% browser-based.",
-    url: "https://associate-piyush-bduu.vercel.app/tools/dashboard",
+    url: "https://associatepiyush.co.in/tools/dashboard",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
 };

@@ -14,13 +14,13 @@ export const metadata: Metadata = {
     "tax advisor phone pune",
   ],
   alternates: {
-    canonical: "https://associatepiyush.in/contact",
+    canonical: "https://associatepiyush.co.in/contact",
   },
   openGraph: {
     title: "Contact Associate Piyush | Tax Consultant Pune",
     description:
       "WhatsApp or call +91 75073 54141. First consultation free. GST, Income Tax, TDS & Forensic Accounting — Pune & Pan India.",
-    url: "https://associatepiyush.in/contact",
+    url: "https://associatepiyush.co.in/contact",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Contact Associate Piyush" }],
   },
 };

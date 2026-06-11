@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://associatepiyush.in/sitemap.xml
+Sitemap: https://associatepiyush.co.in/sitemap.xml
 
 # Disallow admin or private paths
 Disallow: /api/

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -63,6 +64,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </ThemeProvider>
         <Footer />
         <FloatingContact />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-QPNDK3DSN6" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-QPNDK3DSN6');
+        `}</Script>
       </body>
     </html>
   );

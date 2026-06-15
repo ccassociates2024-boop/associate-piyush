@@ -123,8 +123,8 @@ export function buildExcel(p:{
   const metro = p.salBreak.metroCity==="yes";
   const basic = n(p.salBreak.basicDa), hraRec=n(p.salBreak.hraReceived), rentPm=n(p.salBreak.rentPm);
 
-  hra.add(null,[title("HRA EXEMPTION WORKING",C.NAVY,C.WHITE,14),blk(C.NAVY),blk(C.NAVY)],38); hra.mg(0,0,0,2);
-  hra.add(null,[title(`u/s 10(13A)  |  Rule 2A of IT Rules  |  FY ${p.fyLabel}  |  AY ${p.ayLabel}`,C.NAVY2,C.WHITE,10),blk(C.NAVY2),blk(C.NAVY2)],24); hra.mg(1,1,1,2);
+  hra.add(null,[title("HRA EXEMPTION WORKING",C.NAVY,C.WHITE,14),blk(C.NAVY),blk(C.NAVY)],38); hra.mg(0,0,2,0);
+  hra.add(null,[title(`u/s 10(13A)  |  Rule 2A of IT Rules  |  FY ${p.fyLabel}  |  AY ${p.ayLabel}`,C.NAVY2,C.WHITE,10),blk(C.NAVY2),blk(C.NAVY2)],24); hra.mg(0,1,2,1);
   hra.add(null,[info("Name: "+(p.name||"____"),true),info("PAN: "+(p.pan||"XXXXXXXXXX"),true),blk(C.VLBLUE)],22);
   hra.add(null,sep(HW,C.BORDK),8);
   hra.add(null,[hdr("SR."),hdr("PARTICULARS"),hdr("AMOUNT  (₹)")],26);
@@ -167,7 +167,7 @@ export function buildExcel(p:{
   ],24);
   hra.add(null,sep(HW,C.BORDER),8);
   hra.add(null,[note("Sec 10(13A) | Rule 2A. Only for salaried employees in rented accommodation."),blk(C.GRLT),blk(C.GRLT)],22); hra.mg(1,hra.cur-1,2,hra.cur-1);
-  hra.build([6,58,22],"HRA Working",wb);
+  hra.build([6,74,24],"HRA Working",wb);
   const HRA_EXEMPT_REF = `='HRA Working'!C${hra.row("H_EXEMPT")}`;
 
   // ═══════════════════════════════════════════════════════════════════════
@@ -185,8 +185,8 @@ export function buildExcel(p:{
   const eduRec=n(p.salBreak.eduAllowance), hostelRec=n(p.salBreak.hostelAllowance);
   const eduEx2=Math.min(eduRec,children*100*12), hostelEx2=Math.min(hostelRec,children*300*12);
 
-  gl.add(null,[title("EXEMPTION WORKINGS",C.NAVY,C.WHITE,14),blk(C.NAVY),blk(C.NAVY)],38); gl.mg(0,0,0,2);
-  gl.add(null,[title(`Gratuity · Leave Encashment · Allowances  |  FY ${p.fyLabel}  |  AY ${p.ayLabel}`,C.NAVY2,C.WHITE,10),blk(C.NAVY2),blk(C.NAVY2)],24); gl.mg(1,1,1,2);
+  gl.add(null,[title("EXEMPTION WORKINGS",C.NAVY,C.WHITE,14),blk(C.NAVY),blk(C.NAVY)],38); gl.mg(0,0,2,0);
+  gl.add(null,[title(`Gratuity · Leave Encashment · Allowances  |  FY ${p.fyLabel}  |  AY ${p.ayLabel}`,C.NAVY2,C.WHITE,10),blk(C.NAVY2),blk(C.NAVY2)],24); gl.mg(0,1,2,1);
   gl.add(null,[info("Name: "+(p.name||"___"),true),info("PAN: "+(p.pan||"XXXXXXXXXX"),true),blk(C.VLBLUE)],22);
   gl.add(null,sep(3,C.BORDK),8);
 
@@ -268,7 +268,7 @@ export function buildExcel(p:{
   gl.add("GL_TOTAL", [blk(C.NAVY),lbl("TOTAL CHILDREN ALLOWANCE EXEMPT  (Education + Hostel)",1,C.NAVY,true,C.WHITE),
     numF(`=${gl.ref("EDU_EX","C")}+${gl.ref("HOS_EX","C")}`,eduEx2+hostelEx2,C.GRLT,true,C.GRDK)],28);
   gl.add(null,[note("Sec 10(14)(ii) | Rule 2BB. Education ₹100/month, Hostel ₹300/month per child, max 2 children. Not available in New Regime."),blk(C.GRLT),blk(C.GRLT)],22); gl.mg(1,gl.cur-1,2,gl.cur-1);
-  gl.build([6,58,22],"Gratuity & Leave",wb);
+  gl.build([6,74,24],"Gratuity & Leave",wb);
 
   const GRAT_EXEMPT_REF  = `='Gratuity & Leave'!C${gl.row("G_EXEMPT")}`;
   const LEAVE_EXEMPT_REF = `='Gratuity & Leave'!C${gl.row("L_EXEMPT")}`;
@@ -350,10 +350,11 @@ export function buildExcel(p:{
 
   // ── C. BUSINESS ──────────────────────────────────────────────────────────
   m.add(null,[sec("C.",C.BLUE2),sec("BUSINESS / PROFESSIONAL INCOME",C.BLUE2),blk(C.BLUE2),blk(C.BLUE2),blk(C.BLUE2)],24);
+  const bizR = m.cur + 1;
   m.add("BUSINESS",[blk(),lbl("Net Business / Professional Income (after all expenses)",1,C.GRAY1),
     numV(p.business,C.GRAY1),
-    numF(`=${m.ref("BUSINESS","C")}`,p.business,C.GRLT,true,C.GRDK),
-    numF(`=${m.ref("BUSINESS","C")}`,p.business,C.GRLT,true,C.GRDK)],18);
+    numF(`=C${bizR}`,p.business,C.GRLT,true,C.GRDK),
+    numF(`=C${bizR}`,p.business,C.GRLT,true,C.GRDK)],18);
   m.add(null,sep(NC,C.BORDER),6);
 
   // ── D. CAPITAL GAINS ─────────────────────────────────────────────────────
@@ -369,9 +370,10 @@ export function buildExcel(p:{
 
   // ── E. OTHER INCOME ──────────────────────────────────────────────────────
   m.add(null,[sec("E.",C.BLUE2),sec("INCOME FROM OTHER SOURCES",C.BLUE2),blk(C.BLUE2),blk(C.BLUE2),blk(C.BLUE2)],24);
+  const otherR = m.cur + 1;
   m.add("OTHER",[blk(),lbl("Interest / Dividends / Other Receipts",1,C.GRAY1), numV(p.other,C.GRAY1),
-    numF(`=${m.ref("OTHER","C")}`,p.other,C.GRLT,true,C.GRDK),
-    numF(`=${m.ref("OTHER","C")}`,p.other,C.GRLT,true,C.GRDK)],18);
+    numF(`=C${otherR}`,p.other,C.GRLT,true,C.GRDK),
+    numF(`=C${otherR}`,p.other,C.GRLT,true,C.GRDK)],18);
   m.add(null,sep(NC,C.BORDER),6);
 
   // ── F. GTI ────────────────────────────────────────────────────────────────
@@ -441,10 +443,12 @@ export function buildExcel(p:{
 
   // ── J. TAX PAID ──────────────────────────────────────────────────────────
   m.add(null,[sec("J.",C.BLUE),sec("TAX PAID / ADVANCE TAX",C.BLUE),blk(C.BLUE),blk(C.BLUE),blk(C.BLUE)],24);
+  const tdsR = m.cur + 1;
   m.add("TDS_ROW",[lbl("1",1),lbl("TDS Deducted  [Form 16 / Form 26AS]",1,C.GRAY1),
-    numV(p.tds,C.GRAY1), numF(`=${m.ref("TDS_ROW","C")}`,p.tds,C.GRAY1), numF(`=${m.ref("TDS_ROW","C")}`,p.tds,C.GRAY1)],18);
+    numV(p.tds,C.GRAY1), numF(`=C${tdsR}`,p.tds,C.GRAY1), numF(`=C${tdsR}`,p.tds,C.GRAY1)],18);
+  const advR = m.cur + 1;
   m.add("ADV_ROW",[lbl("2",1),lbl("Advance Tax Paid  (all installments combined)",1),
-    numV(p.advTax), numF(`=${m.ref("ADV_ROW","C")}`,p.advTax), numF(`=${m.ref("ADV_ROW","C")}`,p.advTax)],18);
+    numV(p.advTax), numF(`=C${advR}`,p.advTax), numF(`=C${advR}`,p.advTax)],18);
   m.add("TOT_PAID",[blk(C.AMBER),lbl("Total Tax Paid  (TDS + Advance Tax)",1,C.AMBER,true,C.AMBERDK), blk(C.AMBER),
     numF(`=${m.ref("TDS_ROW","D")}+${m.ref("ADV_ROW","D")}`,p.tds+p.advTax,C.AMBER,true,C.AMBERDK,true),
     numF(`=${m.ref("TDS_ROW","E")}+${m.ref("ADV_ROW","E")}`,p.tds+p.advTax,C.AMBER,true,C.AMBERDK,true)],22);
@@ -536,7 +540,7 @@ export function buildExcel(p:{
   s3.add(null,[note("Sec 234A: 1% p.m. on self-assessment tax for each month/part month after due date."),blk(C.GRLT),blk(C.GRLT),blk(C.GRLT),blk(C.GRLT)],20); s3.mg(0,s3.cur-1,4,s3.cur-1);
   s3.add(null,[note("Sec 234B: 1% p.m. on shortfall in advance tax (tax − 90% of assessed tax)."),blk(C.GRLT),blk(C.GRLT),blk(C.GRLT),blk(C.GRLT)],20); s3.mg(0,s3.cur-1,4,s3.cur-1);
   s3.add(null,[note("Sec 234C: 1% p.m. for each deferred installment. Actual depends on installment dates."),blk(C.GRLT),blk(C.GRLT),blk(C.GRLT),blk(C.GRLT)],20); s3.mg(0,s3.cur-1,4,s3.cur-1);
-  s3.build([6,58,5,22,22],"234 Interest",wb);
+  s3.build([6,74,5,22,22],"234 Interest",wb);
 
   // Now add Section K to main sheet — cross-referencing 234 Interest sheet
   const S3="'234 Interest'";
@@ -595,7 +599,7 @@ export function buildExcel(p:{
   m.add(null,[note(`Generated: ${new Date().toLocaleDateString("en-IN")}  ·  ${p.act}  ·  Results indicative only — verify with a qualified Chartered Accountant.  ·  © Associate Piyush, Pune  —  https://associatepiyush.co.in`),
     blk(C.GRLT),blk(C.GRLT),blk(C.GRLT),blk(C.GRLT)],28); m.mg(0,m.cur-1,4,m.cur-1);
 
-  m.build([6,58,22,22,22],"Tax Computation",wb);
+  m.build([6,74,22,22,22],"Tax Computation",wb);
 
   // ── Write file ─────────────────────────────────────────────────────────────
   const safeName=(p.name||"Taxpayer").replace(/[^a-zA-Z0-9]/g,"_");

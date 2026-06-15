@@ -273,7 +273,7 @@ export function buildExcel(p:{
   const GRAT_EXEMPT_REF  = `='Gratuity & Leave'!C${gl.row("G_EXEMPT")}`;
   const LEAVE_EXEMPT_REF = `='Gratuity & Leave'!C${gl.row("L_EXEMPT")}`;
   const EDU_EXEMPT_REF   = `='Gratuity & Leave'!C${gl.row("EDU_EX")}`;
-  HOS_EXEMPT_REF   = `='Gratuity & Leave'!C${gl.row("HOS_EX")}`;
+  const HOS_EXEMPT_REF   = `='Gratuity & Leave'!C${gl.row("HOS_EX")}`;
 
   // ═══════════════════════════════════════════════════════════════════════
   // SHEET 1 — MAIN TAX COMPUTATION  (5 columns: A B C D E)
@@ -602,6 +602,3 @@ export function buildExcel(p:{
   const fyL=p.fy==="2526"?"FY_2025-26":"FY_2026-27";
   XLSX.writeFile(wb, `Income_Tax_Computation_${safeName}_${fyL}.xlsx`);
 }
-
-// Fix TS error for undeclared variable — hoisted declaration
-declare let HOS_EXEMPT_REF: string;

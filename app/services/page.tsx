@@ -34,7 +34,7 @@ export default function ServicesPage() {
     <div className="pt-16">
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="bg-primary py-12">
+      <section className="ap-texture-dark bg-primary py-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-lime text-xs font-semibold uppercase tracking-widest mb-2">
             What We Offer
@@ -55,7 +55,7 @@ export default function ServicesPage() {
       </section>
 
       {/* ── CTA ───────────────────────────────────────────────────────────── */}
-      <section className="bg-primary py-12">
+      <section className="ap-texture-dark bg-primary py-12">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
             Not sure which service you need?

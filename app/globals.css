@@ -262,18 +262,22 @@ main { overflow-x: clip; }
    ═══════════════════════════════════════════════════════════════════════════ */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(22px) scale(0.985);
+  transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1);
+  will-change: opacity, transform;
 }
 [data-reveal].revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
-[data-reveal][data-delay="100"] { transition-delay: 0.10s; }
-[data-reveal][data-delay="200"] { transition-delay: 0.18s; }
-[data-reveal][data-delay="300"] { transition-delay: 0.26s; }
-[data-reveal][data-delay="400"] { transition-delay: 0.34s; }
-[data-reveal][data-delay="500"] { transition-delay: 0.42s; }
+[data-reveal][data-delay="100"] { transition-delay: 0.08s; }
+[data-reveal][data-delay="200"] { transition-delay: 0.16s; }
+[data-reveal][data-delay="300"] { transition-delay: 0.24s; }
+[data-reveal][data-delay="400"] { transition-delay: 0.32s; }
+[data-reveal][data-delay="500"] { transition-delay: 0.40s; }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ANIMATIONS — minimal set
@@ -411,4 +415,85 @@ html.dark .cat-tab.active {
    ═══════════════════════════════════════════════════════════════════════════ */
 .ap-divider {
   border-top: 1px solid var(--ap-border);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HERO GRID — interactive cursor-glow dot grid (components/HeroGrid.tsx)
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  --hg-dot:      rgba(3,4,7,0.10);
+  --hg-lit:      rgba(21,88,201,0.75);
+  --hg-glow:     rgba(21,88,201,0.10);
+  --hg-corner:   rgba(21,88,201,0.06);
+}
+html.dark {
+  --hg-dot:      rgba(255,255,255,0.07);
+  --hg-lit:      rgba(212,255,36,0.55);
+  --hg-glow:     rgba(91,143,232,0.14);
+  --hg-corner:   rgba(212,255,36,0.05);
+}
+.hero-grid {
+  --gx: 72%;
+  --gy: 32%;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+}
+.hero-grid > div { position: absolute; inset: 0; }
+.hero-grid__glow {
+  background:
+    radial-gradient(560px circle at var(--gx) var(--gy), var(--hg-glow), transparent 62%),
+    radial-gradient(700px circle at 100% 0%, var(--hg-corner), transparent 60%);
+}
+.hero-grid__dots,
+.hero-grid__lit {
+  background-size: 26px 26px;
+  background-position: center top;
+}
+.hero-grid__dots {
+  background-image: radial-gradient(circle, var(--hg-dot) 1px, transparent 1.5px);
+}
+.hero-grid__lit {
+  background-image: radial-gradient(circle, var(--hg-lit) 1.2px, transparent 1.7px);
+  -webkit-mask-image: radial-gradient(200px circle at var(--gx) var(--gy), #000 0%, transparent 75%);
+          mask-image: radial-gradient(200px circle at var(--gx) var(--gy), #000 0%, transparent 75%);
+  opacity: 0.35;
+  transition: opacity 0.5s ease;
+}
+.hero-grid.is-active .hero-grid__lit { opacity: 1; }
+@media (max-width: 640px) {
+  .hero-grid__dots, .hero-grid__lit { background-size: 22px 22px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TEXTURES — quiet static dot grid + corner glow for headers and plain sections
+   Add .ap-texture to light sections, .ap-texture-dark to black/dark sections.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.ap-texture, .ap-texture-dark { position: relative; isolation: isolate; }
+.ap-texture::before, .ap-texture-dark::before,
+.ap-texture::after,  .ap-texture-dark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.ap-texture::before, .ap-texture-dark::before {
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 90% at 85% 0%, #000 0%, transparent 70%);
+          mask-image: radial-gradient(ellipse 70% 90% at 85% 0%, #000 0%, transparent 70%);
+}
+.ap-texture::before      { background-image: radial-gradient(circle, var(--hg-dot) 1px, transparent 1.5px); }
+.ap-texture-dark::before { background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1.5px); }
+.ap-texture::after {
+  background: radial-gradient(640px circle at 95% 0%, var(--hg-glow), transparent 60%);
+}
+.ap-texture-dark::after {
+  background:
+    radial-gradient(640px circle at 95% 0%, rgba(21,88,201,0.28), transparent 60%),
+    radial-gradient(420px circle at 0% 100%, rgba(212,255,36,0.05), transparent 60%);
 }

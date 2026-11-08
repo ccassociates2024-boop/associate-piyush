@@ -171,7 +171,7 @@ export default function ResourcesPage() {
   return (
     <div className="pt-16">
       {/* ── Hero ── */}
-      <section className="bg-primary py-14">
+      <section className="ap-texture-dark bg-primary py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <p className="text-lime text-sm font-semibold uppercase tracking-wider mb-3">
@@ -311,7 +311,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* ── Section 3: Book a Free Consultation CTA ── */}
-      <section className="bg-primary py-16">
+      <section className="ap-texture-dark bg-primary py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <p className="text-lime text-sm font-bold uppercase tracking-wider mb-3">Free Consultation</p>

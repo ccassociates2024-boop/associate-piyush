@@ -36,7 +36,7 @@ export default function ToolsPage() {
 
       {/* Hero */}
       <section style={{ background: "var(--ap-surface)", borderBottom: "1px solid var(--ap-border)" }}
-               className="py-12">
+               className="ap-texture py-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-semibold uppercase tracking-widest mb-2"
              style={{ color: "var(--ap-gold)" }}>Free Tools</p>

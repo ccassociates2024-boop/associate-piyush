@@ -28,6 +28,39 @@ function animateCounter(el: Element) {
   requestAnimationFrame(step);
 }
 
+/* ── Automatic scroll reveal ───────────────────────────────────────────────
+   Adds data-reveal to headings, cards and grid items that start BELOW the
+   fold, so every page gets the same fade-up without editing each page.
+   Grid children get a small stagger. Individual tool pages (/tools/xyz) are
+   skipped so forms and results never animate while someone is working.   */
+const AUTO_REVEAL_SELECTOR = [
+  "main section h2",
+  "main section h3",
+  "main section .grid > *",
+  "main .ap-card",
+  "main .card",
+  "main section > div > p",
+].join(",");
+
+function autoTagReveal(pathname: string | null) {
+  if (pathname && /^\/tools\/.+/.test(pathname)) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const fold = window.innerHeight;
+  document.querySelectorAll<HTMLElement>(AUTO_REVEAL_SELECTOR).forEach((el) => {
+    if (el.hasAttribute("data-reveal") || el.closest("[data-reveal]")) return;
+    if (el.closest("nav, footer, [data-no-reveal]")) return;
+    if (el.getBoundingClientRect().top < fold) return;   // already on screen: leave it
+
+    el.setAttribute("data-reveal", "auto");
+    const parent = el.parentElement;
+    if (parent && parent.classList.contains("grid")) {
+      const index = Array.prototype.indexOf.call(parent.children, el) as number;
+      el.style.transitionDelay = `${(index % 6) * 70}ms`;
+    }
+  });
+}
+
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
@@ -37,8 +70,18 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("revealed");
-            revealObserver.unobserve(entry.target);
+            const el = entry.target as HTMLElement;
+            el.classList.add("revealed");
+            revealObserver.unobserve(el);
+            // Once the fade-up has finished, hand the element back to its own
+            // styles so card hover effects (lift, glow) work normally again.
+            if (el.getAttribute("data-reveal") === "auto") {
+              setTimeout(() => {
+                el.removeAttribute("data-reveal");
+                el.classList.remove("revealed");
+                el.style.transitionDelay = "";
+              }, 1300);
+            }
           }
         });
       },
@@ -46,6 +89,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
     );
 
     const timer = setTimeout(() => {
+      autoTagReveal(pathname);
       document
         .querySelectorAll("[data-reveal]:not(.revealed)")
         .forEach((el) => revealObserver.observe(el));

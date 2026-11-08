@@ -7,6 +7,7 @@ import {
   Lightbulb,
 } from "lucide-react";
 import Team from "@/components/Team";
+import HeroGrid from "@/components/HeroGrid";
 
 export const metadata: Metadata = {
   title: { absolute: "Associate Piyush | Tax & Finance Consultant — Pune & Pan India" },
@@ -51,8 +52,9 @@ export default function HomePage() {
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section style={{ background: "var(--ap-surface)" }}
-               className="border-b ap-divider py-14 lg:py-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+               className="relative isolate overflow-hidden border-b ap-divider py-14 lg:py-20">
+        <HeroGrid />
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Location pill */}
           <div data-reveal
@@ -170,7 +172,7 @@ export default function HomePage() {
       </section>
 
       {/* ── FREE TOOLS ───────────────────────────────────────────────────── */}
-      <section style={{ background: "var(--ap-surface-2)" }} className="py-20 border-b ap-divider">
+      <section style={{ background: "var(--ap-surface-2)" }} className="ap-texture py-20 border-b ap-divider">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <div data-reveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
@@ -289,7 +291,7 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section style={{ background: "#030407", color: "#FFFFFF" }} className="py-20">
+      <section style={{ background: "#030407", color: "#FFFFFF" }} className="ap-texture-dark py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div data-reveal>
             <p className="text-xs font-semibold uppercase tracking-widest mb-4"

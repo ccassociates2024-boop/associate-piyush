@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Associate Piyush — Logo Guide</title>
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink:#030407; --muted:#5B6474; --line:#E3E7EE; --cobalt:#1558C9; --lime:#D4FF24; }
+  html, body { width: 297mm; height: 210mm; }
+  body { font-family: "Inter", "Segoe UI", Arial, sans-serif; color: var(--ink); background:#fff;
+         padding: 11mm 13mm 9mm; display: grid; grid-template-rows: auto 1fr auto; gap: 6mm; }
+  header { display:flex; align-items:flex-end; justify-content:space-between; border-bottom: 2px solid var(--ink); padding-bottom: 3.5mm; }
+  header h1 { font-size: 22pt; font-weight: 800; letter-spacing: -0.4px; }
+  header p { font-size: 8.5pt; color: var(--muted); text-align: right; line-height: 1.45; }
+  .grid { display:grid; grid-template-columns: 1.15fr 1fr 1fr; grid-template-rows: auto auto; gap: 5mm 6mm; }
+  section h2 { font-size: 7.5pt; letter-spacing: 1.6px; text-transform: uppercase; color: var(--cobalt); font-weight: 700; margin-bottom: 2.4mm;
+               display:flex; align-items:center; gap: 2mm; }
+  section h2::before { content:""; width: 6mm; height: 1.2px; background: linear-gradient(90deg, var(--cobalt), var(--lime)); }
+  p.note { font-size: 7.6pt; color: var(--muted); line-height: 1.45; margin-top: 1.6mm; }
+  .tiles { display:grid; grid-template-columns: repeat(3, 1fr); gap: 2.5mm; }
+  .tile { border: 1px solid var(--line); border-radius: 3mm; height: 27mm; display:flex; align-items:center; justify-content:center; position:relative; }
+  .tile small { position:absolute; bottom: 1.4mm; left: 2mm; font-size: 6.2pt; color: var(--muted); }
+  .tile.dark { background: var(--ink); border-color: var(--ink); } .tile.dark small { color:#9AA4B5; }
+  .tile.cob { background: var(--cobalt); border-color: var(--cobalt); } .tile.cob small { color:#D0DDF6; }
+  .lockups { display:grid; gap: 2.5mm; margin-top: 2.5mm; grid-template-columns: 1fr 1fr; }
+  .lock { border:1px solid var(--line); border-radius: 3mm; height: 20mm; display:flex; align-items:center; justify-content:center; }
+  .lock.dark { background: var(--ink); border-color: var(--ink); }
+  .clear { border:1px dashed #9AA4B5; border-radius: 3mm; height: 50mm; display:flex; align-items:center; justify-content:center; position:relative; background:
+           repeating-linear-gradient(45deg, rgba(21,88,201,0.05) 0 3px, transparent 3px 7px); }
+  .clear .inner { background:#fff; padding: 6mm; border: 1px solid rgba(21,88,201,0.35); }
+  .clear .x { position:absolute; font-size: 7pt; color: var(--cobalt); font-weight:700; }
+  table { width:100%; border-collapse: collapse; font-size: 7.6pt; }
+  td { padding: 1.5mm 0; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  td:first-child { width: 9mm; }
+  .sw { width: 7mm; height: 7mm; border-radius: 1.6mm; border:1px solid var(--line); }
+  td b { font-size: 8pt; } td span { color: var(--muted); }
+  .sizes { display:flex; align-items:flex-end; gap: 5mm; margin-top: 1mm; }
+  .sizes div { text-align:center; font-size: 6.6pt; color: var(--muted); }
+  .donts { display:grid; grid-template-columns: repeat(3, 1fr); gap: 2.2mm; }
+  .dont { border:1px solid var(--line); border-radius: 2.5mm; height: 19mm; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+  .dont::after { content:""; position:absolute; inset:0; background:
+     linear-gradient(to top right, transparent calc(50% - 0.6px), #E5484D calc(50% - 0.6px), #E5484D calc(50% + 0.6px), transparent calc(50% + 0.6px)); }
+  .dont small { position:absolute; bottom: 0.9mm; left: 1.6mm; font-size: 5.8pt; color: #B4232A; background:#fff; padding: 0 0.6mm; z-index: 1; }
+  footer { display:flex; justify-content:space-between; font-size: 7pt; color: var(--muted); border-top: 1px solid var(--line); padding-top: 2.5mm; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="glyph" viewBox="10 12 44 40">
+      <path d="M19.8 50 L30 43 V38.8 L23 43.6 Z" style="fill:var(--bar,#D4FF24)"/>
+      <path d="M12 50 L30 14 H37.8 L19.8 50 Z M30 14 H37.8 V50 H30 Z" style="fill:var(--ltr,#FFFFFF)"/>
+      <path d="M37.8 14 H41 A11 11 0 0 1 41 36 H37.8 Z M37.8 21.8 H41 A3.2 3.2 0 0 1 41 28.2 H37.8 Z" style="fill:var(--ltr,#FFFFFF)" fill-rule="evenodd"/>
+    </symbol>
+    <symbol id="mark" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="15" style="fill:var(--tile,#030407)"/>
+      <path d="M19.8 50 L30 43 V38.8 L23 43.6 Z" style="fill:var(--bar,#D4FF24)"/>
+      <path d="M12 50 L30 14 H37.8 L19.8 50 Z M30 14 H37.8 V50 H30 Z" style="fill:var(--ltr,#FFFFFF)"/>
+      <path d="M37.8 14 H41 A11 11 0 0 1 41 36 H37.8 Z M37.8 21.8 H41 A3.2 3.2 0 0 1 41 28.2 H37.8 Z" style="fill:var(--ltr,#FFFFFF)" fill-rule="evenodd"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <div>
+    <h1>Associate Piyush — Logo Guide</h1>
+  </div>
+  <p>AP monogram · version 1.0 · November 2026<br>Master files: website <b>/brand/</b> folder (SVG for print, PNG for screens)</p>
+</header>
+
+<div class="grid">
+  <!-- 1. Versions -->
+  <section style="grid-row: span 2">
+    <h2>Logo versions</h2>
+    <div class="tiles">
+      <div class="tile"><svg width="54" height="54"><use href="#mark" style="--tile:#030407"/></svg><small>Primary</small></div>
+      <div class="tile dark"><svg width="54" height="54"><use href="#mark" style="--tile:#1558C9"/></svg><small>On dark</small></div>
+      <div class="tile cob"><svg width="54" height="54"><use href="#mark" style="--tile:#030407"/></svg><small>On cobalt</small></div>
+      <div class="tile"><svg width="58" height="53"><use href="#glyph" style="--ltr:#000;--bar:#000"/></svg><small>Black · stamps, fax</small></div>
+      <div class="tile dark"><svg width="58" height="53"><use href="#glyph" style="--ltr:#fff;--bar:#fff"/></svg><small>White · reversed</small></div>
+      <div class="tile"><svg width="54" height="54"><use href="#mark" style="--tile:#000;--bar:#fff"/></svg><small>One-colour tile</small></div>
+    </div>
+    <div class="lockups">
+      <div class="lock">
+        <svg width="40" height="40"><use href="#mark"/></svg>
+        <div style="margin-left:3mm;line-height:1"><div style="font-size:6.5pt;letter-spacing:2px;color:#64748B;font-weight:600">ASSOCIATE</div><div style="font-size:15pt;font-weight:800;letter-spacing:-0.3px">Piyush<span style="color:#1558C9">.</span></div></div>
+      </div>
+      <div class="lock dark">
+        <svg width="40" height="40"><use href="#mark" style="--tile:#1558C9"/></svg>
+        <div style="margin-left:3mm;line-height:1;color:#fff"><div style="font-size:6.5pt;letter-spacing:2px;color:#9AA4B5;font-weight:600">ASSOCIATE</div><div style="font-size:15pt;font-weight:800;letter-spacing:-0.3px">Piyush<span style="color:#D4FF24">.</span></div></div>
+      </div>
+    </div>
+    <p class="note">Use the full-colour mark wherever colour is available. Use the black or white single-colour versions only where colour is impossible: rubber stamps, embossed seals, fax, photocopies, one-colour printing. In single colour the rising stroke merges with the letters, which is intended.</p>
+  </section>
+
+  <!-- 2. Clear space -->
+  <section>
+    <h2>Clear space</h2>
+    <div class="clear">
+      <div class="inner"><svg width="70" height="70"><use href="#mark"/></svg></div>
+      <span class="x" style="top:4mm">x</span><span class="x" style="bottom:4mm">x</span>
+      <span class="x" style="left:5mm">x</span><span class="x" style="right:5mm">x</span>
+    </div>
+    <p class="note">Keep empty space on every side equal to <b>x = ¼ of the mark's width</b>. No text, lines or images inside it.</p>
+  </section>
+
+  <!-- 3. Colours -->
+  <section>
+    <h2>Colours</h2>
+    <table>
+      <tr><td><div class="sw" style="background:#030407"></div></td><td><b>Midnight Black</b><br><span>#030407 · RGB 3 4 7 · CMYK 0 0 0 100</span></td></tr>
+      <tr><td><div class="sw" style="background:#1558C9"></div></td><td><b>Electric Cobalt</b><br><span>#1558C9 · RGB 21 88 201 · CMYK ≈ 90 60 0 0</span></td></tr>
+      <tr><td><div class="sw" style="background:#D4FF24"></div></td><td><b>Acid Lime</b><br><span>#D4FF24 · RGB 212 255 36 · CMYK ≈ 20 0 90 0</span></td></tr>
+      <tr><td><div class="sw" style="background:#fff"></div></td><td><b>White</b><br><span>#FFFFFF</span></td></tr>
+    </table>
+    <p class="note">CMYK values are approximate. Lime cannot be printed exactly in CMYK; ask the printer for a proof. Font: <b>Inter</b> (website), Segoe UI as fallback.</p>
+  </section>
+
+  <!-- 4. Minimum size -->
+  <section>
+    <h2>Minimum size</h2>
+    <div class="sizes">
+      <div><svg width="48" height="48"><use href="#mark"/></svg><br>Icon · screen</div>
+      <div><svg width="24" height="24"><use href="#mark"/></svg><br>16 px min.</div>
+      <div><svg width="36" height="32"><use href="#glyph" style="--ltr:#000;--bar:#000"/></svg><br>Print 8 mm min.</div>
+    </div>
+    <p class="note">Mark: at least <b>16 px</b> on screen, <b>8 mm</b> wide in print. Mark + name: at least <b>120 px</b> / <b>30 mm</b> wide, below that use the mark alone.</p>
+  </section>
+
+  <!-- 5. Don'ts -->
+  <section>
+    <h2>Don't</h2>
+    <div class="donts">
+      <div class="dont"><svg width="62" height="34" viewBox="0 0 64 64" preserveAspectRatio="none"><use href="#mark"/></svg><small>Stretch</small></div>
+      <div class="dont"><svg width="36" height="36"><use href="#mark" style="--tile:#7C3AED;--bar:#F59E0B"/></svg><small>Recolour</small></div>
+      <div class="dont"><svg width="36" height="36" style="transform:rotate(-18deg)"><use href="#mark"/></svg><small>Rotate</small></div>
+      <div class="dont"><svg width="36" height="36" style="filter:drop-shadow(3px 3px 2px rgba(0,0,0,.6))"><use href="#mark"/></svg><small>Add effects</small></div>
+      <div class="dont" style="background:repeating-linear-gradient(45deg,#C9D3E3 0 4px,#8DA0C2 4px 9px)"><svg width="36" height="36"><use href="#glyph" style="--ltr:#1558C9;--bar:#1558C9"/></svg><small>Busy background</small></div>
+      <div class="dont"><svg width="36" height="36"><use href="#mark" style="--tile:#D4FF24;--ltr:#1558C9;--bar:#030407"/></svg><small>Swap colours</small></div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <span>Associate Piyush · Tax &amp; Finance Consultant · Pune · associatepiyush.co.in</span>
+  <span>Questions about using the logo: associate.piyush.nimse@gmail.com</span>
+</footer>
+</body>
+</html>

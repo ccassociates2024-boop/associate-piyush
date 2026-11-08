@@ -34,13 +34,13 @@ export default function ServicesPage() {
     <div className="pt-16">
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="ap-texture-dark bg-primary py-12">
+      <section className="ap-texture-dark ap-hero-band">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="ap-eyebrow text-lime text-xs font-semibold uppercase tracking-widest mb-2">
             What We Offer
           </p>
-          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">Our Services</h1>
-          <p className="text-blue-200 text-sm sm:text-base max-w-xl leading-relaxed">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">Our <span className="ap-script">Services</span></h1>
+          <p className="ap-band-sub text-base sm:text-lg max-w-xl leading-relaxed">
             Click any service to see full details, pricing, and what&apos;s included.
             Each engagement is handled with precision and confidentiality.
           </p>

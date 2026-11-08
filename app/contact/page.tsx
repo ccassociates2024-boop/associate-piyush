@@ -29,16 +29,16 @@ export default function ContactPage() {
   return (
     <div className="pt-16">
       {/* Hero */}
-      <section className="ap-texture-dark bg-primary py-14">
+      <section className="ap-texture-dark ap-hero-band">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <p className="ap-eyebrow text-lime text-sm font-semibold uppercase tracking-wider mb-3">
               Get in Touch
             </p>
-            <h1 className="text-4xl font-bold text-white mb-4">
-              Let&apos;s Resolve Your Tax Matter
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">
+              Let&apos;s <span className="ap-script">Resolve</span> Your Tax Matter
             </h1>
-            <p className="text-blue-200 text-lg leading-relaxed">
+            <p className="ap-band-sub text-lg leading-relaxed">
               Reach out via WhatsApp, call, or email. First consultation is free.
               Response within 2–3 working days.
             </p>

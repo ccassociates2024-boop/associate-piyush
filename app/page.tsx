@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import Team from "@/components/Team";
 import HeroGrid from "@/components/HeroGrid";
+import HeroCharacter from "@/components/HeroCharacter";
 
 export const metadata: Metadata = {
   title: { absolute: "Associate Piyush | Tax & Finance Consultant — Pune & Pan India" },
@@ -52,9 +53,9 @@ export default function HomePage() {
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section style={{ background: "var(--ap-surface)" }}
-               className="relative isolate overflow-hidden border-b ap-divider py-14 lg:py-20">
+               className="ap-home-hero relative isolate overflow-hidden border-b ap-divider py-14 lg:py-20">
         <HeroGrid />
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="ap-hero-copy relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Location pill */}
           <div data-reveal
@@ -105,6 +106,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
+        <HeroCharacter />
       </section>
 
       {/* ── STATS ────────────────────────────────────────────────────────── */}
@@ -135,7 +137,7 @@ export default function HomePage() {
             <p className="ap-eyebrow text-xs font-semibold uppercase tracking-widest mb-2"
                style={{ color: "var(--ap-gold)" }}>Services</p>
             <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--ap-text)" }}>
-              Our Services
+              Our <span className="ap-script">Services</span>
             </h2>
           </div>
 
@@ -178,7 +180,7 @@ export default function HomePage() {
               <p className="ap-eyebrow text-xs font-semibold uppercase tracking-widest mb-2"
                  style={{ color: "var(--ap-gold)" }}>Free Tools</p>
               <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--ap-text)" }}>
-                15+ Tools, No Login Required
+                15+ Tools, <span className="ap-script">No Login</span> Required
               </h2>
               <p className="text-sm mt-2" style={{ color: "var(--ap-text-muted)" }}>
                 Runs entirely in your browser. Your data never leaves your device.
@@ -241,7 +243,7 @@ export default function HomePage() {
             <p className="ap-eyebrow text-xs font-semibold uppercase tracking-widest mb-2"
                style={{ color: "var(--ap-gold)" }}>How We Work</p>
             <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--ap-text)" }}>
-              Simple Steps. Expert Results.
+              Simple Steps. <span className="ap-script">Expert Results.</span>
             </h2>
             <p className="text-sm mt-2 max-w-lg" style={{ color: "var(--ap-text-muted)" }}>
               From your first message to final filing — a clear, confidential process every time.
@@ -275,7 +277,7 @@ export default function HomePage() {
             <p className="ap-eyebrow text-xs font-semibold uppercase tracking-widest mb-2"
                style={{ color: "var(--ap-gold)" }}>Meet the Experts</p>
             <h3 className="text-xl sm:text-2xl font-bold" style={{ color: "var(--ap-text)" }}>
-              Handled by Qualified Professionals
+              Handled by <span className="ap-script">Qualified</span> Professionals
             </h3>
             <p className="text-sm mt-2 max-w-lg" style={{ color: "var(--ap-text-muted)" }}>
               Every case is personally reviewed and managed — not outsourced, not automated.
@@ -295,7 +297,7 @@ export default function HomePage() {
               First Consultation Free
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Stop overpaying taxes.<br className="hidden sm:block" /> Let&apos;s fix that.
+              Stop overpaying taxes.<br className="hidden sm:block" /> Let&apos;s <span className="ap-script">fix that.</span>
             </h2>
             <p className="text-base mb-10" style={{ color: "rgba(255,255,255,0.55)" }}>
               Whether it&apos;s a notice, GST refund, LTCG on property, or just filing your ITR — we respond within 2–3 working days and your first consultation is free.

@@ -95,12 +95,13 @@ export default function Navbar() {
 
   return (
     <>
-      <header className={clsx(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled ? "ap-nav shadow-sm" : "ap-nav"
-      )}>
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-[60px]">
+      <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-5 pt-2.5 sm:pt-3 pointer-events-none">
+        <nav className={clsx(
+          "ap-pill-nav pointer-events-auto max-w-6xl mx-auto px-3 sm:px-4 transition-all duration-300",
+          open ? "rounded-3xl" : "rounded-full",
+          scrolled && "is-scrolled"
+        )}>
+          <div className="flex items-center justify-between h-[52px]">
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
@@ -117,20 +118,20 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Links */}
-            <div className="hidden md:flex items-center gap-0.5">
+            <div className="ap-pill-links hidden md:flex items-center gap-0.5 rounded-full p-1">
               {NAV_LINKS.map((link) => {
                 const active = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href));
                 return (
                   <Link key={link.href} href={link.href}
                     className={clsx(
-                      "px-4 py-2 rounded-xl text-sm font-medium transition-all duration-150",
+                      "px-4 py-1.5 rounded-full text-[13px] font-medium tracking-wide transition-all duration-150",
                       active
                         ? "font-semibold"
                         : "hover:opacity-80"
                     )}
                     style={active
-                      ? { color: "var(--ap-accent)", background: "var(--ap-accent-bg)" }
-                      : { color: "var(--ap-text-muted)" }
+                      ? { color: "var(--ap-cta-text)", background: "var(--ap-cta-bg)" }
+                      : { color: "var(--ap-text-2)" }
                     }
                   >
                     {link.label}
@@ -144,7 +145,7 @@ export default function Navbar() {
               {/* Spotlight search */}
               <button
                 onClick={() => setSpotlight(true)}
-                className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs transition-all duration-150 hover:opacity-80"
+                className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs transition-all duration-150 hover:opacity-80"
                 style={{ background: "var(--ap-glass)", border: "1px solid var(--ap-border)", color: "var(--ap-text-muted)", backdropFilter: "blur(8px)" }}
                 title="Search (⌘K)"
               >
@@ -156,7 +157,7 @@ export default function Navbar() {
               {/* Dark/Light toggle */}
               <button
                 onClick={toggle}
-                className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 hover:opacity-80"
+                className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:opacity-80"
                 style={{ background: "var(--ap-glass)", border: "1px solid var(--ap-border)" }}
                 aria-label="Toggle dark mode"
               >
@@ -167,14 +168,14 @@ export default function Navbar() {
               </button>
 
               {/* Book Consultation */}
-              <Link href="/contact" className="hidden md:inline-flex btn-gold text-xs px-4 py-2 gap-1.5">
+              <Link href="/contact" className="hidden md:inline-flex btn-gold !rounded-full text-xs px-4 py-2 gap-1.5">
                 Book Consultation
               </Link>
 
               {/* Mobile menu */}
               <button
                 onClick={() => setOpen(!open)}
-                className="md:hidden w-9 h-9 rounded-xl flex items-center justify-center transition-all"
+                className="md:hidden w-9 h-9 rounded-full flex items-center justify-center transition-all"
                 style={{ background: "var(--ap-glass)", border: "1px solid var(--ap-border)" }}
                 aria-label="Toggle menu"
               >

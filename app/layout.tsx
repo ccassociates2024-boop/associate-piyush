@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Dancing_Script } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 import ThemeProvider from "@/components/ThemeProvider";
+import CustomCursor from "@/components/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+// Script face for one highlighted word in big headings (.ap-script)
+const script = Dancing_Script({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-script", display: "swap" });
 
 export const metadata: Metadata = {
   title: { default: "Associate Piyush | Tax & Finance Consultant, Pune", template: "%s | Associate Piyush" },
@@ -43,7 +46,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${script.variable}`} suppressHydrationWarning>
       <head>
         {/* No-flash dark mode init */}
         <script dangerouslySetInnerHTML={{ __html: `
@@ -64,6 +67,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </ThemeProvider>
         <Footer />
         <FloatingContact />
+        <CustomCursor />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-QPNDK3DSN6" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">{`
           window.dataLayer = window.dataLayer || [];

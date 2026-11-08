@@ -686,3 +686,163 @@ html.dark .ap-step-chip { background: var(--ap-lime); color: var(--ap-lime-ink);
 .ap-stats-band > div::before,
 .ap-stats-band > div::after { content: none; }
 .ap-stats-band { box-shadow: inset 0 1px 0 rgba(212,255,36,0.25), inset 0 -1px 0 rgba(21,88,201,0.45); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GLASS PILL NAV — floating rounded menu bar (components/Navbar.tsx)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.ap-pill-nav {
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(255,255,255,0.65);
+  box-shadow: 0 8px 32px -12px rgba(3,4,7,0.18), 0 1px 0 rgba(255,255,255,0.6) inset;
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+.ap-pill-nav.is-scrolled { background: rgba(255,255,255,0.86); box-shadow: 0 10px 36px -12px rgba(3,4,7,0.25); }
+html.dark .ap-pill-nav {
+  background: rgba(11,14,21,0.62);
+  border-color: rgba(255,255,255,0.08);
+  box-shadow: 0 10px 36px -12px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.05) inset;
+}
+html.dark .ap-pill-nav.is-scrolled { background: rgba(11,14,21,0.82); }
+.ap-pill-links {
+  background: rgba(3,4,7,0.04);
+  border: 1px solid rgba(3,4,7,0.06);
+}
+html.dark .ap-pill-links { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.07); }
+.ap-pill-links a:hover { background: var(--ap-accent-bg); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BOLD HEADER BANDS + SCRIPT HEADINGS (inspired by the reference reel)
+   Light mode: solid Electric Cobalt band. Dark mode: Midnight band with glow.
+   The band slides up under the floating glass nav.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.ap-hero-band {
+  background: #1558C9;
+  color: #FFFFFF;
+  margin-top: -4rem;
+  padding-top: 8.5rem;
+  padding-bottom: 4.5rem;
+}
+@media (min-width: 1024px) { .ap-hero-band { padding-top: 10rem; padding-bottom: 5.5rem; } }
+html.dark .ap-hero-band { background: #070B14; }
+.ap-hero-band.ap-texture-dark::after {
+  background:
+    radial-gradient(700px circle at 90% 10%, rgba(255,255,255,0.14), transparent 60%),
+    radial-gradient(520px circle at 0% 100%, rgba(212,255,36,0.12), transparent 60%);
+}
+html.dark .ap-hero-band.ap-texture-dark::after {
+  background:
+    radial-gradient(700px circle at 90% 10%, rgba(21,88,201,0.35), transparent 60%),
+    radial-gradient(520px circle at 0% 100%, rgba(212,255,36,0.07), transparent 60%);
+}
+.ap-hero-band.ap-texture-dark::before { opacity: 0.9; }
+.ap-band-sub { color: rgba(255,255,255,0.78); }
+
+.ap-script {
+  font-family: var(--font-script), "Brush Script MT", cursive;
+  font-weight: 700;
+  font-size: 1.22em;
+  line-height: 0.9;
+  letter-spacing: 0;
+  color: var(--ap-accent);
+  padding: 0 0.04em;
+  -webkit-text-fill-color: currentColor;
+}
+.ap-hero-band .ap-script,
+.ap-texture-dark .ap-script,
+.ap-stats-band .ap-script { color: var(--ap-lime); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CUSTOM CURSOR (components/CustomCursor.tsx) — desktop mouse only
+   ═══════════════════════════════════════════════════════════════════════════ */
+.ap-cursor-dot, .ap-cursor-ring {
+  position: fixed; top: 0; left: 0;
+  z-index: 10000;
+  pointer-events: none;
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.ap-cursor-dot {
+  width: 8px; height: 8px; margin: -4px 0 0 -4px;
+  background: var(--ap-accent);
+}
+.ap-cursor-ring {
+  width: 34px; height: 34px; margin: -17px 0 0 -17px;
+  border: 1.5px solid rgba(var(--ap-accent-rgb), 0.55);
+  transition: opacity 0.2s ease, width 0.2s ease, height 0.2s ease, margin 0.2s ease,
+              background-color 0.2s ease, border-color 0.2s ease;
+}
+html.dark .ap-cursor-dot  { background: var(--ap-lime); }
+html.dark .ap-cursor-ring { border-color: rgba(212,255,36,0.5); }
+
+html.ap-cursor-on .ap-cursor-dot,
+html.ap-cursor-on .ap-cursor-ring { opacity: 1; }
+html.ap-cursor-on, html.ap-cursor-on * { cursor: none; }
+html.ap-cursor-on :is(input, textarea, [contenteditable="true"]) { cursor: text; }
+
+html.ap-cursor-hover .ap-cursor-ring {
+  width: 56px; height: 56px; margin: -28px 0 0 -28px;
+  background: rgba(var(--ap-accent-rgb), 0.10);
+  border-color: rgba(var(--ap-accent-rgb), 0.8);
+}
+html.dark.ap-cursor-hover .ap-cursor-ring { background: rgba(212,255,36,0.10); border-color: rgba(212,255,36,0.8); }
+html.ap-cursor-hover .ap-cursor-dot { opacity: 0; }
+html.ap-cursor-down .ap-cursor-ring { width: 26px; height: 26px; margin: -13px 0 0 -13px; }
+html.ap-cursor-text .ap-cursor-dot,
+html.ap-cursor-text .ap-cursor-ring { opacity: 0; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HERO CHARACTER (components/HeroCharacter.tsx) — shown only once frames load
+   ═══════════════════════════════════════════════════════════════════════════ */
+.hero-character {
+  position: relative;
+  z-index: 1;
+  width: min(78vw, 360px);
+  aspect-ratio: 9 / 11;
+  margin: 2rem auto 0;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(.22,1,.36,1);
+}
+.hero-character.is-ready { opacity: 1; transform: none; }
+.hero-character__frame { position: absolute; inset: 0; will-change: transform; transform-style: preserve-3d; }
+.hero-character__canvas { width: 100%; height: 100%; object-fit: contain; display: block; }
+.hero-character__halo {
+  position: absolute; inset: 8% 4% 0;
+  border-radius: 9999px 9999px 32px 32px;
+  background: radial-gradient(circle at 50% 40%, rgba(var(--ap-accent-rgb),0.28), transparent 65%);
+  filter: blur(8px);
+}
+html.dark .hero-character__halo {
+  background:
+    radial-gradient(circle at 50% 40%, rgba(21,88,201,0.45), transparent 62%),
+    radial-gradient(circle at 50% 90%, rgba(212,255,36,0.12), transparent 55%);
+}
+@media (min-width: 1024px) {
+  .hero-character {
+    position: absolute;
+    right: max(2rem, calc((100vw - 72rem) / 2));
+    bottom: 0;
+    width: 40%;
+    max-width: 520px;
+    margin: 0;
+  }
+  .ap-home-hero:has(.hero-character.is-ready) .ap-hero-copy { max-width: 72rem; }
+  .ap-home-hero:has(.hero-character.is-ready) .ap-hero-copy > * { max-width: 34rem; }
+}
+
+/* Single portrait card (anime character on cobalt) — rounded card with accent rim */
+.hero-character { aspect-ratio: 4 / 5; }
+.hero-character__frame {
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.10),
+    0 30px 60px -20px rgba(21,88,201,0.55),
+    0 0 0 6px rgba(212,255,36,0.10);
+}
+@media (min-width: 1024px) {
+  .hero-character { bottom: 50%; transform: translateY(50%); width: 34%; max-width: 420px; }
+  .hero-character.is-ready { transform: translateY(50%); }
+}

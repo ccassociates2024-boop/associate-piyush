@@ -35,19 +35,17 @@ export default function ToolsPage() {
     <div className="pt-16">
 
       {/* Hero */}
-      <section style={{ background: "var(--ap-surface)", borderBottom: "1px solid var(--ap-border)" }}
-               className="ap-texture py-12">
+      <section className="ap-texture-dark ap-hero-band">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="ap-eyebrow text-xs font-semibold uppercase tracking-widest mb-2"
-             style={{ color: "var(--ap-gold)" }}>Free Tools</p>
-          <h1 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: "var(--ap-text)" }}>
-            Tax &amp; Finance Tools
+          <p className="ap-eyebrow text-lime text-xs font-semibold uppercase tracking-widest mb-3">Free Tools</p>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">
+            Tax &amp; Finance <span className="ap-script">Tools</span>
           </h1>
-          <p className="text-sm leading-relaxed max-w-xl mb-5" style={{ color: "var(--ap-text-muted)" }}>
+          <p className="ap-band-sub text-base sm:text-lg leading-relaxed max-w-xl mb-6">
             15+ professional-grade tools built for Indian tax compliance. No login, no data stored — everything runs in your browser.
           </p>
           <div className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full"
-               style={{ background: "rgba(22,163,74,0.08)", color: "#16A34A", border: "1px solid rgba(22,163,74,0.15)" }}>
+               style={{ background: "rgba(212,255,36,0.12)", color: "#D4FF24", border: "1px solid rgba(212,255,36,0.30)" }}>
             <Shield size={11} /> 100% Private — Your data never leaves your device
           </div>
         </div>

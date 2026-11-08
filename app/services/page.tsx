@@ -36,7 +36,7 @@ export default function ServicesPage() {
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="ap-texture-dark bg-primary py-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-lime text-xs font-semibold uppercase tracking-widest mb-2">
+          <p className="ap-eyebrow text-lime text-xs font-semibold uppercase tracking-widest mb-2">
             What We Offer
           </p>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">Our Services</h1>

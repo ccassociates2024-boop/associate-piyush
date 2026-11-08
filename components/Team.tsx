@@ -46,7 +46,7 @@ export default function Team() {
       {/* Partnership banner */}
       <div
         className="rounded-2xl px-5 py-4 mb-6 flex flex-col sm:flex-row sm:items-center gap-3"
-        style={{ background: "#EAF1FC", border: "1px solid #A3C1F0" }}
+        style={{ background: "var(--ap-accent-bg)", border: "1px solid rgba(var(--ap-accent-rgb),0.30)" }}
       >
         <CheckCircle size={16} className="text-gold flex-shrink-0 hidden sm:block" />
         <div>
@@ -147,7 +147,7 @@ export default function Team() {
             <span
               key={tag}
               className="text-[11px] font-medium px-2.5 py-1 rounded-full"
-              style={{ background: "#EAF1FC", color: "#0F46A3", border: "1px solid #A3C1F0" }}
+              style={{ background: "var(--ap-accent-bg)", color: "var(--ap-accent)", border: "1px solid rgba(var(--ap-accent-rgb),0.30)" }}
             >
               {tag}
             </span>

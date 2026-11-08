@@ -108,20 +108,19 @@ export default function HomePage() {
       </section>
 
       {/* ── STATS ────────────────────────────────────────────────────────── */}
-      <section style={{ background: "var(--ap-surface-2)" }} className="ap-divider border-b">
+      <section style={{ background: "#030407" }} className="ap-texture-dark ap-stats-band">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-3">
             {stats.map((s, i) => (
               <div key={s.label} data-reveal data-delay={String(i * 100)}
                    className="text-center py-2"
-                   style={i > 0 ? { borderLeft: "1px solid var(--ap-border)", paddingLeft: "2rem" } : { paddingRight: "2rem" }}>
-                <div className="text-3xl sm:text-4xl font-bold mb-1"
-                     style={{ color: "var(--ap-text)" }}>
+                   style={i > 0 ? { borderLeft: "1px solid rgba(255,255,255,0.10)", paddingLeft: "2rem" } : { paddingRight: "2rem" }}>
+                <div className="ap-stat-number text-3xl sm:text-4xl font-bold mb-1">
                   <span data-counter={s.value} data-counter-suffix={s.suffix}>
                     {s.value}{s.suffix}
                   </span>
                 </div>
-                <div className="text-sm" style={{ color: "var(--ap-text-muted)" }}>{s.label}</div>
+                <div className="text-sm" style={{ color: "rgba(255,255,255,0.55)" }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -133,7 +132,7 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <div data-reveal className="mb-12">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2"
+            <p className="ap-eyebrow text-xs font-semibold uppercase tracking-widest mb-2"
                style={{ color: "var(--ap-gold)" }}>Services</p>
             <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--ap-text)" }}>
               Our Services
@@ -145,8 +144,7 @@ export default function HomePage() {
               <Link key={s.title} href={s.href}
                     data-reveal data-delay={String((i % 3) * 100)}
                     className="ap-card p-6 group block">
-                <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-4"
-                     style={{ background: "var(--ap-gold-bg)" }}>
+                <div className="ap-icon-tile w-9 h-9 rounded-lg flex items-center justify-center mb-4">
                   <s.icon size={18} style={{ color: "var(--ap-gold)" }} />
                 </div>
                 <h3 className="font-semibold text-sm mb-2" style={{ color: "var(--ap-text)" }}>
@@ -177,7 +175,7 @@ export default function HomePage() {
 
           <div data-reveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest mb-2"
+              <p className="ap-eyebrow text-xs font-semibold uppercase tracking-widest mb-2"
                  style={{ color: "var(--ap-gold)" }}>Free Tools</p>
               <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--ap-text)" }}>
                 15+ Tools, No Login Required
@@ -203,8 +201,7 @@ export default function HomePage() {
                     {t.badge}
                   </span>
                 )}
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-                     style={{ background: "var(--ap-surface-2)" }}>
+                <div className="ap-icon-tile w-8 h-8 rounded-lg flex items-center justify-center">
                   <t.icon size={16} style={{ color: "var(--ap-gold)" }} />
                 </div>
                 <span className="text-[11px] font-medium leading-tight" style={{ color: "var(--ap-text-2)" }}>
@@ -241,7 +238,7 @@ export default function HomePage() {
 
           {/* Section header */}
           <div data-reveal className="mb-12">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2"
+            <p className="ap-eyebrow text-xs font-semibold uppercase tracking-widest mb-2"
                style={{ color: "var(--ap-gold)" }}>How We Work</p>
             <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--ap-text)" }}>
               Simple Steps. Expert Results.
@@ -260,12 +257,11 @@ export default function HomePage() {
               { step: "04", title: "Execute & File",  body: "Accurate, on-time filing. We keep you in the loop at every step until the job is fully done." },
             ].map(({ step, title, body }) => (
               <div key={step} data-reveal className="ap-card p-6 relative overflow-hidden">
-                <span className="absolute top-3 right-4 text-4xl font-black select-none"
-                      style={{ color: "var(--ap-gold-bg)", lineHeight: 1 }}>
+                <span className="ap-step-ghost absolute top-3 right-4 text-4xl font-black select-none"
+                      style={{ lineHeight: 1 }}>
                   {step}
                 </span>
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-4 text-sm font-bold"
-                     style={{ background: "var(--ap-gold-bg)", color: "var(--ap-gold)" }}>
+                <div className="ap-step-chip w-8 h-8 rounded-lg flex items-center justify-center mb-4 text-sm font-bold">
                   {step}
                 </div>
                 <h3 className="font-semibold text-sm mb-2" style={{ color: "var(--ap-text)" }}>{title}</h3>
@@ -276,7 +272,7 @@ export default function HomePage() {
 
           {/* Team divider */}
           <div data-reveal className="mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2"
+            <p className="ap-eyebrow text-xs font-semibold uppercase tracking-widest mb-2"
                style={{ color: "var(--ap-gold)" }}>Meet the Experts</p>
             <h3 className="text-xl sm:text-2xl font-bold" style={{ color: "var(--ap-text)" }}>
               Handled by Qualified Professionals

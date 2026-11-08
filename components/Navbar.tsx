@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, Sun, Moon, Search, ArrowRight, FileText, Calculator, BarChart3, Database, Merge } from "lucide-react";
 import clsx from "clsx";
+import LogoMark from "@/components/LogoMark";
 
 const NAV_LINKS = [
   { label: "Services",  href: "/services" },
@@ -105,10 +106,8 @@ export default function Navbar() {
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:shadow-[0_0_16px_rgba(21,88,201,0.45)]"
-                   style={{ background: "linear-gradient(135deg, #030407 0%, #0F2A63 55%, #1558C9 100%)", boxShadow: "0 2px 8px rgba(10,22,40,0.35), inset 0 1px 0 rgba(255,255,255,0.08)", border: "1px solid rgba(212,255,36,0.25)" }}>
-                <span className="text-white font-black text-sm tracking-tight">AP</span>
-              </div>
+              <LogoMark size={36} tile={dark ? "cobalt" : "midnight"}
+                        className="flex-shrink-0 transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105" />
               <div className="flex flex-col leading-none">
                 <span className="font-medium text-xs tracking-wide" style={{ color: "var(--ap-text-muted)" }}>Associate</span>
                 <span className="font-black text-sm -mt-0.5 tracking-tight" style={{ color: "var(--ap-text)" }}>

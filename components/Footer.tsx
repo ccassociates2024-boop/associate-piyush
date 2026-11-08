@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MapPin, Mail, Phone, Shield, ArrowRight } from "lucide-react";
+import LogoMark from "@/components/LogoMark";
 
 const services = [
   { label: "GST Reconciliation",  href: "/services#gst" },
@@ -40,10 +41,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2.5 mb-5">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-                   style={{ background: "linear-gradient(135deg, #030407 0%, #0F2A63 55%, #1558C9 100%)", border: "1px solid rgba(212,255,36,0.3)" }}>
-                <span className="text-white font-bold text-sm">AP</span>
-              </div>
+              <LogoMark size={36} tile="cobalt" className="flex-shrink-0" />
               <div className="flex flex-col leading-none">
                 <span className="font-semibold text-sm text-white/90">Associate</span>
                 <span className="font-bold text-sm text-white/90 -mt-0.5">

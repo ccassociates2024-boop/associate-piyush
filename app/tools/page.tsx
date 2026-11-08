@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Shield } from "lucide-react";
 import ToolsGrid from "./ToolsGrid";
+import HeroGrid from "@/components/HeroGrid";
 
 export const metadata: Metadata = {
   title: "Free Tax & Finance Tools",
@@ -36,7 +37,8 @@ export default function ToolsPage() {
 
       {/* Hero */}
       <section className="ap-texture-dark ap-hero-band">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <HeroGrid />
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="ap-eyebrow text-lime text-xs font-semibold uppercase tracking-widest mb-3">Free Tools</p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">
             Tax &amp; Finance <span className="ap-script">Tools</span>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ServicesAccordion from "./ServicesAccordion";
+import HeroGrid from "@/components/HeroGrid";
 
 export const metadata: Metadata = {
   title: "Tax & Finance Services",
@@ -35,7 +36,8 @@ export default function ServicesPage() {
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="ap-texture-dark ap-hero-band">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <HeroGrid />
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="ap-eyebrow text-lime text-xs font-semibold uppercase tracking-widest mb-2">
             What We Offer
           </p>

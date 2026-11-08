@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
-/* ── Custom cursor: accent dot + trailing ring ──────────────────────────────
+/* ── Custom cursor: accent dot + trailing ring + page spotlight ────────────
+   A soft accent light also follows the mouse across every page (.ap-spotlight).
    Desktop (fine pointer) only. Off for touch devices and reduced motion.
    The ring grows over links/buttons and hides over text fields, where the
    normal text cursor comes back. Styling: "CUSTOM CURSOR" in globals.css. */
@@ -34,6 +35,8 @@ export default function CustomCursor() {
     const onMove = (e: PointerEvent) => {
       if (e.pointerType !== "mouse") return;
       mx = e.clientX; my = e.clientY;
+      root.style.setProperty("--mx", `${mx}px`);
+      root.style.setProperty("--my", `${my}px`);
       if (!shown) { shown = true; rx = mx; ry = my; root.classList.add("ap-cursor-on"); }
       const t = e.target as Element | null;
       root.classList.toggle("ap-cursor-hover", !!t?.closest?.(INTERACTIVE));
@@ -62,6 +65,7 @@ export default function CustomCursor() {
     <>
       <div ref={ringRef} className="ap-cursor-ring" aria-hidden="true" />
       <div ref={dotRef}  className="ap-cursor-dot"  aria-hidden="true" />
+      <div className="ap-spotlight" aria-hidden="true" />
     </>
   );
 }

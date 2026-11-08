@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import Team from "@/components/Team";
 import HeroGrid from "@/components/HeroGrid";
-import HeroCharacter from "@/components/HeroCharacter";
 
 export const metadata: Metadata = {
   title: { absolute: "Associate Piyush | Tax & Finance Consultant — Pune & Pan India" },
@@ -106,7 +105,6 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-        <HeroCharacter />
       </section>
 
       {/* ── STATS ────────────────────────────────────────────────────────── */}

@@ -787,7 +787,7 @@ html.ap-cursor-hover .ap-cursor-ring {
   border-color: rgba(var(--ap-accent-rgb), 0.8);
 }
 html.dark.ap-cursor-hover .ap-cursor-ring { background: rgba(212,255,36,0.10); border-color: rgba(212,255,36,0.8); }
-html.ap-cursor-hover .ap-cursor-dot { opacity: 0; }
+html.ap-cursor-hover .ap-cursor-dot { opacity: 1; transform-origin: center; }
 html.ap-cursor-down .ap-cursor-ring { width: 26px; height: 26px; margin: -13px 0 0 -13px; }
 html.ap-cursor-text .ap-cursor-dot,
 html.ap-cursor-text .ap-cursor-ring { opacity: 0; }
@@ -838,3 +838,22 @@ html.ap-cursor-on .ap-spotlight { opacity: 1; }
 .ap-cursor-ring { box-shadow: 0 0 0 1px rgba(255,255,255,0.35); }
 html.dark .ap-cursor-dot  { box-shadow: 0 0 0 2px rgba(3,4,7,0.6); }
 html.dark .ap-cursor-ring { box-shadow: none; }
+
+/* Cursor visibility on white cards (light mode): solid dot always shown,
+   stronger ring when hovering links, buttons and cards */
+.ap-cursor-dot {
+  width: 10px; height: 10px; margin: -5px 0 0 -5px;
+  background: #1558C9;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 1px 6px rgba(3,4,7,0.35);
+}
+.ap-cursor-ring {
+  border: 2px solid rgba(21,88,201,0.75);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.6), 0 2px 10px rgba(3,4,7,0.12);
+}
+html.ap-cursor-hover .ap-cursor-ring {
+  background: rgba(21,88,201,0.12);
+  border-color: #1558C9;
+}
+html.dark .ap-cursor-dot  { background: var(--ap-lime); box-shadow: 0 0 0 2px rgba(3,4,7,0.7); }
+html.dark .ap-cursor-ring { border-color: rgba(212,255,36,0.7); box-shadow: none; }
+html.dark.ap-cursor-hover .ap-cursor-ring { background: rgba(212,255,36,0.12); border-color: #D4FF24; }

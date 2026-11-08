@@ -32,7 +32,7 @@ const tools = [
 
 export default function Footer() {
   return (
-    <footer style={{ background: "#050A14", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+    <footer style={{ background: "#030407", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
       {/* Main grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -41,13 +41,13 @@ export default function Footer() {
           <div>
             <Link href="/" className="flex items-center gap-2.5 mb-5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-                   style={{ background: "linear-gradient(135deg, #0A1628 0%, #1F3088 100%)", border: "1px solid rgba(201,168,76,0.3)" }}>
+                   style={{ background: "linear-gradient(135deg, #030407 0%, #0F2A63 55%, #1558C9 100%)", border: "1px solid rgba(212,255,36,0.3)" }}>
                 <span className="text-white font-bold text-sm">AP</span>
               </div>
               <div className="flex flex-col leading-none">
                 <span className="font-semibold text-sm text-white/90">Associate</span>
                 <span className="font-bold text-sm text-white/90 -mt-0.5">
-                  Piyush<span style={{ color: "#C9A84C" }}>.</span>
+                  Piyush<span style={{ color: "#D4FF24" }}>.</span>
                 </span>
               </div>
             </Link>
@@ -61,7 +61,7 @@ export default function Footer() {
                 { Icon: Mail,    text: "associate.piyush.nimse@gmail.com",      href: "mailto:associate.piyush.nimse@gmail.com" },
               ].map(({ Icon, text, href }) => (
                 <div key={text} className="flex items-center gap-2">
-                  <Icon size={13} style={{ color: "#C9A84C", flexShrink: 0 }} />
+                  <Icon size={13} style={{ color: "#D4FF24", flexShrink: 0 }} />
                   {href
                     ? <a href={href} className="transition-colors hover:text-white break-all" style={{ color: "rgba(255,255,255,0.45)" }}>{text}</a>
                     : <span style={{ color: "rgba(255,255,255,0.45)" }}>{text}</span>
@@ -111,7 +111,7 @@ export default function Footer() {
                 </li>
               ))}
               <li>
-                <Link href="/tools" className="inline-flex items-center gap-1 text-sm font-semibold transition-colors" style={{ color: "#C9A84C" }}>
+                <Link href="/tools" className="inline-flex items-center gap-1 text-sm font-semibold transition-colors hover:text-white" style={{ color: "#D4FF24" }}>
                   View All 16 Free Tools <ArrowRight size={12} />
                 </Link>
               </li>
@@ -119,8 +119,8 @@ export default function Footer() {
 
             {/* Book CTA */}
             <Link href="/contact"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:shadow-gold"
-              style={{ background: "#C9A84C", color: "#0A1628" }}>
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:shadow-[0_4px_24px_rgba(212,255,36,0.35)]"
+              style={{ background: "#D4FF24", color: "#030407" }}>
               Book Consultation <ArrowRight size={14} />
             </Link>
           </div>

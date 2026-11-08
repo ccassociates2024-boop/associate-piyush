@@ -238,7 +238,7 @@ export default function LTCGPropertyPage() {
 
             {/* Summary banner */}
             <div className="bg-primary text-white rounded-xl p-5">
-              <p className="text-xs font-semibold uppercase tracking-widest text-gold/80 mb-1">LTCG Computation Summary</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-lime/80 mb-1">LTCG Computation Summary</p>
               <div className="grid grid-cols-2 gap-4 text-sm mt-3">
                 <div>
                   <div className="text-blue-200 text-xs mb-0.5">Sale Price</div>

@@ -21,31 +21,49 @@
   --ap-shadow:      0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
   --ap-shadow-md:   0 4px 16px rgba(15,23,42,0.08);
   --ap-shadow-lg:   0 8px 32px rgba(15,23,42,0.10);
-  --ap-gold:        #B8960C;
-  --ap-gold-bg:     rgba(184,150,12,0.10);
-  --ap-navy:        #0A1628;
+  /* Palette: Midnight Black #030407 · Electric Cobalt #1558C9 · Acid Lime #D4FF24 */
+  --ap-accent:       #1558C9;
+  --ap-accent-rgb:   21 88 201;
+  --ap-accent-hover: #0F46A3;
+  --ap-accent-bg:    rgba(21,88,201,0.08);
+  --ap-lime:         #D4FF24;
+  --ap-lime-hover:   #C2EE10;
+  --ap-lime-ink:     #030407;
+  --ap-cta-bg:       var(--ap-accent);
+  --ap-cta-hover:    var(--ap-accent-hover);
+  --ap-cta-text:     #FFFFFF;
+  --ap-gold:        var(--ap-accent);
+  --ap-gold-bg:     var(--ap-accent-bg);
+  --ap-navy:        #030407;
   --ap-green:       #16A34A;
   --font-sans:      "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --radius-card:    12px;
 }
 
 html.dark {
-  --ap-bg:          #0D1117;
-  --ap-surface:     #161B22;
-  --ap-surface-2:   #1C2330;
-  --ap-border:      #30363D;
-  --ap-text:        #E6EDF3;
-  --ap-text-2:      #B1BAC4;
-  --ap-text-muted:  #6E7681;
-  --ap-glass:       rgba(22,27,34,0.90);
+  --ap-bg:          #030407;
+  --ap-surface:     #0B0E15;
+  --ap-surface-2:   #10141D;
+  --ap-border:      #1E2533;
+  --ap-text:        #E8ECF3;
+  --ap-text-2:      #B4BCC9;
+  --ap-text-muted:  #7C8596;
+  --ap-glass:       rgba(11,14,21,0.90);
   --ap-glass-bdr:   rgba(255,255,255,0.08);
-  --ap-nav:         rgba(13,17,23,0.95);
+  --ap-nav:         rgba(3,4,7,0.92);
   --ap-shadow:      0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
   --ap-shadow-md:   0 4px 16px rgba(0,0,0,0.35);
   --ap-shadow-lg:   0 8px 32px rgba(0,0,0,0.45);
-  --ap-gold:        #D4A820;
-  --ap-gold-bg:     rgba(212,168,32,0.12);
-  --ap-navy:        #0A1628;
+  --ap-accent:       #5B8FE8;
+  --ap-accent-rgb:   91 143 232;
+  --ap-accent-hover: #7DA7EE;
+  --ap-accent-bg:    rgba(91,143,232,0.12);
+  --ap-cta-bg:       var(--ap-lime);
+  --ap-cta-hover:    var(--ap-lime-hover);
+  --ap-cta-text:     var(--ap-lime-ink);
+  --ap-gold:        var(--ap-accent);
+  --ap-gold-bg:     var(--ap-accent-bg);
+  --ap-navy:        #030407;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -75,7 +93,7 @@ main { overflow-x: clip; }
   width: 0%;
   height: 2px;
   z-index: 9999;
-  background: #B8960C;
+  background: var(--ap-accent);
   transition: width 0.1s linear;
   pointer-events: none;
 }
@@ -120,7 +138,7 @@ main { overflow-x: clip; }
 }
 .ap-card:hover {
   box-shadow: var(--ap-shadow-md);
-  border-color: #B8960C;
+  border-color: var(--ap-accent);
   transform: translateY(-2px);
 }
 
@@ -141,33 +159,45 @@ main { overflow-x: clip; }
   /* Primary button */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-semibold rounded-lg text-sm transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
-    background: #0A1628;
+    background: #030407;
     color: #FFFFFF;
     box-shadow: 0 1px 2px rgba(0,0,0,0.15);
   }
   .btn-primary:hover {
-    background: #152040;
-    box-shadow: 0 4px 12px rgba(10,22,40,0.20);
+    background: #141A26;
+    box-shadow: 0 4px 12px rgba(3,4,7,0.20);
     transform: translateY(-1px);
   }
   html.dark .btn-primary {
     background: #F0F4FF;
-    color: #0A1628;
+    color: #030407;
   }
   html.dark .btn-primary:hover {
     background: #FFFFFF;
   }
 
-  /* Gold button */
+  /* Main call-to-action button: cobalt in light mode, acid lime in dark mode */
   .btn-gold {
     @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-semibold rounded-lg text-sm transition-all duration-150;
-    background: #B8960C;
-    color: #FFFFFF;
+    background: var(--ap-cta-bg);
+    color: var(--ap-cta-text);
     box-shadow: 0 1px 2px rgba(0,0,0,0.12);
   }
   .btn-gold:hover {
-    background: #9E800A;
-    box-shadow: 0 4px 12px rgba(184,150,12,0.25);
+    background: var(--ap-cta-hover);
+    box-shadow: 0 4px 12px rgba(var(--ap-accent-rgb),0.25);
+    transform: translateY(-1px);
+  }
+
+  /* Lime button: for dark sections in both light and dark mode */
+  .btn-lime {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-semibold rounded-lg text-sm transition-all duration-150;
+    background: var(--ap-lime);
+    color: var(--ap-lime-ink);
+  }
+  .btn-lime:hover {
+    background: var(--ap-lime-hover);
+    box-shadow: 0 4px 16px rgba(212,255,36,0.30);
     transform: translateY(-1px);
   }
 
@@ -179,9 +209,9 @@ main { overflow-x: clip; }
     color: var(--ap-text-2);
   }
   .btn-outline:hover {
-    border-color: #B8960C;
-    color: #B8960C;
-    background: var(--ap-gold-bg);
+    border-color: var(--ap-accent);
+    color: var(--ap-accent);
+    background: var(--ap-accent-bg);
   }
 
   /* Legacy aliases */
@@ -207,8 +237,8 @@ main { overflow-x: clip; }
   }
   .input-field::placeholder { color: var(--ap-text-muted); }
   .input-field:focus {
-    border-color: #B8960C;
-    box-shadow: 0 0 0 3px rgba(184,150,12,0.10);
+    border-color: var(--ap-accent);
+    box-shadow: 0 0 0 3px var(--ap-accent-bg);
   }
 
   .label {
@@ -275,13 +305,10 @@ main { overflow-x: clip; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   GOLD TEXT
+   ACCENT TEXT (class name kept for compatibility)
    ═══════════════════════════════════════════════════════════════════════════ */
 .text-gold-gradient {
-  color: #B8960C;
-}
-html.dark .text-gold-gradient {
-  color: #D4A820;
+  color: var(--ap-accent);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -299,7 +326,7 @@ html.dark .text-gold-gradient {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
-html.dark ::-webkit-scrollbar-thumb { background: #30363D; }
+html.dark ::-webkit-scrollbar-thumb { background: #1E2533; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    DOCK (tools page)
@@ -353,17 +380,17 @@ html.dark ::-webkit-scrollbar-thumb { background: #30363D; }
 }
 .cat-tab:hover {
   color: var(--ap-text);
-  border-color: #B8960C;
+  border-color: var(--ap-accent);
 }
 .cat-tab.active {
-  background: #0A1628;
+  background: #030407;
   color: #FFFFFF;
-  border-color: #0A1628;
+  border-color: #030407;
   font-weight: 600;
 }
 html.dark .cat-tab.active {
   background: #F0F4FF;
-  color: #0A1628;
+  color: #030407;
   border-color: #F0F4FF;
 }
 

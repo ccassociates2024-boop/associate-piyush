@@ -57,7 +57,7 @@ export default function HomePage() {
           {/* Location pill */}
           <div data-reveal
                className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1 rounded-full mb-8"
-               style={{ background: "var(--ap-gold-bg)", color: "var(--ap-gold)", border: "1px solid rgba(184,150,12,0.2)" }}>
+               style={{ background: "var(--ap-gold-bg)", color: "var(--ap-gold)", border: "1px solid rgba(var(--ap-accent-rgb),0.25)" }}>
             <MapPin size={11} />
             Pune, Maharashtra — Pan India Services
           </div>
@@ -289,11 +289,11 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section style={{ background: "#0A1628", color: "#FFFFFF" }} className="py-20">
+      <section style={{ background: "#030407", color: "#FFFFFF" }} className="py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div data-reveal>
             <p className="text-xs font-semibold uppercase tracking-widest mb-4"
-               style={{ color: "rgba(255,255,255,0.45)" }}>
+               style={{ color: "#D4FF24" }}>
               First Consultation Free
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
@@ -303,7 +303,7 @@ export default function HomePage() {
               Whether it&apos;s a notice, GST refund, LTCG on property, or just filing your ITR — we respond within 2–3 working days and your first consultation is free.
             </p>
             <div className="flex flex-wrap justify-center gap-3 mb-10">
-              <Link href="/contact" className="btn-gold gap-2 px-7 py-3 text-sm">
+              <Link href="/contact" className="btn-lime gap-2 px-7 py-3 text-sm">
                 Get in Touch <ArrowRight size={15} />
               </Link>
               <a href="https://wa.me/917507354141?text=Hello%20Associate%20Piyush%2C%20I%20need%20tax%20consultation."

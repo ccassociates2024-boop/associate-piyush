@@ -350,14 +350,14 @@ export default function CapitalGainsPage() {
               <TrendingUp size={24} className="text-white" />
             </div>
             <div>
-              <div className="text-gold text-xs font-bold uppercase tracking-wider mb-1">Income Tax · FY 2026-27</div>
+              <div className="text-lime text-xs font-bold uppercase tracking-wider mb-1">Income Tax · FY 2026-27</div>
               <h1 className="text-2xl font-bold text-white mb-1">Capital Gains Tax Calculator</h1>
               <p className="text-blue-200 text-sm">
                 STCG &amp; LTCG on equity, mutual funds &amp; property — with indexed cost of improvement, inherited/gift property &amp; Sec 54 / 54F / 54EC exemptions.
               </p>
             </div>
           </div>
-          <div className="mt-4 flex items-start gap-2 bg-gold/20 border border-gold/30 rounded-lg px-4 py-2.5 text-gold text-xs font-medium">
+          <div className="mt-4 flex items-start gap-2 bg-lime/20 border border-lime/30 rounded-lg px-4 py-2.5 text-lime text-xs font-medium">
             <Info size={14} className="flex-shrink-0 mt-0.5" />
             Updated for Income-tax Act, 2025 (effective 1 April 2026) — STCG equity 20%, LTCG 12.5%, ₹1.25L exemption; Property LTCG 12.5% or 20% with CII (pre-23 Jul 2024 option).
           </div>

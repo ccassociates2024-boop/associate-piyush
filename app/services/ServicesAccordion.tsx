@@ -265,7 +265,7 @@ export default function ServicesAccordion() {
                     <span
                       key={area}
                       className="text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full hidden sm:inline-block"
-                      style={{ background: "#FEF9EC", color: "#92680A", border: "1px solid #F0C842" }}
+                      style={{ background: "var(--ap-accent-bg)", color: "var(--ap-accent)", border: "1px solid rgba(var(--ap-accent-rgb),0.35)" }}
                     >
                       ★ {area}
                     </span>
@@ -317,7 +317,7 @@ export default function ServicesAccordion() {
                           <span
                             key={area}
                             className="text-xs font-semibold px-3 py-1 rounded-full"
-                            style={{ background: "#FEF9EC", color: "#92680A", border: "1px solid #F0C842" }}
+                            style={{ background: "var(--ap-accent-bg)", color: "var(--ap-accent)", border: "1px solid rgba(var(--ap-accent-rgb),0.35)" }}
                           >
                             ★ {area}
                           </span>

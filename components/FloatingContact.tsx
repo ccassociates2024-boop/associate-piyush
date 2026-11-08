@@ -47,7 +47,7 @@ export default function FloatingContact() {
         <a
           href={CALL_URL}
           className="flex items-center gap-2.5 text-white text-sm font-semibold px-4 py-2.5 rounded-full shadow-lg transition-all whitespace-nowrap hover:scale-105"
-          style={{ background: "#0A1628" }}
+          style={{ background: "#030407" }}
           onClick={() => setOpen(false)}
         >
           <Phone size={14} className="flex-shrink-0" />
@@ -69,8 +69,8 @@ export default function FloatingContact() {
           aria-label={open ? "Close contact options" : "Contact us"}
           className="w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 focus:outline-none hover:scale-105"
           style={{
-            background: open ? "#374151" : "linear-gradient(135deg, #0A1628 0%, #1F3088 100%)",
-            border: "2px solid rgba(201,168,76,0.4)",
+            background: open ? "#374151" : "linear-gradient(135deg, #030407 0%, #0F2A63 55%, #1558C9 100%)",
+            border: "2px solid rgba(212,255,36,0.55)",
             transform: open ? "rotate(90deg)" : undefined,
           }}
         >

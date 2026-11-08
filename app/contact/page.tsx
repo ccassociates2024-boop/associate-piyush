@@ -32,7 +32,7 @@ export default function ContactPage() {
       <section className="bg-primary py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <p className="text-gold text-sm font-semibold uppercase tracking-wider mb-3">
+            <p className="text-lime text-sm font-semibold uppercase tracking-wider mb-3">
               Get in Touch
             </p>
             <h1 className="text-4xl font-bold text-white mb-4">

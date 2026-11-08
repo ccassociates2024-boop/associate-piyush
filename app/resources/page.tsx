@@ -174,7 +174,7 @@ export default function ResourcesPage() {
       <section className="bg-primary py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <p className="text-gold text-sm font-semibold uppercase tracking-wider mb-3">
+            <p className="text-lime text-sm font-semibold uppercase tracking-wider mb-3">
               Updated for Income-tax Act, 2025
             </p>
             <h1 className="text-4xl font-bold text-white mb-4">Tax Resources &amp; Updates</h1>
@@ -239,7 +239,7 @@ export default function ResourcesPage() {
                 href={WA_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-primary text-gold text-xs font-bold px-4 py-2 rounded-full mt-1 hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center gap-2 bg-primary text-lime text-xs font-bold px-4 py-2 rounded-full mt-1 hover:bg-primary/90 transition-colors"
               >
                 <MessageCircle size={13} /> Follow on WhatsApp
               </a>
@@ -314,7 +314,7 @@ export default function ResourcesPage() {
       <section className="bg-primary py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <p className="text-gold text-sm font-bold uppercase tracking-wider mb-3">Free Consultation</p>
+            <p className="text-lime text-sm font-bold uppercase tracking-wider mb-3">Free Consultation</p>
             <h2 className="text-3xl font-bold text-white mb-4">
               Have a tax question? Get expert guidance from Associate Piyush.
             </h2>
@@ -346,7 +346,7 @@ export default function ResourcesPage() {
               href="tel:+917507354141"
               className="flex flex-col items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-5 transition-colors"
             >
-              <div className="w-10 h-10 rounded-full bg-gold flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-lime flex items-center justify-center">
                 <Phone size={20} className="text-dark" />
               </div>
               <div className="text-center">
@@ -376,7 +376,7 @@ export default function ResourcesPage() {
               href={WA_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 bg-gold hover:bg-gold/90 text-dark font-bold px-8 py-4 rounded-full text-base transition-colors shadow-lg"
+              className="inline-flex items-center gap-2.5 bg-lime hover:bg-lime-hover text-dark font-bold px-8 py-4 rounded-full text-base transition-colors shadow-lg"
             >
               <MessageCircle size={20} />
               WhatsApp for Free Consultation

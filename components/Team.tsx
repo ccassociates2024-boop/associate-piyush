@@ -34,7 +34,7 @@ const partners = [
     phoneRaw: "917507354141",
     email: "associate.piyush.nimse@gmail.com",
     expertise: ["Income Tax", "GST", "TDS", "Forensic Accounting", "Tax Notices", "LTCG"],
-    accentBg: "#7C3AED",
+    accentBg: "#1558C9",
     highlight: "950+ Income Tax Returns · 150+ GST Clients",
   },
 ];
@@ -46,14 +46,14 @@ export default function Team() {
       {/* Partnership banner */}
       <div
         className="rounded-2xl px-5 py-4 mb-6 flex flex-col sm:flex-row sm:items-center gap-3"
-        style={{ background: "linear-gradient(135deg,#F5F3FF 0%,#EEF2FF 100%)", border: "1px solid #DDD6FE" }}
+        style={{ background: "#EAF1FC", border: "1px solid #A3C1F0" }}
       >
-        <CheckCircle size={16} className="text-purple-600 flex-shrink-0 hidden sm:block" />
+        <CheckCircle size={16} className="text-gold flex-shrink-0 hidden sm:block" />
         <div>
-          <p className="text-xs font-bold uppercase tracking-widest text-purple-600 mb-0.5">
+          <p className="text-xs font-bold uppercase tracking-widest text-gold mb-0.5">
             A Complete Tax + CA Partnership
           </p>
-          <p className="text-xs text-purple-700 leading-relaxed">
+          <p className="text-xs text-gold leading-relaxed">
             C.A. Sourabh &amp; Piyush cover the full spectrum — from day-to-day tax filing and GST
             compliance to CA-certified audits, financial litigation, and strategic advisory.
             One point of contact. Complete coverage.
@@ -66,8 +66,8 @@ export default function Team() {
         {partners.map((p) => (
           <div
             key={p.initials}
-            className="bg-white rounded-2xl border border-purple-100 p-6 flex flex-col
-                       hover:shadow-lg hover:shadow-purple-100/60 hover:-translate-y-1
+            className="bg-white rounded-2xl border border-gold/20 p-6 flex flex-col
+                       hover:shadow-lg hover:shadow-gold/10 hover:-translate-y-1
                        transition-all duration-200"
           >
             {/* Avatar + name */}
@@ -79,14 +79,14 @@ export default function Team() {
                 <span className="text-xs font-bold text-white tracking-tight">{p.initials}</span>
               </div>
               <div>
-                <h3 className="text-sm font-bold text-[#26215C] leading-tight">{p.name}</h3>
-                <p className="text-xs font-semibold text-purple-600">{p.role}</p>
+                <h3 className="text-sm font-bold text-[#030407] leading-tight">{p.name}</h3>
+                <p className="text-xs font-semibold text-gold">{p.role}</p>
               </div>
             </div>
 
             {/* Qualification badge */}
-            <span className="inline-block self-start text-xs bg-purple-50 text-purple-800
-                             border border-purple-100 rounded-lg px-2 py-0.5 mb-3">
+            <span className="inline-block self-start text-xs bg-gold/10 text-gold
+                             border border-gold/20 rounded-lg px-2 py-0.5 mb-3">
               {p.qualification}
             </span>
 
@@ -96,7 +96,7 @@ export default function Team() {
             </p>
 
             {/* Description */}
-            <p className="text-xs text-[#7F77DD] leading-relaxed mb-4 flex-1">{p.description}</p>
+            <p className="text-xs text-slate-500 leading-relaxed mb-4 flex-1">{p.description}</p>
 
             {/* Expertise tags */}
             <div className="flex flex-wrap gap-1.5 mb-4">
@@ -104,7 +104,7 @@ export default function Team() {
                 <span
                   key={tag}
                   className="text-[9px] font-bold uppercase tracking-wide
-                             bg-purple-50 text-purple-700 border border-purple-100
+                             bg-gold/10 text-gold border border-gold/25
                              rounded-md px-1.5 py-0.5"
                 >
                   {tag}
@@ -113,13 +113,13 @@ export default function Team() {
             </div>
 
             {/* Contact */}
-            <div className="mt-auto space-y-1.5 text-xs text-[#7F77DD]">
+            <div className="mt-auto space-y-1.5 text-xs text-slate-500">
               <a href={`tel:${p.phoneRaw}`}
-                 className="flex items-center gap-1.5 hover:text-purple-600 transition-colors">
+                 className="flex items-center gap-1.5 hover:text-gold transition-colors">
                 <Phone size={11} /> {p.phone}
               </a>
               <a href={`mailto:${p.email}`}
-                 className="flex items-center gap-1.5 hover:text-purple-600 transition-colors">
+                 className="flex items-center gap-1.5 hover:text-gold transition-colors">
                 <Mail size={11} /> {p.email}
               </a>
               <a href={`https://wa.me/${p.phoneRaw}?text=Hello%2C%20I%20need%20consultation.`}
@@ -139,7 +139,7 @@ export default function Team() {
         className="rounded-xl px-5 py-4"
         style={{ background: "var(--ap-surface-2, #F8F9FB)", border: "1px solid #E5E7EB" }}
       >
-        <p className="text-[10px] font-bold uppercase tracking-widest text-[#7F77DD] mb-3">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-gold mb-3">
           What We Cover Together
         </p>
         <div className="flex flex-wrap gap-2">
@@ -147,7 +147,7 @@ export default function Team() {
             <span
               key={tag}
               className="text-[11px] font-medium px-2.5 py-1 rounded-full"
-              style={{ background: "#F5F3FF", color: "#5B21B6", border: "1px solid #DDD6FE" }}
+              style={{ background: "#EAF1FC", color: "#0F46A3", border: "1px solid #A3C1F0" }}
             >
               {tag}
             </span>

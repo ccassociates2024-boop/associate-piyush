@@ -411,10 +411,10 @@ export default function NoticeReplyPage() {
         <div className="bg-primary rounded-xl p-6 mb-8">
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
-              <FileText size={24} className="text-gold" />
+              <FileText size={24} className="text-lime" />
             </div>
             <div>
-              <div className="text-gold text-xs font-bold uppercase tracking-wider mb-1">Income Tax · Free Tool</div>
+              <div className="text-lime text-xs font-bold uppercase tracking-wider mb-1">Income Tax · Free Tool</div>
               <h1 className="text-2xl font-bold text-white mb-1">Income Tax Notice Reply Generator</h1>
               <p className="text-blue-200 text-sm">
                 Generate a professional, legally-worded reply draft for common Income Tax notices in 60 seconds. No login required.
@@ -478,7 +478,7 @@ export default function NoticeReplyPage() {
             <button
               disabled={!canProceedStep1}
               onClick={() => setStep(2)}
-              className="mt-6 w-full flex items-center justify-center gap-2 bg-primary disabled:bg-gray-200 disabled:text-gray-400 text-gold font-bold rounded-lg py-3.5 text-sm transition-colors hover:bg-primary/90"
+              className="mt-6 w-full flex items-center justify-center gap-2 bg-primary disabled:bg-gray-200 disabled:text-gray-400 text-lime font-bold rounded-lg py-3.5 text-sm transition-colors hover:bg-primary/90"
             >
               Next: Enter Details <ArrowRight size={16} />
             </button>
@@ -556,7 +556,7 @@ export default function NoticeReplyPage() {
               <button
                 disabled={!canProceedStep2}
                 onClick={() => setStep(3)}
-                className="flex-1 flex items-center justify-center gap-2 bg-primary disabled:bg-gray-200 disabled:text-gray-400 text-gold font-bold rounded-lg py-3 text-sm transition-colors hover:bg-primary/90"
+                className="flex-1 flex items-center justify-center gap-2 bg-primary disabled:bg-gray-200 disabled:text-gray-400 text-lime font-bold rounded-lg py-3 text-sm transition-colors hover:bg-primary/90"
               >
                 Generate Reply Draft <ArrowRight size={16} />
               </button>
@@ -589,7 +589,7 @@ export default function NoticeReplyPage() {
                 </button>
                 <button
                   onClick={printLetter}
-                  className="flex items-center gap-2 bg-primary text-gold rounded-lg px-4 py-2 text-xs font-bold hover:bg-primary/90 transition-colors"
+                  className="flex items-center gap-2 bg-primary text-lime rounded-lg px-4 py-2 text-xs font-bold hover:bg-primary/90 transition-colors"
                 >
                   <Printer size={13} /> Print / PDF
                 </button>
@@ -628,7 +628,7 @@ export default function NoticeReplyPage() {
               className="flex items-center justify-between gap-4 bg-primary rounded-xl px-5 py-4 hover:bg-primary/90 transition-colors"
             >
               <div>
-                <div className="text-gold text-xs font-bold uppercase tracking-wide mb-0.5">Need Expert Help?</div>
+                <div className="text-lime text-xs font-bold uppercase tracking-wide mb-0.5">Need Expert Help?</div>
                 <div className="text-white font-semibold text-sm">Let us review & submit this reply on your behalf</div>
                 <div className="text-blue-200 text-xs mt-0.5">WhatsApp: {FIRM_PHONE} · Response within 2 hours</div>
               </div>

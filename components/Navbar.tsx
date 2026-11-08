@@ -104,14 +104,14 @@ export default function Navbar() {
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:shadow-[0_0_16px_rgba(201,168,76,0.35)]"
-                   style={{ background: "linear-gradient(135deg, #0A1628 0%, #1F3088 60%, #2A40A0 100%)", boxShadow: "0 2px 8px rgba(10,22,40,0.35), inset 0 1px 0 rgba(255,255,255,0.08)", border: "1px solid rgba(201,168,76,0.20)" }}>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:shadow-[0_0_16px_rgba(21,88,201,0.45)]"
+                   style={{ background: "linear-gradient(135deg, #030407 0%, #0F2A63 55%, #1558C9 100%)", boxShadow: "0 2px 8px rgba(10,22,40,0.35), inset 0 1px 0 rgba(255,255,255,0.08)", border: "1px solid rgba(212,255,36,0.25)" }}>
                 <span className="text-white font-black text-sm tracking-tight">AP</span>
               </div>
               <div className="flex flex-col leading-none">
                 <span className="font-medium text-xs tracking-wide" style={{ color: "var(--ap-text-muted)" }}>Associate</span>
                 <span className="font-black text-sm -mt-0.5 tracking-tight" style={{ color: "var(--ap-text)" }}>
-                  Piyush<span style={{ color: "#C9A84C" }}>.</span>
+                  Piyush<span style={{ color: "var(--ap-accent)" }}>.</span>
                 </span>
               </div>
             </Link>
@@ -129,7 +129,7 @@ export default function Navbar() {
                         : "hover:opacity-80"
                     )}
                     style={active
-                      ? { color: "#C9A84C", background: "rgba(201,168,76,0.10)" }
+                      ? { color: "var(--ap-accent)", background: "var(--ap-accent-bg)" }
                       : { color: "var(--ap-text-muted)" }
                     }
                   >
@@ -161,7 +161,7 @@ export default function Navbar() {
                 aria-label="Toggle dark mode"
               >
                 {dark
-                  ? <Sun size={16} style={{ color: "#C9A84C" }} />
+                  ? <Sun size={16} style={{ color: "var(--ap-lime)" }} />
                   : <Moon size={16} style={{ color: "var(--ap-text-muted)" }} />
                 }
               </button>
@@ -192,7 +192,7 @@ export default function Navbar() {
                   <Link key={link.href} href={link.href}
                     className="block px-4 py-3 text-sm font-medium rounded-xl mx-1 mb-0.5 transition-all"
                     style={active
-                      ? { color: "#C9A84C", background: "rgba(201,168,76,0.10)" }
+                      ? { color: "var(--ap-accent)", background: "var(--ap-accent-bg)" }
                       : { color: "var(--ap-text-muted)" }
                     }
                   >
@@ -260,8 +260,8 @@ export default function Navbar() {
                               onClick={() => setSpotlight(false)}
                               className="flex items-center gap-3 px-5 py-3 transition-all duration-100"
                               style={{
-                                background: idx === selected ? "rgba(201,168,76,0.10)" : "transparent",
-                                borderLeft: idx === selected ? "2px solid #C9A84C" : "2px solid transparent",
+                                background: idx === selected ? "var(--ap-accent-bg)" : "transparent",
+                                borderLeft: idx === selected ? "2px solid var(--ap-accent)" : "2px solid transparent",
                               }}
                               onMouseEnter={() => setSelected(idx)}
                             >

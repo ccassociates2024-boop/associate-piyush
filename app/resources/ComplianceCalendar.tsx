@@ -130,8 +130,8 @@ export default function ComplianceCalendar() {
           {off !== 0 && (
             <button
               onClick={() => setOff(0)}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors hover:bg-amber-50"
-              style={{ borderColor: "#C9A84C", color: "#C9A84C" }}
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors hover:bg-gold/10"
+              style={{ borderColor: "var(--ap-accent)", color: "var(--ap-accent)" }}
             >
               This Month
             </button>

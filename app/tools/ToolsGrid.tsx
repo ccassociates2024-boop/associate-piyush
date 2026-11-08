@@ -168,18 +168,18 @@ const CATEGORIES = ["All", "GST", "TDS", "Income Tax", "PDF", "Finance"];
 
 /* Category → subtle accent color */
 const CAT_COLORS: Record<string, { bg: string; text: string }> = {
-  GST:          { bg: "rgba(201,168,76,0.12)",  text: "#C9A84C" },
+  GST:          { bg: "rgba(21,88,201,0.12)",   text: "#3D78DC" },
   TDS:          { bg: "rgba(83,74,183,0.12)",   text: "#7B74E0" },
   "Income Tax": { bg: "rgba(74,222,128,0.10)",  text: "#22C55E" },
   PDF:          { bg: "rgba(239,68,68,0.10)",   text: "#F87171" },
-  Finance:      { bg: "rgba(59,130,246,0.10)",  text: "#60A5FA" },
+  Finance:      { bg: "rgba(20,184,166,0.10)",  text: "#14B8A6" },
 };
 
 export default function ToolsGrid() {
   const [active, setActive] = useState("All");
 
   const visible = active === "All" ? tools : tools.filter((t) => t.category === active);
-  const catColor = CAT_COLORS[active] ?? { bg: "rgba(201,168,76,0.12)", text: "#C9A84C" };
+  const catColor = CAT_COLORS[active] ?? { bg: "rgba(21,88,201,0.12)", text: "#3D78DC" };
 
   return (
     <>

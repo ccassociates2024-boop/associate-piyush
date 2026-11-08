@@ -43,31 +43,31 @@ export default function Testimonials() {
       {testimonials.map((t) => (
         <div
           key={t.name}
-          className="bg-white rounded-2xl border border-purple-100 p-5 shadow-sm
-                     hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-100/60
+          className="bg-white rounded-2xl border border-gold/20 p-5 shadow-sm
+                     hover:-translate-y-1 hover:shadow-lg hover:shadow-gold/10
                      transition-all duration-200"
         >
           {/* Avatar */}
-          <div className="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center
+          <div className="w-10 h-10 rounded-xl bg-cobalt text-white flex items-center
                           justify-center text-sm font-semibold mb-3">
             {initials(t.name)}
           </div>
 
           {/* Stars */}
-          <div className="text-gold-500 text-xs mb-2">★★★★★</div>
+          <div className="text-amber-500 text-xs mb-2">★★★★★</div>
 
           {/* Quote */}
-          <p className="text-sm text-[#26215C] leading-relaxed italic mb-3">
+          <p className="text-sm text-[#030407] leading-relaxed italic mb-3">
             &ldquo;{t.quote}&rdquo;
           </p>
 
           {/* Name + location */}
-          <p className="text-sm font-semibold text-purple-800">{t.name}</p>
-          {t.role && <p className="text-xs text-[#7F77DD] leading-snug">{t.role}</p>}
-          {t.location && <p className="text-xs text-[#7F77DD]">{t.location}</p>}
+          <p className="text-sm font-semibold text-[#030407]">{t.name}</p>
+          {t.role && <p className="text-xs text-slate-500 leading-snug">{t.role}</p>}
+          {t.location && <p className="text-xs text-slate-500">{t.location}</p>}
 
           {/* Service badge */}
-          <span className="inline-block mt-2 text-xs bg-purple-50 text-purple-600
+          <span className="inline-block mt-2 text-xs bg-gold/10 text-gold
                            rounded-md px-2 py-0.5">
             {t.service}
           </span>

@@ -4,14 +4,14 @@ import {
   FileSpreadsheet, Search, Calculator, ClipboardCheck, BarChart3, Briefcase,
   ArrowRight, CheckCircle, Shield, MapPin, FileText, RefreshCw, Clock,
   TrendingUp, Merge, Home, Database, ChevronRight, Phone, Mail,
-  Lightbulb,
+  Lightbulb, MessageCircle,
 } from "lucide-react";
 import Team from "@/components/Team";
 import HeroGrid from "@/components/HeroGrid";
 
 export const metadata: Metadata = {
   title: { absolute: "Associate Piyush | Tax & Finance Consultant — Pune & Pan India" },
-  description: "Piyush Nimse & CA Sourabh Chavan — Expert Tax & Finance Consultants. 950+ ITR filed. GST compliance & ITC refunds, Income Tax, TDS, Virtual CFO, Outsourced Accounting, Forensic Accounting. Serving clients Pan India from Pune. Call +91 75073 54141.",
+  description: "Piyush Nimse and CA Sourabh Chavan, tax and finance consultants in Pune. 950+ ITR filed. GST compliance & ITC refunds, Income Tax, TDS, Virtual CFO, Outsourced Accounting, Forensic Accounting. Serving clients Pan India from Pune. Call +91 75073 54141.",
   alternates: { canonical: "https://associatepiyush.co.in" },
 };
 
@@ -28,16 +28,16 @@ const services = [
 ];
 
 const tools = [
-  { icon: FileText,        label: "GST Invoice Generator",  href: "/tools/gst-invoice",   badge: "Popular" },
+  { icon: FileText,        label: "GST Invoice Generator",  href: "/tools/gst-invoice",   badge: "" },
   { icon: Calculator,      label: "TDS Calculator",         href: "/tools/tds-calculator", badge: ""        },
-  { icon: BarChart3,       label: "Income Tax Estimator",      href: "/tools/itr-estimator",  badge: "New"     },
+  { icon: BarChart3,       label: "Income Tax Estimator",      href: "/tools/itr-estimator",  badge: ""     },
   { icon: FileSpreadsheet, label: "GSTR-2A Reconciliation", href: "/tools/gstr2a-recon",   badge: ""        },
   { icon: Clock,           label: "GST Late Fee Calc",      href: "/tools/gst-late-fee",   badge: ""        },
   { icon: RefreshCw,       label: "26AS TDS Recon",         href: "/tools/26as-recon",     badge: ""        },
   { icon: TrendingUp,      label: "Advance Tax Calc",       href: "/tools/advance-tax",    badge: ""        },
   { icon: Database,        label: "Bank Statement → Excel", href: "/tools/bank-statement", badge: ""        },
   { icon: Merge,           label: "PDF Merge",              href: "/tools/pdf-merge",      badge: ""        },
-  { icon: Home,            label: "LTCG Property Calc",     href: "/tools/ltcg-property",  badge: "New"     },
+  { icon: Home,            label: "LTCG Property Calc",     href: "/tools/ltcg-property",  badge: ""     },
 ];
 
 const stats = [
@@ -68,23 +68,23 @@ export default function HomePage() {
           <h1 data-reveal data-delay="100"
               className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-5 text-balance"
               style={{ color: "var(--ap-text)" }}>
-            Tax &amp; Finance Advisory<br />
-            for <span className="text-gold-gradient">Individuals, SMEs &amp; Startups</span>
+            Income tax, GST and audit work<br />
+            for <span className="text-gold-gradient">individuals and growing businesses</span>
           </h1>
 
           <p data-reveal data-delay="200"
              className="text-base sm:text-lg leading-relaxed mb-10 max-w-2xl"
              style={{ color: "var(--ap-text-muted)" }}>
-            Piyush Nimse &amp; CA Sourabh Chavan — your complete tax and finance team. GST compliance, income tax returns, audits, TDS, Virtual CFO, and financial advisory. Serving clients across India from Pune.
+            Piyush Nimse and CA Sourabh Chavan handle income tax returns, GST, TDS, audits and monthly accounts. Based in Pune, working with clients across India.
           </p>
 
           {/* CTAs */}
           <div data-reveal data-delay="300" className="flex flex-wrap gap-3 mb-12">
             <Link href="/contact" className="btn-gold gap-2 px-6 py-3 text-sm">
-              Book a Free Consultation <ArrowRight size={15} />
+              Book a free consultation <ArrowRight size={15} />
             </Link>
             <Link href="/tools" className="btn-outline gap-2 px-6 py-3 text-sm">
-              <Shield size={14} /> Explore Free Tools
+              <Shield size={14} /> Use the free tools
             </Link>
           </div>
 
@@ -93,10 +93,10 @@ export default function HomePage() {
                className="flex flex-wrap gap-6 pt-8"
                style={{ borderTop: "1px solid var(--ap-border)" }}>
             {[
-              { icon: CheckCircle, text: "100% Confidential" },
-              { icon: CheckCircle, text: "First Consultation Free" },
-              { icon: CheckCircle, text: "Response within 2–3 Working Days" },
-              { icon: CheckCircle, text: "CA-Certified Practice" },
+              { icon: CheckCircle, text: "Confidential" },
+              { icon: CheckCircle, text: "First consultation free" },
+              { icon: CheckCircle, text: "Reply within 2–3 working days" },
+              { icon: CheckCircle, text: "Audits by a chartered accountant" },
             ].map(({ icon: Icon, text }) => (
               <div key={text} className="flex items-center gap-1.5 text-sm" style={{ color: "var(--ap-text-muted)" }}>
                 <Icon size={14} style={{ color: "var(--ap-green)" }} />
@@ -132,10 +132,10 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <div data-reveal className="mb-12">
-            <p className="ap-eyebrow text-xs font-semibold uppercase tracking-widest mb-2"
+            <p className="ap-eyebrow text-xs font-semiboldst mb-2"
                style={{ color: "var(--ap-gold)" }}>Services</p>
             <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--ap-text)" }}>
-              Our <span className="ap-script">Services</span>
+              Our Services
             </h2>
           </div>
 
@@ -175,10 +175,10 @@ export default function HomePage() {
 
           <div data-reveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
             <div>
-              <p className="ap-eyebrow text-xs font-semibold uppercase tracking-widest mb-2"
-                 style={{ color: "var(--ap-gold)" }}>Free Tools</p>
+              <p className="ap-eyebrow text-xs font-semiboldst mb-2"
+                 style={{ color: "var(--ap-gold)" }}>Free tools</p>
               <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--ap-text)" }}>
-                15+ Tools, <span className="ap-script">No Login</span> Required
+                17 free tools, no login
               </h2>
               <p className="text-sm mt-2" style={{ color: "var(--ap-text-muted)" }}>
                 Runs entirely in your browser. Your data never leaves your device.
@@ -213,7 +213,7 @@ export default function HomePage() {
 
           <div data-reveal>
             <Link href="/tools" className="btn-outline gap-1.5 text-sm">
-              View All 15+ Tools <ArrowRight size={14} />
+              View all 17 tools <ArrowRight size={14} />
             </Link>
           </div>
         </div>
@@ -223,7 +223,7 @@ export default function HomePage() {
       <section className="py-5 border-b ap-divider" style={{ background: "var(--ap-gold-bg)" }}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-sm font-medium text-center sm:text-left" style={{ color: "var(--ap-text)" }}>
-            🧮 <strong>Not sure which tax regime saves you more?</strong> — Old Regime with 80C/HRA vs New Regime zero-tax up to ₹12L.
+            <strong>Old or new tax regime?</strong> Compare both with your own numbers, including 80C, HRA and the ₹12 lakh zero-tax limit.
           </p>
           <Link href="/tools/itr-estimator"
                 className="btn-gold shrink-0 gap-1.5 text-sm whitespace-nowrap">
@@ -238,23 +238,23 @@ export default function HomePage() {
 
           {/* Section header */}
           <div data-reveal className="mb-12">
-            <p className="ap-eyebrow text-xs font-semibold uppercase tracking-widest mb-2"
-               style={{ color: "var(--ap-gold)" }}>How We Work</p>
+            <p className="ap-eyebrow text-xs font-semiboldst mb-2"
+               style={{ color: "var(--ap-gold)" }}>How we work</p>
             <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--ap-text)" }}>
-              Simple Steps. <span className="ap-script">Expert Results.</span>
+              From first message to filing
             </h2>
             <p className="text-sm mt-2 max-w-lg" style={{ color: "var(--ap-text-muted)" }}>
-              From your first message to final filing — a clear, confidential process every time.
+              Four steps, the same for every case.
             </p>
           </div>
 
           {/* 4-step process */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
             {[
-              { step: "01", title: "Reach Out",       body: "WhatsApp, email, or the contact form — whichever is easiest. We reply within 2–3 working days." },
-              { step: "02", title: "Share Your Case", body: "Send your documents or describe your situation. Everything is handled with complete confidentiality." },
-              { step: "03", title: "Expert Review",   body: "CA-reviewed analysis specific to your numbers — tax-saving options, risks, and the best path forward." },
-              { step: "04", title: "Execute & File",  body: "Accurate, on-time filing. We keep you in the loop at every step until the job is fully done." },
+              { step: "01", title: "You reach out",   body: "WhatsApp, email or the contact form, whichever is easiest. We reply within 2–3 working days." },
+              { step: "02", title: "You share the papers", body: "Send your documents or describe the situation. Everything you share stays confidential." },
+              { step: "03", title: "We review it",    body: "We go through your numbers and tell you the options, the risks and what we recommend." },
+              { step: "04", title: "We file and follow up", body: "We file before the due date and keep you updated until the acknowledgement or refund arrives." },
             ].map(({ step, title, body }) => (
               <div key={step} data-reveal className="ap-card p-6 relative overflow-hidden">
                 <span className="ap-step-ghost absolute top-3 right-4 text-4xl font-black select-none"
@@ -272,10 +272,10 @@ export default function HomePage() {
 
           {/* Team divider */}
           <div data-reveal className="mb-10">
-            <p className="ap-eyebrow text-xs font-semibold uppercase tracking-widest mb-2"
-               style={{ color: "var(--ap-gold)" }}>Meet the Experts</p>
+            <p className="ap-eyebrow text-xs font-semiboldst mb-2"
+               style={{ color: "var(--ap-gold)" }}>Meet the team</p>
             <h3 className="text-xl sm:text-2xl font-bold" style={{ color: "var(--ap-text)" }}>
-              Handled by <span className="ap-script">Qualified</span> Professionals
+              Who handles your work
             </h3>
             <p className="text-sm mt-2 max-w-lg" style={{ color: "var(--ap-text-muted)" }}>
               Every case is personally reviewed and managed — not outsourced, not automated.
@@ -290,25 +290,25 @@ export default function HomePage() {
       <section style={{ background: "#030407", color: "#FFFFFF" }} className="ap-texture-dark py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div data-reveal>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-4"
+            <p className="text-xs font-semiboldst mb-4"
                style={{ color: "#D4FF24" }}>
-              First Consultation Free
+              First consultation free
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Stop overpaying taxes.<br className="hidden sm:block" /> Let&apos;s <span className="ap-script">fix that.</span>
+              A notice, a refund or a return to file?
             </h2>
             <p className="text-base mb-10" style={{ color: "rgba(255,255,255,0.55)" }}>
-              Whether it&apos;s a notice, GST refund, LTCG on property, or just filing your ITR — we respond within 2–3 working days and your first consultation is free.
+              Send us the details on WhatsApp or through the contact form. We reply within 2–3 working days, and the first consultation is free.
             </p>
             <div className="flex flex-wrap justify-center gap-3 mb-10">
               <Link href="/contact" className="btn-lime gap-2 px-7 py-3 text-sm">
-                Get in Touch <ArrowRight size={15} />
+                Contact us <ArrowRight size={15} />
               </Link>
               <a href="https://wa.me/917507354141?text=Hello%20Associate%20Piyush%2C%20I%20need%20tax%20consultation."
                  target="_blank" rel="noopener noreferrer"
                  className="inline-flex items-center gap-2 px-7 py-3 text-sm font-semibold rounded-lg transition-all"
                  style={{ background: "rgba(255,255,255,0.10)", color: "white", border: "1.5px solid rgba(255,255,255,0.20)" }}>
-                💬 WhatsApp
+                <MessageCircle size={15} /> WhatsApp
               </a>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm"

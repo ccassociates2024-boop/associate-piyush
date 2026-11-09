@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, X, Sun, Moon, Search, ArrowRight, FileText, Calculator, BarChart3, Database, Merge } from "lucide-react";
+import { Menu, X, Sun, Moon, Search, ArrowRight, FileText, Calculator, BarChart3, Merge, Home, Scale, Wrench, Mail, BookOpen, Receipt, Landmark, TrendingUp, CalendarClock } from "lucide-react";
 import clsx from "clsx";
 import LogoMark from "@/components/LogoMark";
 
@@ -15,19 +15,19 @@ const NAV_LINKS = [
 ];
 
 const SPOTLIGHT_ITEMS = [
-  { type: "page", icon: "🏠", label: "Home",        desc: "Main page",                  href: "/" },
-  { type: "page", icon: "⚖️", label: "Services",    desc: "Tax & finance services",     href: "/services" },
-  { type: "page", icon: "🛠", label: "Free Tools",   desc: "15 browser-based tools",     href: "/tools" },
-  { type: "page", icon: "📬", label: "Contact",      desc: "Book a consultation",        href: "/contact" },
-  { type: "page", icon: "📚", label: "Resources",    desc: "Tax guides & articles",      href: "/resources" },
-  { type: "tool", icon: "🧾", label: "GST Invoice Generator", desc: "Generate GST invoices",    href: "/tools/gst-invoice" },
-  { type: "tool", icon: "🔢", label: "TDS Calculator",         desc: "Section-wise TDS rates",  href: "/tools/tds-calculator" },
-  { type: "tool", icon: "📊", label: "Income Tax Estimator",      desc: "Old vs New regime",        href: "/tools/itr-estimator" },
-  { type: "tool", icon: "🏦", label: "Bank Statement → Excel", desc: "PDF extraction tool",     href: "/tools/bank-statement" },
-  { type: "tool", icon: "💰", label: "Capital Gains Calc",     desc: "STCG / LTCG calculator",  href: "/tools/capital-gains" },
-  { type: "tool", icon: "📝", label: "Notice Reply Generator", desc: "143(1), 148A & more",     href: "/tools/notice-reply" },
-  { type: "tool", icon: "📑", label: "PDF Merge",              desc: "Merge multiple PDFs",      href: "/tools/pdf-merge" },
-  { type: "tool", icon: "📉", label: "Advance Tax Calc",       desc: "Quarterly advance tax",   href: "/tools/advance-tax" },
+  { type: "page", icon: Home, label: "Home",        desc: "Main page",                  href: "/" },
+  { type: "page", icon: Scale, label: "Services",    desc: "Tax & finance services",     href: "/services" },
+  { type: "page", icon: Wrench, label: "Free Tools",   desc: "17 browser-based tools",     href: "/tools" },
+  { type: "page", icon: Mail, label: "Contact",      desc: "Book a consultation",        href: "/contact" },
+  { type: "page", icon: BookOpen, label: "Resources",    desc: "Tax guides & articles",      href: "/resources" },
+  { type: "tool", icon: Receipt, label: "GST Invoice Generator", desc: "Generate GST invoices",    href: "/tools/gst-invoice" },
+  { type: "tool", icon: Calculator, label: "TDS Calculator",         desc: "Section-wise TDS rates",  href: "/tools/tds-calculator" },
+  { type: "tool", icon: BarChart3, label: "Income Tax Estimator",      desc: "Old vs New regime",        href: "/tools/itr-estimator" },
+  { type: "tool", icon: Landmark, label: "Bank Statement → Excel", desc: "PDF extraction tool",     href: "/tools/bank-statement" },
+  { type: "tool", icon: TrendingUp, label: "Capital Gains Calc",     desc: "STCG / LTCG calculator",  href: "/tools/capital-gains" },
+  { type: "tool", icon: FileText, label: "Notice Reply Generator", desc: "143(1), 148A & more",     href: "/tools/notice-reply" },
+  { type: "tool", icon: Merge, label: "PDF Merge",              desc: "Merge multiple PDFs",      href: "/tools/pdf-merge" },
+  { type: "tool", icon: CalendarClock, label: "Advance Tax Calc",       desc: "Quarterly advance tax",   href: "/tools/advance-tax" },
 ];
 
 function useTheme() {
@@ -248,7 +248,7 @@ export default function Navbar() {
                     if (!items.length) return null;
                     return (
                       <div key={type}>
-                        <div className="px-5 py-2 text-[10px] font-semibold uppercase tracking-widest" style={{ color: "var(--ap-text-muted)" }}>
+                        <div className="px-5 py-2 text-[11px] font-semiboldst" style={{ color: "var(--ap-text-muted)" }}>
                           {type === "page" ? "Pages" : "Tools"}
                         </div>
                         {items.map((item) => {
@@ -265,7 +265,7 @@ export default function Navbar() {
                               }}
                               onMouseEnter={() => setSelected(idx)}
                             >
-                              <span className="text-xl w-7 text-center flex-shrink-0">{item.icon}</span>
+                              <span className="w-7 flex justify-center flex-shrink-0" style={{ color: "var(--ap-text-muted)" }}><item.icon size={17} strokeWidth={1.75} /></span>
                               <div className="flex-1 min-w-0">
                                 <div className="text-sm font-semibold truncate" style={{ color: "var(--ap-text)" }}>{item.label}</div>
                                 <div className="text-xs truncate" style={{ color: "var(--ap-text-muted)" }}>{item.desc}</div>

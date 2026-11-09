@@ -50,13 +50,12 @@ export default function Team() {
       >
         <CheckCircle size={16} className="text-gold flex-shrink-0 hidden sm:block" />
         <div>
-          <p className="text-xs font-bold uppercase tracking-widest text-gold mb-0.5">
-            A Complete Tax + CA Partnership
+          <p className="text-xs font-boldst text-gold mb-0.5">
+            Tax and CA work under one roof
           </p>
           <p className="text-xs text-gold leading-relaxed">
-            C.A. Sourabh &amp; Piyush cover the full spectrum — from day-to-day tax filing and GST
-            compliance to CA-certified audits, financial litigation, and strategic advisory.
-            One point of contact. Complete coverage.
+            Piyush handles day-to-day tax filing and GST. CA Sourabh Chavan handles audits,
+            financial litigation and advisory work. You deal with one team for all of it.
           </p>
         </div>
       </div>
@@ -91,7 +90,7 @@ export default function Team() {
             </span>
 
             {/* Highlight stat */}
-            <p className="text-[10px] font-semibold text-amber-600 uppercase tracking-wide mb-2">
+            <p className="text-[11px] font-semibold text-amber-600 mb-2">
               {p.highlight}
             </p>
 
@@ -103,7 +102,7 @@ export default function Team() {
               {p.expertise.map((tag) => (
                 <span
                   key={tag}
-                  className="text-[9px] font-bold uppercase tracking-wide
+                  className="text-[11px] font-bold
                              bg-gold/10 text-gold border border-gold/25
                              rounded-md px-1.5 py-0.5"
                 >
@@ -139,8 +138,8 @@ export default function Team() {
         className="rounded-xl px-5 py-4"
         style={{ background: "var(--ap-surface-2, #F8F9FB)", border: "1px solid #E5E7EB" }}
       >
-        <p className="text-[10px] font-bold uppercase tracking-widest text-gold mb-3">
-          What We Cover Together
+        <p className="text-[11px] font-boldst text-gold mb-3">
+          What we cover together
         </p>
         <div className="flex flex-wrap gap-2">
           {combinedExpertise.map((tag) => (

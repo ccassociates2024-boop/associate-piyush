@@ -50,7 +50,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.45)" }}>
-              Expert Tax Advisory, GST Reconciliation & Forensic Accounting across India. Based in Pune.
+              Income tax, GST, TDS, audit and forensic accounting work. Based in Pune, serving clients across India.
             </p>
             <div className="flex flex-col gap-2.5 text-sm">
               {[
@@ -71,7 +71,7 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-widest mb-5 text-white/60">Services</h3>
+            <h3 className="text-xs font-semiboldst mb-5 text-white/60">Services</h3>
             <ul className="space-y-2.5">
               {services.map((s) => (
                 <li key={s.href}>
@@ -85,7 +85,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-widest mb-5 text-white/60">Quick Links</h3>
+            <h3 className="text-xs font-semiboldst mb-5 text-white/60">Quick links</h3>
             <ul className="space-y-2.5 mb-6">
               {quickLinks.map((l) => (
                 <li key={l.href}>
@@ -99,7 +99,7 @@ export default function Footer() {
 
           {/* Tools + CTA */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-widest mb-5 text-white/60">Free Tools</h3>
+            <h3 className="text-xs font-semiboldst mb-5 text-white/60">Free tools</h3>
             <ul className="space-y-2.5 mb-5">
               {tools.map((t) => (
                 <li key={t.href}>
@@ -110,7 +110,7 @@ export default function Footer() {
               ))}
               <li>
                 <Link href="/tools" className="inline-flex items-center gap-1 text-sm font-semibold transition-colors hover:text-white" style={{ color: "#D4FF24" }}>
-                  View All 16 Free Tools <ArrowRight size={12} />
+                  View all 17 tools <ArrowRight size={12} />
                 </Link>
               </li>
             </ul>

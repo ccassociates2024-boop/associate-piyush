@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Clock, ArrowRight, BookOpen, Tag, Bell, Phone, Mail, MessageCircle } from "lucide-react";
 import ComplianceCalendar from "./ComplianceCalendar";
-import HeroGrid from "@/components/HeroGrid";
 
 export const metadata: Metadata = {
   title: "Free Tax & Finance Guides",
@@ -173,15 +172,14 @@ export default function ResourcesPage() {
     <div className="pt-16">
       {/* ── Hero ── */}
       <section className="ap-texture-dark ap-hero-band">
-        <HeroGrid />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <p className="ap-eyebrow text-lime text-sm font-semibold uppercase tracking-wider mb-3">
+            <p className="ap-eyebrow text-lime text-sm font-semiboldr mb-3">
               Updated for Income-tax Act, 2025
             </p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">Tax <span className="ap-script">Resources</span> &amp; Updates</h1>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">Tax Resources &amp; Updates</h1>
             <p className="ap-band-sub text-lg leading-relaxed">
-              Latest tax notifications, compliance calendar, and expert guides on GST, Income Tax, and TDS — all in one place.
+              Recent tax notifications, this month's due dates and longer guides on GST, income tax and TDS.
             </p>
           </div>
         </div>
@@ -222,7 +220,7 @@ export default function ResourcesPage() {
                 <h3 className="font-bold text-dark text-base leading-snug">{update.title}</h3>
 
                 {/* Section ref */}
-                <div className="text-[11px] font-semibold text-primary/80 uppercase tracking-wide">
+                <div className="text-[11px] font-semibold text-primary/80">
                   {update.section}
                 </div>
 
@@ -233,7 +231,7 @@ export default function ResourcesPage() {
 
             {/* "More updates" placeholder card */}
             <div className="bg-primary/5 border border-primary/10 rounded-xl p-5 flex flex-col items-start justify-center gap-2">
-              <div className="text-xs font-semibold text-primary uppercase tracking-wide">Stay Updated</div>
+              <div className="text-xs font-semibold text-primary">Stay updated</div>
               <p className="text-dark text-sm font-medium leading-snug">
                 Get the latest tax updates and compliance reminders directly on WhatsApp.
               </p>
@@ -316,9 +314,9 @@ export default function ResourcesPage() {
       <section className="ap-texture-dark bg-primary py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <p className="ap-eyebrow text-lime text-sm font-bold uppercase tracking-wider mb-3">Free Consultation</p>
+            <p className="ap-eyebrow text-lime text-sm font-boldr mb-3">Free consultation</p>
             <h2 className="text-3xl font-bold text-white mb-4">
-              Have a tax question? Get expert guidance from Associate Piyush.
+              Have a tax question? Ask us directly.
             </h2>
             <p className="text-blue-200 text-base max-w-xl mx-auto">
               First consultation is free. We respond within 2–3 working days. Serving clients across India from Pune.
@@ -366,7 +364,7 @@ export default function ResourcesPage() {
                 <Mail size={20} className="text-white" />
               </div>
               <div className="text-center">
-                <div className="text-white font-semibold text-sm">Email Us</div>
+                <div className="text-white font-semibold text-sm">Email</div>
                 <div className="text-blue-200 text-xs mt-0.5">Reply within 24 hours</div>
               </div>
             </a>

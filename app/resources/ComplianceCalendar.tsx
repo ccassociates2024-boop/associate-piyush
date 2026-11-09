@@ -153,10 +153,10 @@ export default function ComplianceCalendar() {
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-primary text-white">
-              <th className="text-left px-5 py-3 font-semibold text-xs uppercase tracking-wider w-28">Due Date</th>
-              <th className="text-left px-5 py-3 font-semibold text-xs uppercase tracking-wider">Compliance</th>
-              <th className="text-left px-5 py-3 font-semibold text-xs uppercase tracking-wider w-20">Type</th>
-              <th className="text-left px-5 py-3 font-semibold text-xs uppercase tracking-wider w-32">Status</th>
+              <th className="text-left px-5 py-3 font-semibold text-xsr w-28">Due date</th>
+              <th className="text-left px-5 py-3 font-semibold text-xsr">Compliance</th>
+              <th className="text-left px-5 py-3 font-semibold text-xsr w-20">Type</th>
+              <th className="text-left px-5 py-3 font-semibold text-xsr w-32">Status</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 bg-white">

@@ -14,7 +14,7 @@ const tools = [
     label: "Personal Finance Dashboard",
     desc: "Track income, expenses, investments, EMIs, tax & goals. Free personal CFO tool built for Indian taxpayers. No login, 100% private.",
     href: "/tools/dashboard",
-    badge: "New",
+    badge: "",
     badgeColor: "bg-purple-100 text-purple-800",
     category: "Finance",
   },
@@ -23,7 +23,7 @@ const tools = [
     label: "GST Invoice Generator",
     desc: "Generate professional GST-compliant PDF invoices with CGST/SGST/IGST auto-calculation.",
     href: "/tools/gst-invoice",
-    badge: "Popular",
+    badge: "",
     badgeColor: "bg-amber-100 text-amber-800",
     category: "GST",
   },
@@ -41,7 +41,7 @@ const tools = [
     label: "Income Tax Estimator",
     desc: "Estimate income tax under Old vs New regime for FY 2025-26 & FY 2026-27 with full slab comparison.",
     href: "/tools/itr-estimator",
-    badge: "New",
+    badge: "",
     badgeColor: "bg-green-100 text-green-800",
     category: "Income Tax",
   },
@@ -50,7 +50,7 @@ const tools = [
     label: "LTCG on Property Calculator",
     desc: "Calculate Long Term Capital Gain on house / flat / plot sale. CII indexation, Section 54 & 54EC exemption planning.",
     href: "/tools/ltcg-property",
-    badge: "New",
+    badge: "",
     badgeColor: "bg-green-100 text-green-800",
     category: "Income Tax",
   },
@@ -95,7 +95,7 @@ const tools = [
     label: "Notice Reply Generator",
     desc: "Generate professional reply drafts for Sec 143(1), 148A, 139(9), 245, 156 & 131 notices in 60 seconds.",
     href: "/tools/notice-reply",
-    badge: "New",
+    badge: "",
     badgeColor: "bg-green-100 text-green-800",
     category: "Income Tax",
   },
@@ -104,7 +104,7 @@ const tools = [
     label: "Capital Gains Tax Calculator",
     desc: "Calculate STCG & LTCG on equity, mutual funds, and property with indexation for FY 2026-27.",
     href: "/tools/capital-gains",
-    badge: "New",
+    badge: "",
     badgeColor: "bg-green-100 text-green-800",
     category: "Income Tax",
   },
@@ -122,7 +122,7 @@ const tools = [
     label: "PDF Arranger",
     desc: "Upload a PDF and visually rearrange pages. Drag to reorder, rotate, delete pages, then download.",
     href: "/tools/pdf-arranger",
-    badge: "New",
+    badge: "",
     badgeColor: "bg-green-100 text-green-800",
     category: "PDF",
   },
@@ -149,7 +149,7 @@ const tools = [
     label: "PDF Bank Statement to Excel",
     desc: "Auto-extract & classify transactions from any Indian bank PDF. Supports SBI, PNB, HDFC, ICICI, Axis, Kotak, Canara & more. Color-coded Excel with category breakdown.",
     href: "/tools/bank-statement",
-    badge: "New",
+    badge: "",
     badgeColor: "bg-green-100 text-green-800",
     category: "Finance",
   },
@@ -158,7 +158,7 @@ const tools = [
     label: "Tally Ledger to Excel",
     desc: "Convert Tally Prime ledger exports (.xlsx/.xml/.csv) to structured Excel with forensic flags.",
     href: "/tools/tally-ledger",
-    badge: "Advanced",
+    badge: "",
     badgeColor: "bg-indigo-100 text-indigo-800",
     category: "Finance",
   },
@@ -231,7 +231,7 @@ export default function ToolsGrid() {
               </div>
 
               {/* Category */}
-              <div className="text-[9px] font-semibold uppercase tracking-wider mb-1.5"
+              <div className="text-[11px] font-semiboldr mb-1.5"
                    style={{ color: cc.text }}>
                 {tool.category}
               </div>

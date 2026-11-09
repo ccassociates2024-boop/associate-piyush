@@ -1,20 +1,17 @@
 import type { Metadata } from "next";
-import { Inter, Dancing_Script } from "next/font/google";
+import { Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 import ThemeProvider from "@/components/ThemeProvider";
-import CustomCursor from "@/components/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-// Script face for one highlighted word in big headings (.ap-script)
-const script = Dancing_Script({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-script", display: "swap" });
 
 export const metadata: Metadata = {
   title: { default: "Associate Piyush | Tax & Finance Consultant, Pune", template: "%s | Associate Piyush" },
-  description: "Expert Tax Advisory, GST Reconciliation & Forensic Accounting Services for businesses across India. Associate Piyush — 950+ income tax cases. Pune. Pan India. Call +91 75073 54141.",
+  description: "Income tax, GST, TDS, audit and forensic accounting services for individuals and businesses across India. Associate Piyush — 950+ income tax cases. Pune. Pan India. Call +91 75073 54141.",
   keywords: ["tax consultant pune","GST reconciliation pune","forensic accounting india","income tax advisory pune","TDS compliance","CA consultant pune","Associate Piyush","Piyush Nimse"],
   authors: [{ name: "Associate Piyush" }],
   creator: "Associate Piyush",
@@ -24,7 +21,7 @@ export const metadata: Metadata = {
     url: "https://associatepiyush.co.in",
     siteName: "Associate Piyush",
     title: "Associate Piyush | Tax & Finance Consultant, Pune",
-    description: "Expert Tax Advisory, GST Reconciliation & Forensic Accounting. 950+ cases. Since 2025.",
+    description: "Income tax, GST, TDS, audit and forensic accounting. Based in Pune.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Associate Piyush - Tax Consultant Pune" }],
   },
   twitter: { card: "summary_large_image", title: "Associate Piyush | Tax & Finance Consultant, Pune", images: ["/og-image.png"] },
@@ -35,7 +32,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "AccountingService",
   name: "Associate Piyush",
-  description: "Expert Tax Advisory, GST Reconciliation & Forensic Accounting Services across India.",
+  description: "Income tax, GST, TDS, audit and forensic accounting services across India.",
   url: "https://associatepiyush.co.in",
   telephone: "+917507354141",
   email: "associate.piyush.nimse@gmail.com",
@@ -46,7 +43,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${script.variable}`} suppressHydrationWarning>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
         {/* No-flash dark mode init */}
         <script dangerouslySetInnerHTML={{ __html: `
@@ -67,7 +64,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </ThemeProvider>
         <Footer />
         <FloatingContact />
-        <CustomCursor />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-QPNDK3DSN6" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">{`
           window.dataLayer = window.dataLayer || [];

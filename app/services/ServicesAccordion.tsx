@@ -267,7 +267,7 @@ export default function ServicesAccordion() {
                       className="text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full hidden sm:inline-block"
                       style={{ background: "var(--ap-accent-bg)", color: "var(--ap-accent)", border: "1px solid rgba(var(--ap-accent-rgb),0.35)" }}
                     >
-                      ★ {area}
+                      {area}
                     </span>
                   ))}
                 </div>
@@ -319,7 +319,7 @@ export default function ServicesAccordion() {
                             className="text-xs font-semibold px-3 py-1 rounded-full"
                             style={{ background: "var(--ap-accent-bg)", color: "var(--ap-accent)", border: "1px solid rgba(var(--ap-accent-rgb),0.35)" }}
                           >
-                            ★ {area}
+                            {area}
                           </span>
                         ))}
                       </div>
@@ -345,7 +345,7 @@ export default function ServicesAccordion() {
 
                   {/* Right: What's included */}
                   <div className="lg:w-3/5 bg-white rounded-xl p-5 border border-gray-100">
-                    <h3 className="font-semibold text-dark text-xs uppercase tracking-widest mb-4
+                    <h3 className="font-semibold text-dark text-xsst mb-4
                                    flex items-center gap-2">
                       <Building2 size={13} className="text-gold" />
                       What&apos;s Included

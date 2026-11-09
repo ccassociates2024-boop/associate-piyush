@@ -128,7 +128,7 @@ export default function ContactSection() {
                     <Icon size={18} className={iconColor} />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-[11px] font-semibold text-muted uppercase tracking-wider mb-0.5">
+                    <div className="text-[11px] font-semibold text-mutedr mb-0.5">
                       {label}
                     </div>
                     <div className="text-sm font-semibold text-dark truncate">{value}</div>
@@ -183,7 +183,7 @@ export default function ContactSection() {
                 <Mail size={18} className="text-gold" />
               </div>
               <div>
-                <div className="text-xs font-semibold text-muted uppercase tracking-wide mb-0.5">Email Us</div>
+                <div className="text-xs font-semibold text-muted mb-0.5">Email</div>
                 <div className="text-sm font-semibold text-dark break-all">{EMAIL}</div>
               </div>
             </a>
@@ -220,7 +220,7 @@ export default function ContactSection() {
 
               {/* Preview message example */}
               <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 text-xs text-green-900 font-mono leading-relaxed">
-                <div className="text-[10px] text-green-600 font-semibold uppercase tracking-wide mb-1.5">Message Preview (example)</div>
+                <div className="text-[11px] text-green-600 font-semibold mb-1.5">Message preview (example)</div>
                 <div className="whitespace-pre-line">{
                   `*New Inquiry — Associate Piyush*\n\nName: Sunil Yadav\nEmail: sunil@example.com\nPhone: +91 98765 43210\nService: Income Tax Filing\n\nMessage: I need to file ITR for FY 2026-27.`
                 }</div>
@@ -318,7 +318,7 @@ export default function ContactSection() {
 
               {/* Also reachable via */}
               <div className="mt-5 pt-5 border-t border-gray-100 space-y-2">
-                <div className="text-xs text-muted font-semibold uppercase tracking-wide mb-2">Or reach us directly</div>
+                <div className="text-xs text-muted font-semibold mb-2">Or reach us directly</div>
                 <a
                   href={`tel:+${PHONE_RAW}`}
                   className="flex items-center gap-2 text-sm font-medium text-primary hover:underline"

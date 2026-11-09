@@ -489,14 +489,8 @@ html.dark {
 }
 .ap-texture::before      { background-image: radial-gradient(circle, var(--hg-dot) 1px, transparent 1.5px); }
 .ap-texture-dark::before { background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1.5px); }
-.ap-texture::after {
-  background: radial-gradient(640px circle at 95% 0%, var(--hg-glow), transparent 60%);
-}
-.ap-texture-dark::after {
-  background:
-    radial-gradient(640px circle at 95% 0%, rgba(21,88,201,0.28), transparent 60%),
-    radial-gradient(420px circle at 0% 100%, rgba(212,255,36,0.05), transparent 60%);
-}
+/* Textures are dots only: no colour washes */
+.ap-texture::after, .ap-texture-dark::after { content: none; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    THEME BRIDGE — makes pages built with fixed Tailwind colours (Services,
@@ -617,44 +611,19 @@ html.dark .text-rose-700, html.dark .text-rose-800, html.dark .text-rose-900 { c
 /* ═══════════════════════════════════════════════════════════════════════════
    COLOUR ACCENTS — section labels, icon tiles, card edges, steps, stats band
    ═══════════════════════════════════════════════════════════════════════════ */
-:root      { --ap-grad: linear-gradient(90deg, #1558C9 0%, #3D78DC 55%, #D4FF24 100%); }
-html.dark  { --ap-grad: linear-gradient(90deg, #5B8FE8 0%, #8FB3F0 45%, #D4FF24 100%); }
 
-/* Section label with a short cobalt→lime bar in front */
-.ap-eyebrow { display: inline-flex; align-items: center; gap: 8px; }
-.ap-eyebrow::before {
-  content: "";
-  width: 20px; height: 2px; border-radius: 2px;
-  background: var(--ap-grad);
-  flex-shrink: 0;
+/* Section label: small, sentence case, accent colour, no decoration */
+.ap-eyebrow {
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
 }
 
-/* Headline highlight: cobalt gradient (adds lime at the end in dark mode) */
-.text-gold-gradient {
-  background: linear-gradient(90deg, #1558C9 0%, #2F6FDB 60%, #3D78DC 100%);
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; color: transparent;
-}
-html.dark .text-gold-gradient {
-  background: linear-gradient(90deg, #5B8FE8 0%, #8FB3F0 55%, #D4FF24 100%);
-  -webkit-background-clip: text; background-clip: text;
-}
+/* Headline highlight: solid accent colour (no gradient text) */
+.text-gold-gradient { color: var(--ap-accent); background: none; -webkit-text-fill-color: currentColor; }
 
-/* Cards: cobalt→lime edge slides in along the top on hover */
-.ap-card { position: relative; }
-.ap-card::before {
-  content: "";
-  position: absolute;
-  top: -1px; left: 14px; right: 14px; height: 2px;
-  border-radius: 0 0 2px 2px;
-  background: var(--ap-grad);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s cubic-bezier(.22,1,.36,1);
-  pointer-events: none;
-}
-.ap-card:hover::before { transform: scaleX(1); }
-.ap-card:hover { box-shadow: 0 10px 30px -12px rgba(var(--ap-accent-rgb), 0.35), var(--ap-shadow-md); }
+/* Cards: accent border + neutral shadow on hover (set in CARDS above) */
 
 /* Icon tiles: tinted at rest, filled on card hover (cobalt light / lime dark) */
 .ap-icon-tile {
@@ -679,13 +648,13 @@ html.dark .ap-step-chip { background: var(--ap-lime); color: var(--ap-lime-ink);
   -webkit-text-stroke: 1.5px rgba(var(--ap-accent-rgb), 0.22);
 }
 
-/* Stats band: Midnight Black strip with gradient hairlines top and bottom */
+/* Stats band: Midnight Black strip with quiet hairlines */
 .ap-stats-band { color: #FFFFFF; }
 .ap-stats-band::before { -webkit-mask-image: none; mask-image: none; opacity: 0.6; }
 .ap-stat-number { color: #FFFFFF; }
 .ap-stats-band > div::before,
 .ap-stats-band > div::after { content: none; }
-.ap-stats-band { box-shadow: inset 0 1px 0 rgba(212,255,36,0.25), inset 0 -1px 0 rgba(21,88,201,0.45); }
+.ap-stats-band { box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(255,255,255,0.06); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    GLASS PILL NAV — floating rounded menu bar (components/Navbar.tsx)
@@ -712,8 +681,8 @@ html.dark .ap-pill-links { background: rgba(255,255,255,0.04); border-color: rgb
 .ap-pill-links a:hover { background: var(--ap-accent-bg); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   BOLD HEADER BANDS + SCRIPT HEADINGS (inspired by the reference reel)
-   Light mode: solid Electric Cobalt band. Dark mode: Midnight band with glow.
+   PAGE HEADER BANDS
+   Light mode: solid Electric Cobalt band. Dark mode: Midnight band.
    The band slides up under the floating glass nav.
    ═══════════════════════════════════════════════════════════════════════════ */
 .ap-hero-band {
@@ -725,135 +694,5 @@ html.dark .ap-pill-links { background: rgba(255,255,255,0.04); border-color: rgb
 }
 @media (min-width: 1024px) { .ap-hero-band { padding-top: 10rem; padding-bottom: 5.5rem; } }
 html.dark .ap-hero-band { background: #070B14; }
-.ap-hero-band.ap-texture-dark::after {
-  background:
-    radial-gradient(700px circle at 90% 10%, rgba(255,255,255,0.14), transparent 60%),
-    radial-gradient(520px circle at 0% 100%, rgba(212,255,36,0.12), transparent 60%);
-}
-html.dark .ap-hero-band.ap-texture-dark::after {
-  background:
-    radial-gradient(700px circle at 90% 10%, rgba(21,88,201,0.35), transparent 60%),
-    radial-gradient(520px circle at 0% 100%, rgba(212,255,36,0.07), transparent 60%);
-}
 .ap-hero-band.ap-texture-dark::before { opacity: 0.9; }
 .ap-band-sub { color: rgba(255,255,255,0.78); }
-
-.ap-script {
-  font-family: var(--font-script), "Brush Script MT", cursive;
-  font-weight: 700;
-  font-size: 1.22em;
-  line-height: 0.9;
-  letter-spacing: 0;
-  color: var(--ap-accent);
-  padding: 0 0.04em;
-  -webkit-text-fill-color: currentColor;
-}
-.ap-hero-band .ap-script,
-.ap-texture-dark .ap-script,
-.ap-stats-band .ap-script { color: var(--ap-lime); }
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   CUSTOM CURSOR (components/CustomCursor.tsx) — desktop mouse only
-   ═══════════════════════════════════════════════════════════════════════════ */
-.ap-cursor-dot, .ap-cursor-ring {
-  position: fixed; top: 0; left: 0;
-  z-index: 10000;
-  pointer-events: none;
-  border-radius: 9999px;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-.ap-cursor-dot {
-  width: 8px; height: 8px; margin: -4px 0 0 -4px;
-  background: var(--ap-accent);
-}
-.ap-cursor-ring {
-  width: 34px; height: 34px; margin: -17px 0 0 -17px;
-  border: 1.5px solid rgba(var(--ap-accent-rgb), 0.55);
-  transition: opacity 0.2s ease, width 0.2s ease, height 0.2s ease, margin 0.2s ease,
-              background-color 0.2s ease, border-color 0.2s ease;
-}
-html.dark .ap-cursor-dot  { background: var(--ap-lime); }
-html.dark .ap-cursor-ring { border-color: rgba(212,255,36,0.5); }
-
-html.ap-cursor-on .ap-cursor-dot,
-html.ap-cursor-on .ap-cursor-ring { opacity: 1; }
-html.ap-cursor-on, html.ap-cursor-on * { cursor: none; }
-html.ap-cursor-on :is(input, textarea, [contenteditable="true"]) { cursor: text; }
-
-html.ap-cursor-hover .ap-cursor-ring {
-  width: 56px; height: 56px; margin: -28px 0 0 -28px;
-  background: rgba(var(--ap-accent-rgb), 0.10);
-  border-color: rgba(var(--ap-accent-rgb), 0.8);
-}
-html.dark.ap-cursor-hover .ap-cursor-ring { background: rgba(212,255,36,0.10); border-color: rgba(212,255,36,0.8); }
-html.ap-cursor-hover .ap-cursor-dot { opacity: 1; transform-origin: center; }
-html.ap-cursor-down .ap-cursor-ring { width: 26px; height: 26px; margin: -13px 0 0 -13px; }
-html.ap-cursor-text .ap-cursor-dot,
-html.ap-cursor-text .ap-cursor-ring { opacity: 0; }
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   INTERACTIVE GRID ON HEADER BANDS (HeroGrid inside .ap-hero-band)
-   White dots on cobalt that light up lime near the cursor, with a soft glow.
-   ═══════════════════════════════════════════════════════════════════════════ */
-.ap-hero-band { overflow: hidden; }
-.ap-hero-band.ap-texture-dark::before { display: none; }   /* HeroGrid draws the dots instead */
-.ap-hero-band .hero-grid {
-  --hg-dot:    rgba(255,255,255,0.16);
-  --hg-lit:    rgba(212,255,36,0.95);
-  --hg-glow:   rgba(255,255,255,0.16);
-  --hg-corner: rgba(212,255,36,0.10);
-  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
-          mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
-}
-html.dark .ap-hero-band .hero-grid {
-  --hg-dot:    rgba(255,255,255,0.08);
-  --hg-lit:    rgba(212,255,36,0.65);
-  --hg-glow:   rgba(91,143,232,0.22);
-  --hg-corner: rgba(212,255,36,0.06);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   PAGE SPOTLIGHT — soft accent light that follows the mouse on every page
-   (set by components/CustomCursor.tsx; desktop mouse only)
-   ═══════════════════════════════════════════════════════════════════════════ */
-.ap-spotlight {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  background: radial-gradient(560px circle at var(--mx, -999px) var(--my, -999px),
-              rgba(21,88,201,0.07), rgba(21,88,201,0.025) 40%, transparent 70%);
-}
-html.dark .ap-spotlight {
-  background: radial-gradient(560px circle at var(--mx, -999px) var(--my, -999px),
-              rgba(91,143,232,0.10), rgba(212,255,36,0.02) 45%, transparent 70%);
-}
-html.ap-cursor-on .ap-spotlight { opacity: 1; }
-
-/* Cursor stays visible on cobalt bands as well as white: thin white halo */
-.ap-cursor-dot  { box-shadow: 0 0 0 2px rgba(255,255,255,0.85); }
-.ap-cursor-ring { box-shadow: 0 0 0 1px rgba(255,255,255,0.35); }
-html.dark .ap-cursor-dot  { box-shadow: 0 0 0 2px rgba(3,4,7,0.6); }
-html.dark .ap-cursor-ring { box-shadow: none; }
-
-/* Cursor visibility on white cards (light mode): solid dot always shown,
-   stronger ring when hovering links, buttons and cards */
-.ap-cursor-dot {
-  width: 10px; height: 10px; margin: -5px 0 0 -5px;
-  background: #1558C9;
-  box-shadow: 0 0 0 2px #FFFFFF, 0 1px 6px rgba(3,4,7,0.35);
-}
-.ap-cursor-ring {
-  border: 2px solid rgba(21,88,201,0.75);
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.6), 0 2px 10px rgba(3,4,7,0.12);
-}
-html.ap-cursor-hover .ap-cursor-ring {
-  background: rgba(21,88,201,0.12);
-  border-color: #1558C9;
-}
-html.dark .ap-cursor-dot  { background: var(--ap-lime); box-shadow: 0 0 0 2px rgba(3,4,7,0.7); }
-html.dark .ap-cursor-ring { border-color: rgba(212,255,36,0.7); box-shadow: none; }
-html.dark.ap-cursor-hover .ap-cursor-ring { background: rgba(212,255,36,0.12); border-color: #D4FF24; }

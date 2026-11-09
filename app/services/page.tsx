@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ServicesAccordion from "./ServicesAccordion";
-import HeroGrid from "@/components/HeroGrid";
 
 export const metadata: Metadata = {
   title: "Tax & Finance Services",
@@ -36,12 +35,11 @@ export default function ServicesPage() {
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="ap-texture-dark ap-hero-band">
-        <HeroGrid />
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="ap-eyebrow text-lime text-xs font-semibold uppercase tracking-widest mb-2">
-            What We Offer
+          <p className="ap-eyebrow text-lime text-xs font-semiboldst mb-2">
+            What we offer
           </p>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">Our <span className="ap-script">Services</span></h1>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">Our Services</h1>
           <p className="ap-band-sub text-base sm:text-lg max-w-xl leading-relaxed">
             Click any service to see full details, pricing, and what&apos;s included.
             Each engagement is handled with precision and confidentiality.

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import ContactSection from "./ContactForm";
-import HeroGrid from "@/components/HeroGrid";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -31,14 +30,13 @@ export default function ContactPage() {
     <div className="pt-16">
       {/* Hero */}
       <section className="ap-texture-dark ap-hero-band">
-        <HeroGrid />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <p className="ap-eyebrow text-lime text-sm font-semibold uppercase tracking-wider mb-3">
-              Get in Touch
+            <p className="ap-eyebrow text-lime text-sm font-semiboldr mb-3">
+              Get in touch
             </p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">
-              Let&apos;s <span className="ap-script">Resolve</span> Your Tax Matter
+              Let&apos;s Resolve Your Tax Matter
             </h1>
             <p className="ap-band-sub text-lg leading-relaxed">
               Reach out via WhatsApp, call, or email. First consultation is free.

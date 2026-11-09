@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Shield } from "lucide-react";
 import ToolsGrid from "./ToolsGrid";
-import HeroGrid from "@/components/HeroGrid";
 
 export const metadata: Metadata = {
   title: "Free Tax & Finance Tools",
@@ -37,14 +36,13 @@ export default function ToolsPage() {
 
       {/* Hero */}
       <section className="ap-texture-dark ap-hero-band">
-        <HeroGrid />
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="ap-eyebrow text-lime text-xs font-semibold uppercase tracking-widest mb-3">Free Tools</p>
+          <p className="ap-eyebrow text-lime text-xs font-semiboldst mb-3">Free tools</p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">
-            Tax &amp; Finance <span className="ap-script">Tools</span>
+            Tax &amp; Finance Tools
           </h1>
           <p className="ap-band-sub text-base sm:text-lg leading-relaxed max-w-xl mb-6">
-            15+ professional-grade tools built for Indian tax compliance. No login, no data stored — everything runs in your browser.
+            17 tools for Indian tax and GST work. No login and nothing is uploaded: everything runs in your browser.
           </p>
           <div className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full"
                style={{ background: "rgba(212,255,36,0.12)", color: "#D4FF24", border: "1px solid rgba(212,255,36,0.30)" }}>
